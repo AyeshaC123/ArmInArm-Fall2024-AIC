@@ -1,3 +1,5 @@
+#Project Proposal
+
 1. Description of the problem to be solved.
 
 A problem that the volunteer organization “Arm In Arms'' has with their volunteers is how to best organize people and assign tasks to them. Today, the task allocation process is both labor intensive and time consuming, taking away from the organization’s core objective. This stems from bad coordination and from a lack of any formalized structure to connect volunteers to tasks which utilize their skills, strengths and talents. The result is that volunteers frequently end up doing things that don’t best leverage them or bring the most impact to the organization.
