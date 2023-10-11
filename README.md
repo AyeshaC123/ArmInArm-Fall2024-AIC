@@ -1,4 +1,4 @@
-#Project Proposal
+# Project Proposal
 
 1. Description of the problem to be solved.
 
