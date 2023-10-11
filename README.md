@@ -1,4 +1,6 @@
-# Project Proposal
+# Arm In Arm Volunteer Application
+
+## Project Proposal
 
 1. Description of the problem to be solved.
 
@@ -24,3 +26,6 @@ This project is also innovative from the point that we were moving a lot of thin
 8. A simple use case diagram showing the project functionality. Identify the functionality that will be implemented in each prototype and completed within the time constraints of the semester. Specify functionality that is beyond the semester scope but could be added in future versions.
 
 <img width="614" alt="Screenshot 2023-09-25 at 1 20 31 PM" src="https://github.com/TCNJ-SE/ArmInArm-F23/assets/122068476/412a10bd-ff76-44ea-86a3-952657ba3392">
+
+## Requirements and Analysis
+
