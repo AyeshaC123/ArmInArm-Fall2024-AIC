@@ -42,4 +42,6 @@ The current changes made:
   - _viewHours.html.erb -> Holding the signed in users current hours for their upcoming shift
   - Default.html.erb -> Holding the orignal index.html.erb file contents with helpful information
  - Edited the index.html.erb file and made our own homepage
- - Edited the the dropdown menus options
+ - Edited the the dropdown menus options - 'View Upcoming Volunteer Hours' page and 'Fill out Volunteer Form' page
+ - Created controller files for the separate pages
+ - Added text boxes to enter name/number, radio buttons to select interests, and submit button on the Volunteer Form page
