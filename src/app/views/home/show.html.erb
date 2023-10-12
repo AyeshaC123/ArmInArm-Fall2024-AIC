@@ -1,0 +1,24 @@
+
+<h1>Client Report</h1>
+
+<p>
+  <strong>First Name:</strong>
+  <%= @client.first_name %>
+</p>
+
+<p>
+  <strong>Last Name:</strong>
+  <%= @client.last_name %>
+</p>
+
+<!-- Add similar code for other attributes -->
+
+<p>
+  <strong>Allergies:</strong>
+  <%= @client.allergies.present? ? @client.allergies.join(', ') : 'None' %>
+</p>
+
+<p>
+  <strong>Dietary Restrictions:</strong>
+  <%= @client.restrictions.present? ? @client.restrictions.join(', ') : 'None' %>
+</p>
