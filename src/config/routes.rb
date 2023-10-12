@@ -7,6 +7,12 @@
 # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 
 Rails.application.routes.draw do
+  #get 'volunteers/upcoming_hours'
+  #get 'volunteers/form'
+  get 'volunteers/upcoming_hours', to: 'volunteers#upcoming_hours', as: 'upcoming_hours'
+  get 'volunteers/form', to: 'volunteers#form', as: 'volunteer_form'
+ # post 'volunteers', to: 'volunteers#create'
+
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   # The root page, e.g. www.example.com/, is sent here
   # root 'controller#method_in_controller'
@@ -32,4 +38,5 @@ Rails.application.routes.draw do
   # # than rails would assume by the name. to: 'controller#method_name'.
   # # It would have extected to: 'add_tags#add', which would fail
   # put '/add_tags/add', to: 'users#add_tags'
+  
 end
