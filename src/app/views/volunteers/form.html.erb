@@ -1,0 +1,37 @@
+<!-- update serverendpoint with database connection -->
+<form action="severendpoint" method="post">
+    <h1>Volunteer Sign Up Form</h1>
+    <p>Please fill out the questions below to be assigned to 
+        a volunteer role. 
+    </p>
+    <p>Name: <input type="text" name="volunteer_name" id="volunteer_name" placeholder="Enter your name"></p>
+    <p>Phone Number: <input type="tel" name="volunteer_phone" id="volunteer_phone" placeholder="Enter your phone number"></p>
+
+    <p>Select Interests:</p>
+    <label>
+        <input type="checkbox" name="interests[]" value="Interpersonal Interaction">
+        Interpersonal Interaction
+    </label><br>
+
+    <label>
+        <input type="checkbox" name="interests[]" value="Logistics & Organization">
+        Logistics & Organization
+    </label><br>
+
+    <label>
+        <input type="checkbox" name="interests[]" value="Health & Nutrition">
+        Health & Nutrition
+    </label><br>
+
+    <label>
+        <input type="checkbox" name="interests[]" value="Language & Communication">
+        Language & Communication
+    </label><br>
+
+    <label>
+        <input type="checkbox" name="interests[]" value="Quality Control">
+        Quality Control
+    </label><br>
+
+    <input type="submit" value="Submit">
+</form>
