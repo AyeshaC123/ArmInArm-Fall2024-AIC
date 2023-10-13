@@ -1,11 +1,5 @@
 # README
 
-# SE Rails starter
+Our project will involve creating a software system that allows clients of Arm In Arm to create individual client profiles that hold client specific data that is valuable for Arm In Arm volunteers to use when crafting a client’s bag. Data such as a client’s food preferences, allergies, dietary restrictions and data pertaining to a client’s household all are valuable for volunteers when enabling the best experience for clients. Clients can also update,delete and modify these profiles to ensure data correctness and validity. By being able to have easy to reference information about clients, there will be less guess work on Arm In Arm’s part about their client’s needs. Instead there will be more confidence from Arm In Arm that they are sufficiently serving their clients as well as clients feeling valued and understood by the Arm In Arm staff. Client Profiles would limit the issue of long lines and increase client safety but allow clients to simply come in, give the volunteer their name and receive their personalized bag. This would also lessen disorganization within Arm In Arm through that come-and-go process, giving the staff ample time to pre-build bags and allow for more efficiency. Our project goes beyond creating profiles, it redefines the experience for clients choosing to come to Arm In Arm. We recognize that every individual has unique needs and preferences, especially when it comes to building a grocery bag for a client and their families. Our software will offer a seamless way for clients to get the most out of their weekly grocery bags through individualized client profiles.
 
-### Welcome! To learn how to get started with your own Rails project, visit the resources below. These files can also be found in the `docs/` directory:
-* [Installation Guide](docs/Installation_Guide.md)
-> Note, if you are using this starter kit, PLEASE BE SURE to click USE THIS TEMPLATE on the top of the repository before you clone it. When you do this, make sure you pick your github account as the owner and name the repository with the title of your application. View example images [here](https://github.com/TCNJ-SE/SE-Rails-starter-kit/blob/main/docs/setup-demo-images.md).
-  * [Setting up SSH keys with GitHub](docs/Setting_up_SSH_keys_GitHub.md)
-  * [Setting up the correct database](docs/SQLite3_to_Postgres_on_Rails.md)
-* [More helpful information](docs/More_helpful_info.md)
-* [Guide to the .gitignore file](docs/.gitignore_Guide.md)
+
