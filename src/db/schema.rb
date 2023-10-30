@@ -10,13 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_13_190602) do
+ActiveRecord::Schema.define(version: 2023_10_30_194451) do
 
   create_table "app_configs", force: :cascade do |t|
     t.string "name"
     t.string "logo_url"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "clients", force: :cascade do |t|
+    t.string "first_name"
+    t.string "last_name"
+    t.date "dob"
+    t.string "address"
+    t.string "language"
+    t.string "religion"
+    t.string "allergies"
+    t.string "restrictions"
   end
 
   create_table "users", force: :cascade do |t|

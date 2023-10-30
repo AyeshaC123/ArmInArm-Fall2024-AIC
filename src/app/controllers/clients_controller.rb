@@ -4,7 +4,11 @@ class ClientsController < ApplicationController
     end
   
     def create
-      @client = Client.new(client_params)
+      cparams = client_params
+      puts cparams
+      cparams[:dob] = Date.strptime(cparams[:dob], '%m/%d/%Y')
+      puts cparams
+      @client = Client.new(cparams)
       if @client.save
         flash[:notice] = "Client profile created successfully!"
         redirect_to client_path(@client)  # Redirect to the show action
@@ -22,17 +26,19 @@ class ClientsController < ApplicationController
     private
   
     def client_params
-      params.require(:client).permit(
-        :first_name, 
-        :last_name, 
-        :dob, 
-        :age, 
-        :address, 
-        :language, 
-        :religion, 
-        :allergies, 
-        :restrictions
-      )
+      params.require(:first_name)
+      params.require(:last_name)
+      params.require(:dob)
+      params.permit(
+          :first_name,
+          :last_name,
+          :dob,
+          :address,
+          :language,
+          :religion,
+          :allergies,
+          :restrictions
+        )
     end
   end
   
