@@ -1,55 +1,9 @@
-<h1 id="client-profile-title">Client Profile</h1>
-<%= image_tag 'image.png', id: 'my-element', alt: 'Client Profile' %> 
+<h1>Client Manager Home</h1>
 
+<br>
 
+<h2>What would you like to do?</h2>
 
-<%= form_with model: @client, url: clients_path, method: :post, local: true do |form| %>
-  <div id="step1">
-    <%= form.label :first_name, "Please enter first name:" %>
-    <%= form.text_field :first_name %><br>
-
-    <%= form.label :last_name, "Please enter last name:" %>
-    <%= form.text_field :last_name %><br>
-
-    <%= form.label :dob, "Please enter date of birth (mm/dd/yyyy):" %>
-    <%= form.text_field :dob %><br>
-
-    <button type="button" onclick="showStep(2)">Next</button>
-  </div>
-
-  <div id="step2" style="display:none;">
-    <%= form.label :address, "Please enter home address (optional):" %>
-    <%= form.text_field :address %><br>
-
-    <%= form.label :language, "Please enter language (optional):" %>
-    <%= form.text_field :language %><br>
-
-    <%= form.label :religion, "Please enter religion (optional):" %>
-    <%= form.text_field :religion %><br>
-
-    <button type="button" onclick="showStep(3)">Next</button>
-  </div>
-
-  <div id="step3" style="display:none;">
-    <%= form.label "Is dietary restriction an allergy? (Enter y/n)" %>
-    <%= form.select :is_allergy, [['Yes', 'y'], ['No', 'n']] %><br>
-
-    <%= form.label :allergies, "Please describe allergy (optional):" %>
-    <%= form.text_field :allergies %><br>
-
-    <%= form.label :restrictions, "Please describe dietary restriction (optional):" %>
-    <%= form.text_field :restrictions %><br>
-
-    <%= form.submit "Create Client" %>
-  </div>
-<% end %>
-
-<script type="text/javascript">
-  function showStep(step) {
-    for (var i = 1; i <= 3; i++) {
-      document.getElementById('step' + i).style.display = i === step ? 'block' : 'none';
-    }
-  }
-</script>
-
-
+<a href="/new_client">Create client profile</a>
+<br>
+<a href="/search">Search client profiles</a>
