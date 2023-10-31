@@ -1,1 +1,12 @@
-Search page will go here.
+<% if @has_searched %>
+  <%# A search query occurred. %>
+  <% if @clients.empty? %>
+    No clients found that matched your search.
+  <% else %>
+    <% @clients.each do |client| %>
+      <%= client.first_name %>
+      <a href="/clients/<%= client.id %>">More info</a>
+      <br>
+    <% end %>
+  <% end %>
+<% end %>
