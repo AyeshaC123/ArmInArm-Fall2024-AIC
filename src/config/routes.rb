@@ -7,10 +7,15 @@
 # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 
 Rails.application.routes.draw do
+  resources :households
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   # The root page, e.g. www.example.com/, is sent here
   # root 'controller#method_in_controller'
+  get 'households/households'
+  get 'households/new'
+  get 'account/index'
   root 'home#index'
+  
   # Devise authentification pages. This controlls the user login
   # and authentification system.
   devise_for :users

@@ -1,0 +1,97 @@
+<%= form_with(model: household, local: true) do |form| %>
+  <% if household.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(household.errors.count, "error") %> prohibited this household from being saved:</h2>
+
+      <ul>
+        <% household.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label nil,"Head Name" %>
+    <%= form.text_field :headname %>
+  </div>
+
+  <div class="field">
+    <%= form.label nil,"Head DOB" %>
+    <%= form.date_select :headdob %>
+  </div>
+
+  <div class="field">
+    <%= form.label nil, "Head Gender" %>
+    <%= form.text_field :headgender %>
+  </div>
+
+  <div class="field">
+    <%= form.label nil, "Head Ethnicity" %>
+    <%= form.text_field :headethicity %>
+  </div>
+
+  <div class="field">
+    <%= form.label nil, "Number of Adults" %>
+    <%= form.text_field :numadults %>
+  </div>
+
+  <div class="field">
+    <%= form.label nil, "Number of children" %>
+    <%= form.text_field :numchild %>
+  </div>
+
+  <div class="field">
+    <%= form.label nil, "Street Address" %>
+    <%= form.text_field :streetaddr %>
+  </div>
+
+  <div class="field">
+    <%= form.label :city %>
+    <%= form.text_field :city %>
+  </div>
+
+  <div class="field">
+    <%= form.label :state %>
+    <%= form.text_field :state %>
+  </div>
+
+  <div class="field">
+    <%= form.label :county %>
+    <%= form.text_field :county %>
+  </div>
+
+  <div class="field">
+    <%= form.label nil, "Zip code" %>
+    <%= form.text_field :zipcode %>
+  </div>
+
+  <div class="field">
+    <%= form.label nil, "Phone Number" %>
+    <%= form.text_field :phonenum %>
+  </div>
+
+  <div class="field">
+    <%= form.label nil, "Income Source" %>
+    <%= form.text_field :incomesource %>
+  </div>
+
+  <div class="field">
+    <%= form.label nil, "Qualifier Code" %>
+    <%= form.text_field :qualifiercode %>
+  </div>
+
+  <div class="field">
+    <%= form.label nil, "Net Income" %>
+    <%= form.text_field :netincome %>
+  </div>
+
+  <div class="field">
+    <%= form.label nil, "Household Type" %>
+    <%= form.text_field :householdtype %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

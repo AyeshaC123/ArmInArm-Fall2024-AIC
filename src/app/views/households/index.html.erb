@@ -1,0 +1,38 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Households</h1>
+
+This page is a basic version of an Admin-only page. Team 12 will mainly be implementing this, where admins will be able to create new households, and more importantly, search through the list of currently registered households.
+<br/>
+<br/>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Head Name</th>
+      <th>Head DOB</th>
+      <th>Num Adults</th>
+      <th>Num Children</th>
+      <th>Phone Number</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @households.each do |household| %>
+      <tr>
+        <td><%= household.headname %></td>
+        <td><%= household.headdob %></td>
+        <td><%= household.numadults %></td>
+        <td><%= household.numchild %></td>
+        <td><%= household.phonenum %></td>
+        <td><%= link_to 'Show', household %></td>
+        <td><%= link_to 'Edit', edit_household_path(household) %></td>
+        <td><%= link_to 'Destroy', household, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Household', new_household_path %>
