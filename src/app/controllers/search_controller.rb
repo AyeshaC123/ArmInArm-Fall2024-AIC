@@ -12,12 +12,12 @@ class SearchController < ApplicationController
     end
     # Add first name to filter if requested.
     if params[:first_name].present?
-      where.push "first_name = ? collate nocase"
+      where.push "first_name ilike ?"
       values.push params[:first_name]
     end
     # Add last name to filter if requested.
     if params[:last_name].present?
-      where.push "last_name = ? collate nocase"
+      where.push "last_name ilike ?"
       values.push params[:last_name]
     end
     if where.empty?
