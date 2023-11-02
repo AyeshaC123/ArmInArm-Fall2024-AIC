@@ -9,5 +9,5 @@ Our project will involve creating a software system that allows clients of Arm I
 * [SavingClientProfileSSD](https://github.com/TCNJ-SE/ArmInArm-F23/blob/collab12-prototype2/docs/SavingClientProfileSSD.jpeg)
 * [SearchClientProfileSSD](https://github.com/TCNJ-SE/ArmInArm-F23/blob/collab12-prototype2/docs/SearchClientProfileSSD.jpeg)
 
-##State Diagram
+## State Diagram
 * [StateDiagram](https://github.com/TCNJ-SE/ArmInArm-F23/blob/collab12-prototype2/docs/StateDiagram.jpeg)
