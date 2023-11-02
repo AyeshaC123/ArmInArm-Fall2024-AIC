@@ -30,7 +30,8 @@ class HouseholdsTest < ApplicationSystemTestCase
     fill_in "State", with: @household.state
     fill_in "Streetaddr", with: @household.streetaddr
     fill_in "Zipcode", with: @household.zipcode
-    click_on "Create Household"
+    fill_in "Foodstamsp" with: @household.foodstamps
+    click_on "Submit Form"
 
     assert_text "Household was successfully created"
     click_on "Back"
@@ -56,6 +57,7 @@ class HouseholdsTest < ApplicationSystemTestCase
     fill_in "State", with: @household.state
     fill_in "Streetaddr", with: @household.streetaddr
     fill_in "Zipcode", with: @household.zipcode
+    fill_in "Foodstamsp" with: @household.foodstamps
     click_on "Update Household"
 
     assert_text "Household was successfully updated"

@@ -11,36 +11,30 @@
     </div>
   <% end %>
 
+  <br/> 
+  <h3>General Information</h3>
+
   <div class="field">
-    <%= form.label nil,"Head Name" %>
+    <%= form.label nil,"Name of Head of Household" %>
     <%= form.text_field :headname %>
   </div>
 
   <div class="field">
-    <%= form.label nil,"Head DOB" %>
+    <%= form.label nil,"Date of Birth (MM/DD/YYYY)" %>
     <%= form.date_select :headdob %>
   </div>
 
   <div class="field">
-    <%= form.label nil, "Head Gender" %>
-    <%= form.text_field :headgender %>
-  </div>
-
-  <div class="field">
-    <%= form.label nil, "Head Ethnicity" %>
-    <%= form.text_field :headethicity %>
-  </div>
-
-  <div class="field">
-    <%= form.label nil, "Number of Adults" %>
+    <%= form.label nil, "# of Adults in Household" %>
     <%= form.text_field :numadults %>
   </div>
 
   <div class="field">
-    <%= form.label nil, "Number of children" %>
+    <%= form.label nil, "# of Children in household" %>
     <%= form.text_field :numchild %>
   </div>
 
+  <h3>Household Address</h3>
   <div class="field">
     <%= form.label nil, "Street Address" %>
     <%= form.text_field :streetaddr %>
@@ -67,8 +61,31 @@
   </div>
 
   <div class="field">
-    <%= form.label nil, "Phone Number" %>
+    <%= form.label nil, "Mobile Phone" %>
     <%= form.text_field :phonenum %>
+  </div>
+  <br/>
+  <h3>Household Demographics</h3>
+  <div class="field">
+    <%= form.label nil, "Household Type" %>
+    <%= form.text_field :householdtype %>
+  </div>
+
+  <div class="field">
+    <%= form.label nil, "Head of Household Gender" %>
+    <%= form.text_field :headgender %>
+  </div>
+
+  <div class="field">
+    <%= form.label nil, "Head of Household Race / Ethinicity" %>
+    <%= form.text_field :headethicity %>
+  </div>
+
+  <br/>
+  <h3>Household Income & Benefits</h3>
+  <div class="field">
+    <%= form.label nil, "Does the client receive SNAP (Food Stamps)?" %>
+    <%= form.text_field :foodstamps %>
   </div>
 
   <div class="field">
@@ -86,12 +103,8 @@
     <%= form.text_field :netincome %>
   </div>
 
-  <div class="field">
-    <%= form.label nil, "Household Type" %>
-    <%= form.text_field :householdtype %>
-  </div>
-
   <div class="actions">
-    <%= form.submit %>
+    <input type="submit" name="commit" value="Submit Form" data-disable-with="Submit Form" />
   </div>
 <% end %>
+<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>

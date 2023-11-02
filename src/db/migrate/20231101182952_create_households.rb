@@ -17,6 +17,7 @@ class CreateHouseholds < ActiveRecord::Migration[6.0]
       t.string :qualifiercode
       t.integer :netincome
       t.string :householdtype
+      t.string :foodstamps
 
       t.timestamps
     end

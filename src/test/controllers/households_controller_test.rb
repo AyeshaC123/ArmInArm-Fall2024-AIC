@@ -17,7 +17,7 @@ class HouseholdsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create household" do
     assert_difference('Household.count') do
-      post households_url, params: { household: { city: @household.city, county: @household.county, headdob: @household.headdob, headethicity: @household.headethicity, headgender: @household.headgender, headname: @household.headname, householdtype: @household.householdtype, incomesource: @household.incomesource, netincome: @household.netincome, numadults: @household.numadults, numchild: @household.numchild, phonenum: @household.phonenum, qualifiercode: @household.qualifiercode, state: @household.state, streetaddr: @household.streetaddr, zipcode: @household.zipcode } }
+      post households_url, params: { household: { city: @household.city, county: @household.county, headdob: @household.headdob, headethicity: @household.headethicity, headgender: @household.headgender, headname: @household.headname, householdtype: @household.householdtype, incomesource: @household.incomesource, netincome: @household.netincome, numadults: @household.numadults, numchild: @household.numchild, phonenum: @household.phonenum, qualifiercode: @household.qualifiercode, state: @household.state, streetaddr: @household.streetaddr, zipcode: @household.zipcode, foodstamps: @household.foodstamps} }
     end
 
     assert_redirected_to household_url(Household.last)
@@ -34,7 +34,7 @@ class HouseholdsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update household" do
-    patch household_url(@household), params: { household: { city: @household.city, county: @household.county, headdob: @household.headdob, headethicity: @household.headethicity, headgender: @household.headgender, headname: @household.headname, householdtype: @household.householdtype, incomesource: @household.incomesource, netincome: @household.netincome, numadults: @household.numadults, numchild: @household.numchild, phonenum: @household.phonenum, qualifiercode: @household.qualifiercode, state: @household.state, streetaddr: @household.streetaddr, zipcode: @household.zipcode } }
+    patch household_url(@household), params: { household: { city: @household.city, county: @household.county, headdob: @household.headdob, headethicity: @household.headethicity, headgender: @household.headgender, headname: @household.headname, householdtype: @household.householdtype, incomesource: @household.incomesource, netincome: @household.netincome, numadults: @household.numadults, numchild: @household.numchild, phonenum: @household.phonenum, qualifiercode: @household.qualifiercode, state: @household.state, streetaddr: @household.streetaddr, zipcode: @household.zipcode, foodstamps: @household.foodstamps } }
     assert_redirected_to household_url(@household)
   end
 
