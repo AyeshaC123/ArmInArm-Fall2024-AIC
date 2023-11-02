@@ -45,3 +45,11 @@ The current changes made:
  - Edited the the dropdown menus options - 'View Upcoming Volunteer Hours' page and 'Fill out Volunteer Form' page
  - Created controller files for the separate pages
  - Added text boxes to enter name/number, radio buttons to select interests, and submit button on the Volunteer Form page
+
+## Design
+The current changes made:
+ - Created database to hold volunteers
+ - Created an admin system to allow admin users to see all data and grant admin privilege to others
+ - Added a home button on the web app
+ - Volunteer form now stores data in database
+ - Provided a summary of all volunteers in the database
