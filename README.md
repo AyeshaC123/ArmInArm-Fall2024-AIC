@@ -33,7 +33,9 @@ Each team member will learn how to use Ruby on Rails to integrate our web app. W
 8. A simple use case diagram showing the project functionality. Identify the functionality that will be implemented in each prototype and completed within the time constraints of the semester. Specify functionality that is beyond the semester scope but could be added in future versions.
 The functionality that we will implement during the course of the semester is depicted in the use case diagram - we plan to create an application that will ask the user to enter their interests and they will be assigned to a task accordingly. For prototype one we will be setting up the classes needed for our application. In prototype two we will finish implementing our algorithm needed for the application’s volunteer organization with the ability to test through the ruby file. Prototype three will have our project linked to a database to store info as well as linking to a web interface for user interaction and making finishing touches.  Something that is beyond the semester scope is expanding our application to Arm in Arm’s other branches, but this could be implemented in future versions.
 
-<img width="580" alt="Screenshot 2023-10-11 at 7 12 17 PM" src="https://github.com/TCNJ-SE/ArmInArm-F23/assets/122068476/1540d62f-d4a2-4a35-ac06-5aa0dea74d94">
+## Diagrams  
+* [Use Case Diagram](https://github.com/TCNJ-SE/ArmInArm-F23/blob/collab13-prototype2/docs/Team13-use-case.md)  
+
 
 ## Requirements and Analysis
 The current changes made:
