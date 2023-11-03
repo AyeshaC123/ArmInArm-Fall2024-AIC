@@ -39,6 +39,7 @@ The functionality that we will implement during the course of the semester is de
 * [System Sequence Diagrams](https://github.com/TCNJ-SE/ArmInArm-F23/blob/collab13-prototype2/docs/Team13-system-sequence-diagram.md)
 * [Statecharts](https://github.com/TCNJ-SE/ArmInArm-F23/blob/collab13-prototype2/docs/Team13-state-charts.md)
 * [Test Case Design](https://github.com/TCNJ-SE/ArmInArm-F23/blob/collab13-prototype2/docs/Team13-test-case-design.md)
+* [UI Mockup](https://github.com/TCNJ-SE/ArmInArm-F23/blob/collab13-prototype2/docs/Team13-ui-mockup.md)
 
 
 ## Requirements and Analysis
