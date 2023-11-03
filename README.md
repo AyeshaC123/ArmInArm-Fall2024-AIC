@@ -35,6 +35,7 @@ The functionality that we will implement during the course of the semester is de
 
 ## Diagrams  
 * [Use Case Diagram](https://github.com/TCNJ-SE/ArmInArm-F23/blob/collab13-prototype2/docs/Team13-use-case.md)
+* [Use Case Descriptions](https://github.com/TCNJ-SE/ArmInArm-F23/blob/collab13-prototype2/docs/Team13-use-case-description.md)
 * [Detailed Design Class Diagram](https://github.com/TCNJ-SE/ArmInArm-F23/blob/collab13-prototype2/docs/Team13-class-diagram.md)
 * [System Sequence Diagrams](https://github.com/TCNJ-SE/ArmInArm-F23/blob/collab13-prototype2/docs/Team13-system-sequence-diagram.md)
 * [Statecharts](https://github.com/TCNJ-SE/ArmInArm-F23/blob/collab13-prototype2/docs/Team13-state-charts.md)
