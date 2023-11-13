@@ -7,6 +7,13 @@
 # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 
 Rails.application.routes.draw do
+  #get 'volunteers/upcoming_hours'
+  #get 'volunteers/form'
+  get 'volunteers/upcoming_hours', to: 'volunteers#upcoming_hours', as: 'upcoming_hours'
+  get 'volunteers/form', to: 'volunteers#form', as: 'volunteer_form'
+ #post 'volunteers', to: 'volunteers#create'
+  post 'volunteers/serverendpoint', to: 'volunteers#create'
+
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   # The root page, e.g. www.example.com/, is sent here
   # root 'controller#method_in_controller'
@@ -27,9 +34,12 @@ Rails.application.routes.draw do
   #
   # # Resources, but only register these methods
   # resources :photos, only: [:index, :new, :create, :destroy]
+  #resources :volunteers, only: [:new, :create]
+  resources :volunteers
   #
   # # Add PUT path for the given url, but send it to a different controller
   # # than rails would assume by the name. to: 'controller#method_name'.
   # # It would have extected to: 'add_tags#add', which would fail
   # put '/add_tags/add', to: 'users#add_tags'
+  
 end

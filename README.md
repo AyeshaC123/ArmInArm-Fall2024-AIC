@@ -1,9 +1,10 @@
+# Arm In Arm Volunteer Application
+
+## Project Proposal
+
 1. Description of the problem to be solved.
 
-A problem that the volunteer organization “Arm In Arms'' has with their volunteers is how to best organize people and assign tasks to them. Today, the task allocation process is both labor intensive and time consuming, taking away from the organization’s core objective. This stems from bad coordination and from a lack of any formalized structure to connect volunteers to tasks which utilize their skills, strengths and talents. The result is that volunteers frequently end up doing things that don’t best leverage them or bring the most impact to the organization.
-
-One major problem is the mismatch of volunteers based on their language abilities. Volunteers who don't know the language of a task get accidentally scheduled for work that requires language abilities (filling out paperwork, or communicating directly with the customer). People with talent or skill-sets in a specific area could be assigned to tasks such as food pag preparation, which is not necessarily the best use of that volunteer's abilities. This lack of efficient distribution of volunteer time has a negative impact on morale and productivity of the volunteers as well as the overall ability of Arm n’ Arm to deliver on our mission: giving people access to the basic services they desperately need. So solving for this challenge in creating a more efficient and scalable task delegation system is essential to improve organizational impact and the volunteers' experience.  
-
+Arm In Arm can seek to enhance the effectiveness of their volunteer coordination process to better align volunteers with tasks that maximize their skills and capabilities. Currently, the task allocation process presents an opportunity for improvement, as it involves significant manual effort and time consumption, diverting resources away from the organization's primary mission. This arises from the need for enhanced coordination and a structured approach to match volunteers with tasks that fully leverage their abilities. Consequently, there is room for enhancement to ensure that volunteers are consistently assigned tasks that align with their unique strengths and talents. Additionally, optimizing the allocation of volunteers based on their language proficiency is crucial to prevent inadvertent scheduling for language-dependent tasks. By streamlining volunteer assignments and ensuring they align with individual skills and abilities, Arm In Arm aims to enhance organizational productivity and efficiency, ultimately improving the overall experience for both volunteers and the organization's clients.
 
  2. Description of the objective of the proposed project to address the problem. 
 
@@ -15,10 +16,48 @@ The project will meet this objective by assigning volunteers to roles that are m
 
 4. Explanation of what aspect of the project is innovative, and why. 
 
-The ability to match volunteers with tasks that match their strengths in an efficient and optimizable manner. Compared to the recent ways that were being used, our project will give the following tasks to the volunteers that best fits that position, maximizing efficiently both the workers and helping customers with the specific aid they may need.
+This project is innovative as it matches volunteers with tasks that match their strengths in an efficient and optimizable manner. Compared to the organization’s current process, our project will assign volunteers to the roles that best fit their interests and strengths, increasing the efficiency of the workers and therefore better helping their clients. We are focusing on a specific inefficiency that we noticed at the organization and proposing a new solution to help the organization, making our project innovative.
 
-This project is also innovative from the point that we were moving a lot of things that were being done by hand or manually virtually, therefore cutting down some of the extra time needed to complete certain tasks
+5. Stakeholders of the project, and explanation of why it is important for the team to be in ongoing contact with them. 
+
+The stakeholders in this project encompass a wide range of individuals and groups, including but not limited to clients, volunteers, fellow engineers, the organization itself, as well as the community at large. Effective communication with all stakeholders is vital as we embark on the development of this application. Our primary goal is to create a solution that aligns with the best interests and needs of these diverse stakeholders. Deviating from their interests or losing sight of the client's specific requirements could result in missing crucial features that are essential for the application's efficiency. Maintaining open and ongoing communication ensures a streamlined development process, prevents complications, and fosters collaboration between the development team and all stakeholders, guaranteeing that the end product serves the collective vision and purpose of the entire community.
+
+6. Other similar systems and approaches that exist, and how your project is different from them. 
+
+Within Arm In Arm, there is only a volunteer opportunities page which states the volunteer positions and at which locations. Our project will be beneficial to Arm In Arm as it will help to organize the volunteers into the correct positions as well as keep track of the amount of volunteers available on a given day. 
+
+7. Course content, concepts, and technologies each team member will need to learn, and a plan with an estimated timeline for how this will be done. 
+
+Each team member will learn how to use Ruby on Rails to integrate our web app. We will be using diagrams to communicate with stakeholders on what progress has been made and what our next steps to be implemented are as well. For our timeline we expect to first code our form and the algorithm necessary for sorting. We will do initial testing to ensure that the algorithm works correctly and how it is intended to. Next we will integrate a database to store our data from the form. Our final step will be to turn our code into a web application and test it to ensure that it is working.
 
 8. A simple use case diagram showing the project functionality. Identify the functionality that will be implemented in each prototype and completed within the time constraints of the semester. Specify functionality that is beyond the semester scope but could be added in future versions.
+The functionality that we will implement during the course of the semester is depicted in the use case diagram - we plan to create an application that will ask the user to enter their interests and they will be assigned to a task accordingly. For prototype one we will be setting up the classes needed for our application. In prototype two we will finish implementing our algorithm needed for the application’s volunteer organization with the ability to test through the ruby file. Prototype three will have our project linked to a database to store info as well as linking to a web interface for user interaction and making finishing touches.  Something that is beyond the semester scope is expanding our application to Arm in Arm’s other branches, but this could be implemented in future versions.
 
-<img width="614" alt="Screenshot 2023-09-25 at 1 20 31 PM" src="https://github.com/TCNJ-SE/ArmInArm-F23/assets/122068476/412a10bd-ff76-44ea-86a3-952657ba3392">
+## Diagrams  
+* [Use Case Diagram](https://github.com/TCNJ-SE/ArmInArm-F23/blob/collab13-prototype2/docs/Team13-use-case.md)
+* [Use Case Descriptions](https://github.com/TCNJ-SE/ArmInArm-F23/blob/collab13-prototype2/docs/Team13-use-case-description.md)
+* [Detailed Design Class Diagram](https://github.com/TCNJ-SE/ArmInArm-F23/blob/collab13-prototype2/docs/Team13-class-diagram.md)
+* [System Sequence Diagrams](https://github.com/TCNJ-SE/ArmInArm-F23/blob/collab13-prototype2/docs/Team13-system-sequence-diagram.md)
+* [Statecharts](https://github.com/TCNJ-SE/ArmInArm-F23/blob/collab13-prototype2/docs/Team13-state-charts.md)
+* [Test Case Design](https://github.com/TCNJ-SE/ArmInArm-F23/blob/collab13-prototype2/docs/Team13-test-case-design.md)
+* [UI Mockup](https://github.com/TCNJ-SE/ArmInArm-F23/blob/collab13-prototype2/docs/Team13-ui-mockup.md)
+
+
+## Requirements and Analysis
+The current changes made:
+ - Created three html files insde app/views
+  - _volfourm.html.erb -> Holding the questions to be asked to upcoming voluneteers looking for a position
+  - _viewHours.html.erb -> Holding the signed in users current hours for their upcoming shift
+  - Default.html.erb -> Holding the orignal index.html.erb file contents with helpful information
+ - Edited the index.html.erb file and made our own homepage
+ - Edited the the dropdown menus options - 'View Upcoming Volunteer Hours' page and 'Fill out Volunteer Form' page
+ - Created controller files for the separate pages
+ - Added text boxes to enter name/number, radio buttons to select interests, and submit button on the Volunteer Form page
+
+## Design
+The current changes made:
+ - Created database to hold volunteers
+ - Created an admin system to allow admin users to see all data and grant admin privilege to others
+ - Added a home button on the web app
+ - Volunteer form now stores data in database
+ - Provided a summary of all volunteers in the database
