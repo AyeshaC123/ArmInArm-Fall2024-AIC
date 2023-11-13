@@ -1,0 +1,3 @@
+class Roles < ApplicationRecord
+
+end

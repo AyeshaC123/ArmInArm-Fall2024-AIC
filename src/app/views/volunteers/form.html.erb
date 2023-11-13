@@ -1,0 +1,17 @@
+<%= form_with(model: @volunteer, url: volunteers_path, local: true) do |form| %>
+  <h1>Volunteer Sign Up Form</h1>
+  <p>Please fill out the questions below to be assigned to a volunteer role.</p>
+  
+  <p>Name: <%= form.text_field :volunteer_name, placeholder: "Enter your name" %></p>
+  <p>Phone Number: <%= form.telephone_field :volunteer_phone, placeholder: "Enter your phone number" %></p>
+
+  <p>Select Interests:</p>
+  <% ['Interpersonal Interaction', 'Logistics & Organization', 'Health & Nutrition', 'Language & Communication', 'Quality Control'].each do |interest| %>
+    <label>
+      <%= form.check_box :interests, { multiple: true, name: "volunteer[interests][]", id: "volunteer_interests_#{interest.parameterize}" }, interest, nil %>
+      <%= interest %>
+    </label><br>
+  <% end %>
+
+  <%= form.submit "Submit" %>
+<% end %>
