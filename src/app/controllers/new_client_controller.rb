@@ -1,0 +1,2 @@
+class NewClientController < ApplicationController
+end
