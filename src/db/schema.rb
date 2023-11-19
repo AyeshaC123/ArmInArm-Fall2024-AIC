@@ -22,6 +22,16 @@ ActiveRecord::Schema.define(version: 2023_11_01_182952) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "clients", force: :cascade do |t|
+    t.string "first_name"
+    t.string "last_name"
+    t.date "dob"
+    t.string "address"
+    t.string "language"
+    t.string "religion"
+    t.string "allergies"
+    t.string "restrictions"
+  end
 
   create_table "households", force: :cascade do |t|
     t.string "headname"
@@ -43,16 +53,6 @@ ActiveRecord::Schema.define(version: 2023_11_01_182952) do
     t.string "foodstamps"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-
-  create_table "clients", force: :cascade do |t|
-    t.string "first_name"
-    t.string "last_name"
-    t.date "dob"
-    t.string "address"
-    t.string "language"
-    t.string "religion"
-    t.string "allergies"
-    t.string "restrictions"
   end
 
   create_table "users", force: :cascade do |t|
@@ -66,4 +66,5 @@ ActiveRecord::Schema.define(version: 2023_11_01_182952) do
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
+
 end
