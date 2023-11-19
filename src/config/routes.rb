@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   get 'households/new'
   get 'account/index'
   
+  get '/apointments/display_wait_Nassau', to: redirect('/')
   
   # Devise authentification pages. This controlls the user login
   # and authentification system.
