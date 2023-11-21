@@ -11,9 +11,17 @@ Rails.application.routes.draw do
 
   # Resources for clients
   resources :clients, only: [:new, :create, :show]
+  resources :booker, only: [:new, :create, :show]
+
 
   resources :new_client, only: [:index]
   resources :search, only: [:index]
+  resources :appointments, only: [:index]
+
+  
+  resources :appointments
+
+  
 
   # Devise authentication
   devise_for :users

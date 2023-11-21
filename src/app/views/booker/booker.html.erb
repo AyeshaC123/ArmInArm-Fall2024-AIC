@@ -1,0 +1,40 @@
+<h1> Booker </h1>
+<head>
+<table>
+  <tr>
+    <th>ID</th>
+    <td><%= @client.id %>
+  </tr>
+  <tr>
+    <th>First Name</th>
+    <td><%= @client.first_name %></td>
+  </tr>
+  <tr>
+    <th>Last Name</th>
+    <td><%= @client.last_name %></td>
+  </tr>
+  <tr>
+    <th>Date of Birth</th>
+    <td><%= @client.dob %></td>
+  </tr>
+  <tr>
+    <th>Address</th>
+    <td><%= @client.address %></td>
+  </tr>
+  
+</table>
+</head>
+<body>
+<tr>
+    <form action="/appointments" method="post">
+      <label for="appointment_date">Select Date:</label>
+      <input type="date" name="appointment_date" id="date_of_appt" required>
+
+      <label for="time_slot">Select Time Slot:</label>
+      <input type="text" name="time_slot" id="time_of_appt" required>
+
+      <button type="submit">Book Appointment</button>
+    </form>
+  </tr>
+
+</body>
