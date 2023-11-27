@@ -11,4 +11,17 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   # See if the current user is logged in
   before_action :authenticate_user!
+  # See if the current user has a client profile
+  before_action :require_profile
+
+  def require_profile
+    # Redirect user to client creation page if:
+    #   the user is logged in,
+    #   the user is not visiting the /clients page (creating a client),
+    #   the user is not visiting the /new_client page (avoid infinite redirect), and
+    #   the user does not have a client associated with their account.
+    if not current_user.nil? and request.path != '/clients' and request.path != '/new_client' and current_user.client.nil?
+      redirect_to '/new_client'
+    end
+  end
 end

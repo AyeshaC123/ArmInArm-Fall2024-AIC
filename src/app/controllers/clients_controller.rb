@@ -10,6 +10,8 @@ class ClientsController < ApplicationController
       puts cparams
       @client = Client.new(cparams)
       if @client.save
+        current_user.client = @client
+        current_user.save
         flash[:notice] = "Client profile created successfully!"
         redirect_to client_path(@client)  # Redirect to the show action
       else
