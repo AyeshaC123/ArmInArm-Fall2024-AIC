@@ -29,7 +29,15 @@
   </tr>
   <tr>
     <th>Allergies</th>
-    <td><%= @client.allergies %></td>
+    <td><%= @client.allergies_string %></td>
+  </tr>
+  <tr>
+    <th>Gluten-free</th>
+    <td><%= if @client.gluten_free then 'Yes' else 'No'end %></td>
+  </tr>
+  <tr>
+    <th>Vegan</th>
+    <td><%= if @client.vegan then 'Yes' else 'No' end %></td>
   </tr>
   <tr>
     <th>Dietary Restrictions</th>

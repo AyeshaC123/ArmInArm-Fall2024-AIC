@@ -37,8 +37,11 @@ class ClientsController < ApplicationController
           :address,
           :language,
           :religion,
-          :allergies,
-          :restrictions
+          :gluten_free,
+          :vegan,
+          :restrictions,
+          # Permits all common allergen parameters
+          *Client::COMMON_ALLERGENS.map(&:first),
         )
     end
   end

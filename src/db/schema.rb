@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_11_01_182952) do
+ActiveRecord::Schema.define(version: 2023_11_27_143915) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,8 +29,17 @@ ActiveRecord::Schema.define(version: 2023_11_01_182952) do
     t.string "address"
     t.string "language"
     t.string "religion"
-    t.string "allergies"
     t.string "restrictions"
+    t.boolean "allergy_peanuts"
+    t.boolean "allergy_treenuts"
+    t.boolean "allergy_eggs"
+    t.boolean "allergy_milk"
+    t.boolean "allergy_shellfish"
+    t.boolean "allergy_fish"
+    t.boolean "allergy_wheat"
+    t.boolean "allergy_soy"
+    t.boolean "gluten_free"
+    t.boolean "vegan"
   end
 
   create_table "households", force: :cascade do |t|
