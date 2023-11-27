@@ -84,5 +84,13 @@
       <% end %>
       <%= yield %>
     </div>
+
+    <!----- fixing dropdown issue !! ---->
+    <script>
+      $(document).ready(function() {
+        $('.dropdown-toggle').dropdown();
+      });
+    <script>
+    
   </body>
 </html>

@@ -30,13 +30,32 @@ class AppointmentsController < ApplicationController
       end
     end
 
+    def new
+      @appointment = Appointment.new
+    end
+
     def create
-      @appointment = Appointment.new(appointment_params)
+      aparams = appointment_params
+      puts aparams
+      @appointment = Appointment.new(aparams.merge(client_id: params[:client_id]))
+      @appointment = Appointment.new(aparams.merge(dob: params[:dob]))
+
+      # @appointment = Appointment.new(aparams.merge(
+      #   client_id: params[:client_id],
+      #   dob: @client.dob,
+      #   last_name: @client.last_name
+      # ))
+
+
+      # @appointment = Appointment.new(aparams.merge(client_id: params[:client_id], dob: params[:dob], last_name: params[:last_name]))
+      # @client = Client.find(params[:client_id])
+      # @appointment = Appointment.new(aparams)
       if @appointment.save
-        # Handle successful creation, e.g., redirect or render a success message
+        puts "in save"
         redirect_to appointments_path, notice: 'Appointment booked successfully!'
       else
-        # Handle errors, e.g., re-render the form with error messages
+        puts @appointment.errors.full_messages
+        flash.now[:alert] = "Failed to create appointment."
         render 'booker'
       end
     end
@@ -44,6 +63,16 @@ class AppointmentsController < ApplicationController
     private
   
     def appointment_params
-      params.require(:appointment).permit(:date_of_appts, :time_of_appts).merge(client_id: params[:client_id])
+      params.require(:date_of_appts)
+      params.require(:time_of_appts)
+      params.require(:location)
+      params.permit(
+        :date_of_appts,
+        :time_of_appts,
+        :location,
+        :client_id,
+        :last_name,
+        :dob
+        )
     end
 end
