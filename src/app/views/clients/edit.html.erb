@@ -1,0 +1,28 @@
+<h1>Edit Client Profile</h1>
+
+
+<%= form_with model: @client, local: true do |form| %>
+  <%= label_tag :first_name, "First Name" %>
+  <%= text_field_tag :first_name, @client.first_name %><br>
+
+
+  <%= label_tag :last_name, "Last Name" %>
+  <%= text_field_tag :last_name, @client.last_name %><br>
+
+
+  <%= label_tag :dob, "Date of Birth (mm/dd/yyyy)" %>
+  <%= text_field_tag :dob, @client.dob ? @client.dob.strftime("%m/%d/%Y") : '' %><br>
+
+
+  <h2>Allergies</h2>
+  <% Client::COMMON_ALLERGENS.each do |allergen, allergen_name| %>
+    <%= check_box_tag "client[#{allergen}]", '1', @client.send(allergen) %>
+    <%= label_tag "client_#{allergen}", allergen_name %><br>
+  <% end %>
+
+
+  <!-- Add other fields in a similar way -->
+
+
+  <%= submit_tag "Save Changes" %>
+<% end %>

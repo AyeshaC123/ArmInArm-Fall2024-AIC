@@ -21,8 +21,7 @@ Rails.application.routes.draw do
   root 'home#index'
 
   # Resources for clients
-  resources :clients, only: [:new, :create, :show]
-
+  resources :clients, only: [:new, :create, :show, :edit, :update, :destroy]
   resources :new_client, only: [:index]
   resources :search, only: [:index]
 

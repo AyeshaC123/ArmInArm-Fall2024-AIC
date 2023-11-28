@@ -43,4 +43,8 @@
     <th>Dietary Restrictions</th>
     <td><%= @client.restrictions %></td>
   </tr>
+  <%= link_to 'Edit', edit_client_path(@client) %>
+  <%= link_to 'Delete', client_path(@client), method: :delete, data: { confirm: 'Are you sure?' } %>
+
 </table>
+

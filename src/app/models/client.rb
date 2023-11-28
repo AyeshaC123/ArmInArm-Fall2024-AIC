@@ -9,6 +9,7 @@ class Client < ApplicationRecord
     # def add_allergy(allergy)
     #   self.allergies << allergy
     # end
+   
   
     # def add_restriction(restriction)
     #   self.restrictions << restriction
@@ -25,6 +26,9 @@ class Client < ApplicationRecord
     [:allergy_wheat,     "Wheat"],
     [:allergy_soy,       "Soy"],
   ]
+
+  has_many :users, dependent: :destroy
+
 
   # Custom method to derive the age of a client based on their date of birth.
   def age

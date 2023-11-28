@@ -2,6 +2,37 @@ class ClientsController < ApplicationController
     def new
       @client = Client.new
     end
+
+    
+
+    def edit
+      @client = Client.find(params[:id])
+    end
+
+    def update
+      @client = Client.find(params[:id])
+      if @client.update(client_params)
+        flash[:notice] = "Client profile updated successfully!"
+        redirect_to client_path(@client)
+      else
+        flash.now[:alert] = "Failed to update client profile."
+        render :edit
+      end
+    end
+
+    def destroy
+      @client = Client.find(params[:id])
+      
+      # Manually delete or update associated users
+      @client.users.destroy_all # or use update_all(client_id: nil) to dissociate
+    
+      @client.destroy
+      flash[:notice] = "Client profile deleted successfully."
+      redirect_to clients_path, notice: 'Client was successfully deleted.'
+    end
+    
+    
+
   
     def create
       cparams = client_params
