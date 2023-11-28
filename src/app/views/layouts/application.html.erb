@@ -57,7 +57,11 @@
               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                 <%# The rails administration panel link %>
                 <% if Rails.env.development? %><%= link_to 'Rails Admin', rails_admin_path, class: "dropdown-item" %><% end %>
+
+                <!--idea will be to show admin panel only if is_admin-->
                 <%= link_to 'Admin Panel', admin_panels_path, class: "dropdown-item" %>
+
+
                 <%# <a class="dropdown-item" href="#">Action</a> %>
                 <%# <a class="dropdown-item" href="#">Another action</a> %>
                 <div class="dropdown-divider"></div>
