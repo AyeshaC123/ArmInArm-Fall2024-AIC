@@ -63,4 +63,4 @@ The current changes made:
  - Provided a summary of all volunteers in the database
 
 ## Team Code
-[Team 13 - Team Code](https://github.com/TCNJ-SE/ArmInArm-F23/blob/36d672a073e17e99c57c15df7a808d8bef9c18a4/docs/Team%2013%20-%20Team%20Code)
+[Team 13 - Team Code]([https://github.com/TCNJ-SE/ArmInArm-F23/blob/36d672a073e17e99c57c15df7a808d8bef9c18a4/docs/Team%2013%20-%20Team%20Code](https://github.com/TCNJ-SE/ArmInArm-F23/blob/a95e1cc5ba7152c65820deddf1798b04d4099144/docs/Team13-TeamCode.md)https://github.com/TCNJ-SE/ArmInArm-F23/blob/a95e1cc5ba7152c65820deddf1798b04d4099144/docs/Team13-TeamCode.md)
