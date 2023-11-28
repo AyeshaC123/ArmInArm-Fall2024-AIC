@@ -1,37 +1,73 @@
-<%= form_with(model: admin_panel, local: true) do |form| %>
-  <% if admin_panel.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(admin_panel.errors.count, "error") %> prohibited this admin_panel from being saved:</h2>
+<br>
 
-      <ul>
-        <% admin_panel.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 mx-auto">
+      <%= form_with(model: admin_panel, local: true) do |form| %>
+        <% if admin_panel.errors.any? %>
+          <div id="error_explanation">
+            <h2><%= pluralize(admin_panel.errors.count, "error") %> prohibited this admin_panel from being saved:</h2>
+            <ul>
+              <% admin_panel.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
         <% end %>
-      </ul>
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="field text-center">
+              <%= form.label :appointment_length, "How many minutes should a single appointment be?" %>
+              <%= form.number_field :appointment_length, class: "form-control" %>
+            </div>
+          </div>
+        </div>
+
+        <br>
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="field text-center">
+              <%= form.label :max_appointment_count, "Maximum number of appointments at one time" %>
+              <%= form.number_field :max_appointment_count, class: "form-control" %>
+            </div>
+          </div>
+        </div>
+
+        <br>
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="field text-center">
+              <%= form.label :booking_days, "What days do you want to have time slots on?" %>
+              <%= form.text_field :booking_days, class: "form-control" %>
+            </div>
+          </div>
+        </div>
+
+        <br>
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="field text-center">
+              <%= form.label :service_time, "How many minutes does it take to service 1 person on average?" %>
+              <%= form.number_field :service_time, class: "form-control" %>
+            </div>
+          </div>
+        </div>
+
+        <br>
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="actions text-center">
+              <%= form.submit class: "btn btn-primary" %>
+            </div>
+          </div>
+        </div>
+      <% end %>
     </div>
-  <% end %>
-
-  <div class="field">
-    <%= form.label :appointment_length %>
-    <%= form.number_field :appointment_length %>
   </div>
+</div>
 
-  <div class="field">
-    <%= form.label :max_appointment_count %>
-    <%= form.number_field :max_appointment_count %>
-  </div>
-
-  <div class="field">
-    <%= form.label :booking_days %>
-    <%= form.text_field :booking_days %>
-  </div>
-
-  <div class="field">
-    <%= form.label :service_time %>
-    <%= form.number_field :service_time %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit %>
-  </div>
-<% end %>

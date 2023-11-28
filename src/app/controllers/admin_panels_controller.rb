@@ -25,7 +25,9 @@ class AdminPanelsController < ApplicationController
 
     respond_to do |format|
       if @admin_panel.save
-        format.html { redirect_to admin_panel_url(@admin_panel), notice: "Admin panel was successfully created." }
+        
+        # format.html { redirect_to admin_panel_url(@admin_panel), notice: "Admin panel was successfully created." }
+        format.html { redirect_to admin_panels_path, notice: "Admin panel was successfully created." }
         format.json { render :show, status: :created, location: @admin_panel }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -38,7 +40,8 @@ class AdminPanelsController < ApplicationController
   def update
     respond_to do |format|
       if @admin_panel.update(admin_panel_params)
-        format.html { redirect_to admin_panel_url(@admin_panel), notice: "Admin panel was successfully updated." }
+        # format.html { redirect_to admin_panel_url(@admin_panel), notice: "Admin panel was successfully updated." }
+        format.html { redirect_to admin_panels_path, notice: "Admin panel was successfully updated."}
         format.json { render :show, status: :ok, location: @admin_panel }
       else
         format.html { render :edit, status: :unprocessable_entity }
