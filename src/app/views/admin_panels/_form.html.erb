@@ -37,14 +37,51 @@
 
         <br>
 
+        <!--<div class="row">
+          <div class="col-md-12">
+            <div class="field text-center">
+              <%#= form.label :booking_days, "What days do you want to have time slots on?" %>-->
+              <%#= form.text_field :booking_days, class: "form-control" %>
+<!--            </div>
+          </div>
+        </div>-->
+
+        <!--<div class="row">
+          <div class="col-md-12">
+            <div class="field text-center">
+              <%#= form.label :booking_days, "What days do you want to have time slots on?" %>-->
+<!--              <div class="form-check">-->
+                <%# days_of_week = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'] %>
+                <%# days_of_week.each do |day| %>
+<!--                  <label class="form-check-label mr-3">-->
+                    <%#= form.check_box :booking_days, { multiple: true, class: 'form-check-input', id: "day_#{day.downcase}" }, day %>
+                    <%#= day %>
+<!--                  </label>-->
+                <%# end %>
+<!--              </div>
+            </div>
+          </div>
+        </div>-->
+
         <div class="row">
           <div class="col-md-12">
             <div class="field text-center">
               <%= form.label :booking_days, "What days do you want to have time slots on?" %>
-              <%= form.text_field :booking_days, class: "form-control" %>
+              <div class="form-check">
+                <% days_of_week = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'] %>
+                <% days_of_week.each do |day| %>
+                  <label class="form-check-label mr-3">
+                    <%= form.check_box :booking_days, { multiple: true, class: 'form-check-input', id: "day_#{day.downcase}", checked: @admin_panel.booking_days.include?(day), value: day }, day %>
+                    <%= day %>
+                  </label>
+                <% end %>
+              </div>
             </div>
           </div>
         </div>
+
+
+
 
         <br>
 

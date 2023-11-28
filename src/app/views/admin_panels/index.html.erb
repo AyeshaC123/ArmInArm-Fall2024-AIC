@@ -25,10 +25,11 @@
         <tr>
           <td><%= admin_panel.appointment_length %></td>
           <td><%= admin_panel.max_appointment_count %></td>
-          <td><%= admin_panel.booking_days %></td>
+          <!--gets rid of zeros that show up-->
+          <td><%= admin_panel.booking_days.reject { |day| day == '0' }.join(', ') %></td>
           <td><%= admin_panel.service_time %></td>
           <td><%= link_to 'Edit', edit_admin_panel_path(admin_panel) %></td>
-          <!--<td><%#= link_to 'Destroy', admin_panel, method: :delete, data: { confirm: 'Are you sure?' } %></td>-->
+          <td><%= link_to 'Destroy', admin_panel, method: :delete, data: { confirm: 'Are you sure?' } %></td>
         </tr>
       <% end %>
     </tbody>

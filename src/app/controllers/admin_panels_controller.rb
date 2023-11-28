@@ -67,7 +67,13 @@ class AdminPanelsController < ApplicationController
     end
 
     # Only allow a list of trusted parameters through.
+    
+    # def admin_panel_params
+    #   params.require(:admin_panel).permit(:appointment_length, :max_appointment_count, :booking_days, :service_time)
+
+    # end
+
     def admin_panel_params
-      params.require(:admin_panel).permit(:appointment_length, :max_appointment_count, :booking_days, :service_time)
+      params.require(:admin_panel).permit(:appointment_length, :max_appointment_count, :service_time, booking_days: [])
     end
 end
