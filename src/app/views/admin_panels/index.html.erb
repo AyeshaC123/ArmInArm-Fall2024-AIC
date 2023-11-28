@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Admin Panels</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Appointment length</th>
+      <th>Max appointment count</th>
+      <th>Booking days</th>
+      <th>Service time</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @admin_panels.each do |admin_panel| %>
+      <tr>
+        <td><%= admin_panel.appointment_length %></td>
+        <td><%= admin_panel.max_appointment_count %></td>
+        <td><%= admin_panel.booking_days %></td>
+        <td><%= admin_panel.service_time %></td>
+        <td><%= link_to 'Show', admin_panel %></td>
+        <td><%= link_to 'Edit', edit_admin_panel_path(admin_panel) %></td>
+        <td><%= link_to 'Destroy', admin_panel, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Admin Panel', new_admin_panel_path %>

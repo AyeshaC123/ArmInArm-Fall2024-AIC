@@ -4,7 +4,7 @@
 
 Rails.application.routes.draw do
 
-  #
+  resources :admin_panels
 
   # Admin route
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'

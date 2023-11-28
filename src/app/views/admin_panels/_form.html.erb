@@ -1,0 +1,37 @@
+<%= form_with(model: admin_panel, local: true) do |form| %>
+  <% if admin_panel.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(admin_panel.errors.count, "error") %> prohibited this admin_panel from being saved:</h2>
+
+      <ul>
+        <% admin_panel.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :appointment_length %>
+    <%= form.number_field :appointment_length %>
+  </div>
+
+  <div class="field">
+    <%= form.label :max_appointment_count %>
+    <%= form.number_field :max_appointment_count %>
+  </div>
+
+  <div class="field">
+    <%= form.label :booking_days %>
+    <%= form.text_field :booking_days %>
+  </div>
+
+  <div class="field">
+    <%= form.label :service_time %>
+    <%= form.number_field :service_time %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

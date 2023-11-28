@@ -10,10 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_11_20_232728) do
+ActiveRecord::Schema.define(version: 2023_11_28_084508) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "admin_panels", force: :cascade do |t|
+    t.integer "appointment_length"
+    t.integer "max_appointment_count"
+    t.string "booking_days"
+    t.integer "service_time"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "app_configs", force: :cascade do |t|
     t.string "name"
@@ -24,11 +33,15 @@ ActiveRecord::Schema.define(version: 2023_11_20_232728) do
 
   create_table "appointments", force: :cascade do |t|
     t.bigint "client_id", null: false
+    t.datetime "date_of_appt"
+    t.datetime "time_of_appt"
+    t.string "location"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
     t.string "last_name"
     t.date "dob"
     t.date "date_of_appts"
     t.time "time_of_appts"
-    t.string "location"
     t.index ["client_id"], name: "index_appointments_on_client_id"
   end
 
