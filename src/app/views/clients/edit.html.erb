@@ -1,22 +1,38 @@
 <h1>Edit Client Profile</h1>
 
 <%= form_with model: @client, local: true do |form| %>
-  <%= form.label :first_name, "First Name" %>
-  <%= form.text_field :first_name %><br>
+  <%= label_tag :first_name, "First Name" %>
+  <%= text_field_tag :first_name, @client.first_name %><br>
 
-  <%= form.label :last_name, "Last Name" %>
-  <%= form.text_field :last_name %><br>
+  <%= label_tag :last_name, "Last Name" %>
+  <%= text_field_tag :last_name, @client.last_name %><br>
 
-  <%= form.label :dob, "Date of Birth (mm/dd/yyyy)" %>
-  <%= form.text_field :dob, value: @client.dob ? @client.dob.strftime("%m/%d/%Y") : '' %><br>
+  <%= label_tag :dob, "Date of Birth (mm/dd/yyyy)" %>
+  <%= text_field_tag :dob, @client.dob ? @client.dob.strftime("%m/%d/%Y") : '' %><br>
 
   <h2>Allergies</h2>
   <% Client::COMMON_ALLERGENS.each do |allergen, allergen_name| %>
-    <%= check_box_tag "client[#{allergen}]", '1', @client.send(allergen) %>
-    <%= label_tag "client_#{allergen}", allergen_name %><br>
+    <%= check_box_tag allergen, '1', @client.send(allergen) %>
+    <%= label_tag allergen, allergen_name %><br>
   <% end %>
 
-  <!-- Add other fields in a similar way -->
+  <%= label_tag :address, "Address" %>
+  <%= text_field_tag :address, @client.address %><br>
+
+  <%= label_tag :language, "Language" %>
+  <%= text_field_tag :language, @client.language %><br>
+
+  <%= label_tag :religion, "Religion" %>
+  <%= text_field_tag :religion, @client.religion %><br>
+
+  <%= label_tag :gluten_free, "Gluten-free" %>
+  <%= check_box_tag :gluten_free, '1', @client.gluten_free %><br>
+
+  <%= label_tag :vegan, "Vegan" %>
+  <%= check_box_tag :vegan, '1', @client.vegan %><br>
+
+  <%= label_tag :restrictions, "Restrictions" %>
+  <%= text_field_tag :restrictions, @client.restrictions %><br>
 
   <%= submit_tag "Save Changes" %>
 <% end %>
