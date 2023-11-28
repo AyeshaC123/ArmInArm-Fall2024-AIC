@@ -20,16 +20,7 @@ class ClientsController < ApplicationController
       end
     end
 
-    def destroy
-      @client = Client.find(params[:id])
-      
-      # Manually delete or update associated users
-      @client.users.destroy_all # or use update_all(client_id: nil) to dissociate
     
-      @client.destroy
-      flash[:notice] = "Client profile deleted successfully."
-      redirect_to clients_path, notice: 'Client was successfully deleted.'
-    end
     
     
 
@@ -60,22 +51,19 @@ class ClientsController < ApplicationController
     private
   
     def client_params
-      params.require(:first_name)
-      params.require(:last_name)
-      params.require(:dob)
-      params.permit(
-          :first_name,
-          :last_name,
-          :dob,
-          :address,
-          :language,
-          :religion,
-          :gluten_free,
-          :vegan,
-          :restrictions,
-          # Permits all common allergen parameters
-          *Client::COMMON_ALLERGENS.map(&:first),
-        )
+      params.require(:client).permit(
+        :first_name,
+        :last_name,
+        :dob,
+        :address,
+        :language,
+        :religion,
+        :gluten_free,
+        :vegan,
+        :restrictions,
+        *Client::COMMON_ALLERGENS.map(&:first),
+      )
     end
+    
   end
   
