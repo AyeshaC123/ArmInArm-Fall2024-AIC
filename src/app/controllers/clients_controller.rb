@@ -26,19 +26,27 @@ class ClientsController < ApplicationController
 
 
   def create
-    cparams = client_params
-    puts cparams
-    cparams[:dob] = Date.strptime(cparams[:dob], '%m/%d/%Y')
-    puts cparams
-    @client = Client.new(cparams)
-    if @client.save
-      current_user.client = @client
-      current_user.save
-      flash[:notice] = "Client profile created successfully!"
-      redirect_to client_path(@client)  # Redirect to the show action
-    else
-      flash.now[:alert] = "Failed to create client profile."
+    # Forbid creating a profile if not allowed.
+    if not current_user.can_create_client_profile? 
+      flash.now[:alert] = "Not allowed to create client profile."
       render :new
+    else
+      cparams = client_params
+      puts cparams
+      cparams[:dob] = Date.strptime(cparams[:dob], '%m/%d/%Y')
+      puts cparams
+      @client = Client.new(cparams)
+      if @client.save
+        if current_user.needs_client_profile?
+          current_user.client = @client
+          current_user.save
+        end
+        flash[:notice] = "Client profile created successfully!"
+        redirect_to client_path(@client)  # Redirect to the show action
+      else
+        flash.now[:alert] = "Failed to create client profile."
+        render :new
+      end
     end
   end
   
