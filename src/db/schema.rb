@@ -18,10 +18,10 @@ ActiveRecord::Schema.define(version: 2023_11_28_101735) do
   create_table "admin_panels", force: :cascade do |t|
     t.integer "appointment_length"
     t.integer "max_appointment_count"
-    t.string "booking_days"
     t.integer "service_time"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "booking_days", default: [], array: true
   end
 
   create_table "app_configs", force: :cascade do |t|
@@ -40,8 +40,6 @@ ActiveRecord::Schema.define(version: 2023_11_28_101735) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "last_name"
     t.date "dob"
-    t.date "date_of_appts"
-    t.time "time_of_appts"
     t.index ["client_id"], name: "index_appointments_on_client_id"
   end
 
