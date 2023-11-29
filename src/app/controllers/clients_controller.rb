@@ -11,7 +11,16 @@ class ClientsController < ApplicationController
 
   def update
     @client = Client.find(params[:id])
-    if @client.update(client_params)
+    
+    # Handle unchecked allergy parameters
+    allergy_params = params.permit(*Client::COMMON_ALLERGENS.map(&:first))
+    Client::COMMON_ALLERGENS.each do |allergen, _|
+      allergy_params[allergen] = false unless allergy_params.has_key?(allergen)
+    end
+
+    # Update client with combined parameters
+    if @client.update(allergy_params.merge(client_params))
+      logger.debug @client.inspect
       flash[:notice] = "Client profile updated successfully!"
       redirect_to client_path(@client)
     else
