@@ -23,6 +23,7 @@ Rails.application.routes.draw do
   # Resources for clients
   resources :clients, only: [:new, :create, :show, :edit, :update]
   resources :new_client, only: [:index]
+  resources :my_client, only: [:index]
   resources :search, only: [:index]
 
   # Devise authentication
