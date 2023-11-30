@@ -7,11 +7,11 @@
 
 # Team 22 - Use Cases/Descrptions and Diagrams 
 -    [Use Case Diagram](https://github.com/TCNJ-SE/ArmInArm-F23/blob/collab22-prototype3-Mike/docs/Team%2022%20-%20Use%20Case%20Diagram.jpg)
--    [Use Case Descriptions](docs/)
--    [System Sequence Diagrams](docs/)
--    [State Diagram](docs/)
+-    [Use Case Descriptions](https://github.com/TCNJ-SE/ArmInArm-F23/blob/collab22-prototype3-Mike/docs/Team%2022%20-%20Use%20Case%20Descriptions.pdf)
+-    [System Sequence Diagrams](https://github.com/TCNJ-SE/ArmInArm-F23/blob/collab22-prototype3-Mike/docs/Team%2022%20-%20System%20Sequence%20Diagrams.pdf)
+-    [State Diagram](https://github.com/TCNJ-SE/ArmInArm-F23/blob/collab22-prototype3-Mike/docs/Team%2022%20-%20State%20Diagram.jpg)
 -    [Analysis Class Diagram]()
--    [Test Case Design](docs/)
+-    [Test Case Design](https://github.com/TCNJ-SE/ArmInArm-F23/blob/collab22-prototype3-Mike/docs/Team%2022%20-%20Test%20Case%20Design%20.jpg)
 
    
 # SE Rails starter
