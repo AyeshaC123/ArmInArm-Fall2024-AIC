@@ -1,0 +1,44 @@
+
+<script import Chart from 'node_modules/chart.js/auto';></script>
+
+<div>
+  <canvas id="myChart"></canvas>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+
+<script>
+
+//This is the page to graph appointments for Princeton
+; // Assign the location name as a JavaScript variable
+//Extract the wait times for the specific location
+
+
+
+const labels = <%=raw @labels.to_json%>;
+const data = <%=raw @data.to_json%>;
+
+
+const ctx = document.getElementById('myChart');
+//Creates a chart 
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: labels,
+      datasets: [{
+        label: 'Estimated wait times for Mobile Pantry',
+        data: data,
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+</script>

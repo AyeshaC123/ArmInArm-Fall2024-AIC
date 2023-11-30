@@ -10,7 +10,9 @@ Rails.application.routes.draw do
 
 
   resources :admin_panels
-
+  get '/graphs/nassau', to: 'graphs#nassau'
+  get '/graphs/hudson', to: 'graphs#hudson'
+  get '/graphs/mobile', to: 'graphs#mobile'
 
   get 'booker/new', to: 'booker#new', as: 'new_appointment'
 

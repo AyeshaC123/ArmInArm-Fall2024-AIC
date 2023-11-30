@@ -23,14 +23,14 @@
           </li>        
 
           <li class="nav-item dropdown">
-            <!--<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Dropdown
-            </a>-->
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+             View Wait Times
+            </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <!--<a class="dropdown-item" href="#">A Link</a>
-              <a class="dropdown-item" href="#">Another Link</a>
+              <a class="dropdown-item"  <%= link_to "Trenton", graphs_hudson_path, class:"nav-link" %></a>
+              <a class="dropdown-item" <%= link_to "Princeton", graphs_nassau_path, class:"nav-link" %></a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">And Another</a>-->
+              <a class="dropdown-item" <%= link_to "Mobile Pantry", graphs_mobile_path, class:"nav-link" %></a>
             </div>
           </li>
           <% unless current_user.nil? %>
