@@ -56,7 +56,7 @@ Our scheduling software for Arm In Arm will offer a feature that allows users to
 ### State Diagram
 ![State Diagram](docs/StateDiagram.png)
 
-The admin panel from Team 21 will handle the functionality of generating a schedule. The "Existing Appointments" section displaying the client's booked appointmnets will replace the need for sending an appointment notification. 
+The "Existing Appointments" section displaying the client's booked appointmnets will replace the need for sending an appointment notification. 
 
 ### Class Diagram
 ![Class Diagram](docs/ClassDiagram.png)
