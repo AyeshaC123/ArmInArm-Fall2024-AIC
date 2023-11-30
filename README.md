@@ -1,38 +1,69 @@
-# README
-# Team 14's attempt at beginning to integrate projects
-### Project Name: Client Profile:
-### An engaging description of the project, including how and why it will add value to extant understanding of the project:
-    Our project will involve creating a software system that allows clients of Arm In Arm to create individual client profiles that hold client specific data that is valuable for Arm In Arm volunteers to use when crafting a client’s bag. Data such as a client’s food preferences, allergies, dietary restrictions and data pertaining to a client’s household all are valuable for volunteers when enabling the best experience for clients. Clients can also update,delete and modify these profiles to ensure data correctness and validity. By being able to have easy to reference information about clients, there will be less guess work on Arm In Arm’s part about their client’s needs. Instead there will be more confidence from Arm In Arm that they are sufficiently serving their clients as well as clients feeling valued and understood by the Arm In Arm staff. Client Profiles would limit the issue of long lines and increase client safety but allow clients to simply come in, give the volunteer their name and receive their personalized bag. This would also lessen disorganization within Arm In Arm through that come-and-go process, giving the staff ample time to pre-build bags and allow for more efficiency. Our project goes beyond creating profiles, it redefines the experience for clients choosing to come to Arm In Arm. We recognize that every individual has unique needs and preferences, especially when it comes to building a grocery bag for a client and their families. Our software will offer a seamless way for clients to get the most out of their weekly grocery bags through individualized client profiles. Admins will be able to search for a client's data by a client identifier which is client ID, first name and last name. 
+# Appointment Scheduler
 
-# Team 22 - Pre-registration module and QR code generator
+CAB Project Team 14
 
->  The project that Team 22 will be designing is a pre registration system for Arm in Arm clients, which will allow clients to be identified quickly and easily when picking up food from an Arm in Arm location. This application will be based on a set of questions Arm in Arm has provided for us. We will use the questions to create an online form in a way. This online form will allow applicants to register as an Arm in Arm customer from a remote device as opposed to going in person and getting asked these questions face to face. This will save Arm in Arm a lot of time and resources to register an applicant into the system. In terms of the user (applicant) that uses this application, we will implement it in a way that it is easy and straightforward to use. This way they can sign up as soon as possible, and receive the proper help they need. Once the user fills out this form they will be generated an id and more that is associated with all of their personal information. They can use this id to identify themselves at food pickup locations, so they can receive their food fast. Arm in Arm has already stressed the more people that are pre registered the faster the line moves at pickup locations. Our goal is to increase the number of applicants that can pre register online assuming they have access to a remote device. The user's newly entered information will be held in a database where Arm in Arm can access it whenever it is needed. Overall this should not completely resolve the issue of non registered customers showing up to locations and asking for food, but the goal is to lessen that number. We hope to make Arm in Arm’s life easier with this application!
+Team: Ifrah Malik, Belmarie Siverio, Joe Petrecca, Dylan Romanski
 
+Development Branch: collab14-dev
 
-# SE Rails starter
-### A discussion of the social, ethical, economic and the real world issues that must be addressed for the project to deliver value, and how the team will do this:
-    By moving Arm In Arm’s clientele to our software, several issues must be addressed and have been communicated within our team. We understand a majority of Arm In Arm’s clients may not speak or understand English and would be disadvantaged due to a language barrier. For that we have implemented a way for our software to include a drop down menu that allows the users to choose which language our project should conduct in. We have chosen English, Spanish, Creole and French as those were the languages we observed from our previous visit. Our project directly relates with data handling and management, and this can be concerning to many users. The issue of ensuring privacy for secure data is one we make sure to keep in mind as we build our project. Our group thought of utilizing a 2 factor identification system to ensure that the user logging in and getting access is the correct user to do so. This will allow clients to feel more safe about inputting sensitive information as well as prevent any security data leakage. We will also implement a saving functionality to ensure none of the data inputted by the client will ever be lost. We must practice a high degree of confidentiality in order to satisfy the concerns of the clients regarding their information and data privacy. The software should reveal information on a need-to-know basis and with the consent of those whose information is being recorded and revealed. Additionally, our software should be accessible to clients and should take caution not to discriminate intentionally or unintentionally. Accessibility for clients would mean accommodating language barriers; no client should be excluded from this system due to not speaking a “required language”. Taking caution to not discriminate with this system would mean ensuring the system does not inherently discriminate against any demographic groups based on how the software is designed. For example, the software should not inherently be unusable or exclude people of certain nationalities or different age groups. We plan on crafting our system to be very inclusive and accessible through our language preference and food preference options.
+**Overview:**
 
+During our visit to Arm in Arm, we noticed long lines that wrapped around the corner, resulting in impatient clients. Our objective is to reduce the wait time for the Arm in Arm clients by providing them with booked appointments to come to the food pantry at their specified time slot. Staff members will ask clients during their registration process if they would like to sign up for a weekly appointment slot, at which point their information will be written down on a report that our software will generate. After the initial registration, the handwritten information will be moved into the software so that the Arm in Arm Staff can run reports and statistics on the information.
 
-## Update Use Case Diagram
-![UseCaseIV](https://github.com/TCNJ-SE/ArmInArm-F23/blob/collab12-prototype2/docs/UseCaseIV.jpeg)
+Our project is an integral component for the way charitable organizations like Arm in Arm distribute food to those in need. The Appointment Scheduler is designed to alleviate the struggles of both clients and volunteers as they face long lines and higher customer demands. By being able to schedule appointments, a client’s time and dignity is respected. However, it's not just about smaller wait times and greater convenience; the project also adds immense value to the topic by addressing the core issue of efficiency. Arm in Arm volunteers, who are often stretched to their limits during peak distribution hours, will now experience a more manageable workload. Additionally, the system will offer a level of flexibility by allowing staff to adjust appointment windows, manage client number per slot, and accommodate special preferences. 
 
+**Objectives:**
 
+To meet our project objectives we will have to consider that not all clients will switch over to this feature and thus, there will still be a physical line. However, this feature will benefit those who are pre-registered using the appointments feature by shortening the time they need to wait for their supplies. It will also take some load off of the Arm in Arm staff and volunteers by allowing them to pre-plan and ultimately have a shorter line to work with. 
 
-## System Sequence Documents
-* [CreateClientProfileSSD](https://github.com/TCNJ-SE/ArmInArm-F23/blob/collab12-prototype2/docs/CreateClientProfileSSD.jpeg)
-* [ModifyClientProfileSSD](https://github.com/TCNJ-SE/ArmInArm-F23/blob/collab12-prototype2/docs/ModifyClientProfileSSD.jpeg)
-* [SavingClientProfileSSD](https://github.com/TCNJ-SE/ArmInArm-F23/blob/collab12-prototype2/docs/SavingClientProfileSSD.jpeg)
-* [SearchClientProfileSSD](https://github.com/TCNJ-SE/ArmInArm-F23/blob/collab12-prototype2/docs/SearchClientProfileSSD.jpeg)
+Our project is an innovative idea for Arm in Arm as they currently do not have an appointment system set up that handles the long lines and overcrowdedness. It is a fresh idea that will ultimately make their current system of handing out food bags more efficient. With the ability to schedule clients at specific times of the day, not only will the clients not have to wait around in the lines, but the volunteers will also have a decreased workload and pressure. Additionally, our appointment feature will offer the Arm in Arm staff the flexibility to control how long an appointment window will be, how many clients to take during a certain block of time, and how to handle missed appointments, late clients, and other preferences. Another aspect of our project that makes it innovative is how it will be able to gather important client data for the organization, such as, how many times a client prefers to come to collect bags. When combined with the other group projects, Arm in Arm will gain better insight into their clientele. Lastly, the appointment feature will be scalable to adjust to the needs of the community and the growing number of Arm in Arm clients.
 
-## State Diagram
-* [StateDiagram](https://github.com/TCNJ-SE/ArmInArm-F23/blob/collab12-prototype2/docs/StateDiagram.jpeg)
-# Arm In Arm Project
+**Social, Ethical, and Economic Issues Addressed**
 
-### Developed by TCNJ Software Engineering Students for Arm In Arm
-  * [Setting up SSH keys with GitHub](docs/Setting_up_SSH_keys_GitHub.md)
-  * [Setting up the correct database](docs/SQLite3_to_Postgres_on_Rails.md)
-* [More helpful information](docs/More_helpful_info.md)
-* [Guide to the .gitignore file](docs/.gitignore_Guide.md)
-* [Code of conduct for this community](CODE_OF_CONDUCT.md)
-* [Installation and usage instructions](docs/Installation_Guide.md)
+For the project to deliver value, we must consider social, ethical, economic and real-world issues. For example, some social issues to consider are digital accessibility and privacy concerns. We recognize that not all clients have easy access to the technology required to book an appointment, so we provide the alternative to scheduling appointments with the staff. Additionally, handling client data including personal information and scheduling preferences raises a privacy concern so we must ensure data privacy regulations and educate clients about how their data will be handled. Some ethical concerns include fairness and equity, so we must ensure that clients who are less tech savvy are not at a disadvantage. To address this concern we must make an easy to use interface. Lastly, we must consider the economic and real-world issues that may arise such as cost of management and integration with current operations. We must ensure that the project does not impose additional financial costs and remains free. We must also smoothly integrate our system with pre-existing systems at Arm in Arm by creating thorough documentation for the staff and to help clients adapt to the changes. 
+
+**Feedback from Stakeholders**
+
+The stakeholders have provided valuable feedback for our web application proposal, emphasizing the need for dual capabilities, enabling both Arm in Arm staff members and clients to book appointments, and offering choices for appointment frequency, such as one-time, weekly, and bi-weekly slots. To implement these suggestions, we will develop a dual-interface system, with a staff portal for managing appointments and a client portal for booking. Additionally, we will incorporate appointment frequency options within the booking process, ensuring that clients can choose the recurrence that suits their needs. To address modularity and customization, our system will be fully configurable by Arm & Arm administration, allowing them to set appointment limits and customize preferences. These improvements will enhance the overall user experience and functionality of our application, aligning it more closely with the stakeholders' expectations.
+
+**Ethical and Legal Concerns**
+
+The implementation and use of the proposed appointment scheduling system raise ethical and legal considerations that must be carefully addressed. One key ethical concern is the protection of client privacy and data security. As the system will collect personal information, including demographic, contact, income, and family dynamic details, it is imperative to ensure robust data encryption and access controls. Transparency regarding data usage and obtaining informed consent from clients for notifications and data handling is essential to maintain trust. Furthermore, there is a potential for discrimination if the system's appointment allocation is not managed fairly, potentially being disadvantageous to certain groups of clients. The legal concerns that come into play with the implementation and use of our product revolve around the laws and regulations in place that all Food Banks must adhere to. In turn, we must abide by these regulations such as having handwritten intake forms and documentation of all clients that use Arm in Arm’s resources. 
+
+**Security and Privacy Concerns**
+
+In developing the scheduling software for Arm In Arm, we focus on straightforward security practices that are easy to implement and maintain. We ensure that sensitive data is protected through strong passwords and encryption, and we make certain that only authorized personnel can access client and volunteer information. While we're keeping things simple, these measures provide a solid level of data protection. We're committed to regularly reviewing and updating our security measures to adapt to any potential threats and ensure the safety of Arm In Arm's data and operations.
+
+**Backup and Recovery**
+
+Our scheduling software for Arm In Arm will offer a feature that allows users to generate printables for hard copy backups. This function provides an additional layer of data security and ensures that essential information is accessible even in the absence of digital access. Users will be able to print schedules, client appointment records, and other critical data with ease. These printables will be formatted for clear and concise presentation, making them suitable for record-keeping or sharing with stakeholders who prefer hard copies. Additionally, we will include options to export data in PDF or other common formats to facilitate printing and filing. This feature will not only serve as a backup method but also enhance accessibility and flexibility for Arm In Arm's staff and volunteers in managing their scheduling and client services.
+
+**Team Code**
+
+[Team Guidelines](Team14%20-%20Team%20Code.md)
+
+### Use Case Diagrams
+- Use Case 1
+  ![Use Case 1](docs/Usecase1.png)
+
+- Use Case 2
+  ![Use Case 2](docs/Usecase2.png)
+
+- Use Case 3
+  ![Use Case 3](docs/Usecase4.png)
+  
+
+### State Diagram
+![State Diagram](docs/StateDiagram.png)
+
+The admin panel from Team 21 will handle the functionality of generating a schedule. The "Existing Appointments" section displaying the client's booked appointmnets will replace the need for sending an appointment notification. 
+
+### Class Diagram
+![Class Diagram](docs/ClassDiagram.png)
+
+### UI Mockup
+![Book an Appointment](docs/UIBookAppointment.png)
+
+Name and ID no longer need to be entered. Instead, once the user logs in, their name and ID from their profile will be saved and appear on the screen. The appointment they then generate will be linked to their profile.
+
+The functionality of generating a schedule will be part of Team 21's admin panel. 
