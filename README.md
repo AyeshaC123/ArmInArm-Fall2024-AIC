@@ -1,5 +1,64 @@
 # README
 
+# README
+
+### Team Guidelines:
+[Team Code](https://github.com/TCNJ-SE/ArmInArm-F23/blob/cd8ab52b797cbe58af846f47ced510cdc292da74/src/Team_21_Team_Code.md)
+
+# Appointments_With_Wait_Time
+
+
+
+### This project will be implementing a appointments system that will allow clients to schedule a time they want to come to arm in arm to pick up food. This appointment system will allow for the creation, deletion, and viewing of appointments. When you view an appointment you will also be able to see an estimated wait time display. These wait times will be calculated using data from Arm-in-Arm about their processing times, and the number of users who have already pre-registered for certain times. In doing this, the number of people coming to arm-in-arm should be spread out throughout the day.
+* 
+
+1. Description of the problem to be solved. 
+The current wait times for people getting food from the different arm and arm locations are not optimal. Having long lines or long wait times to get food causes problems in the community when families just want to come in and get their food and leave. 
+2. Description of the objective of the proposed project to address the problem.
+Our objective will be to create an appointment system that will allow people who want to get food to be able to get their food in a timely manner. We also want to integrate an estimated wait so that people who do have appointments can know how long they might have to wait to get service.
+3. Description of how the project will meet this objective.
+The project will meet the objective by splitting different aspects of the project between team members while getting input from Arm in Arm to make a coherent product.
+4. Explanation of what aspect of the project is innovative, and why.
+The estimated wait time portion of the project is innovative because it would help both people who make an appointment and those who don’t make an appointment make decisions on the best time to come to the different arm in arm locations. This could drastically lower lines and improve the system vastly.
+
+8.The first prototype will allow registering users to log in or create an account, create appointments, view appointments, and cancel appointments. The first prototype will also allow the admin users to log into their account and enter an admin dashboard. The Second prototype will allow admin users to create the appointment blocks registering users will be able to use. Admin users will also be able view made user appointments and any user feedback that is given. In our third prototype we will give the registering user the ability to see past appointments, view wait time for the appointments, and allow admin users to provide wait time parameters that will change the wait time calculation for users with appointments.
+
+
+
+
+Updated use case diagram : 
+<img width="481" alt="image" src="https://github.com/TCNJ-SE/ArmInArm-F23/assets/106837490/a2b59f27-03f4-4c78-9c35-fabd8e65ba85">
+
+
+Changes and implementations for prototype 2:
+  -Made the ability to create, edit, destroy, and show appointments.
+  -Made an admin view to view user appointments
+  -Created a colorblind view
+  -Began work on the wait time controller
+  -Improved the wait time graph mockups
+What needs to be done
+  -Integrate with group 14
+  -Styling
+  -Wait time controller and algorithms
+  -Ensure that people can only make one appointment in a week.
+
+
+How will we as a group perform user testing?: 
+Accessibility Testing: involving users with various disabilities to interact with the UI and evaluate the system's accessibility features.
+
+A/B testing: Two different UI’s can be given to users and the users can explain which interface they found easier to navigate.
+
+How can we as a group raise interest in this project?
+  Our group could label working on the project as community service to encourage others in the community to contribute to it. Also, just leaving behind really clear instructions and documentation will help others to get into the project more easily and make the project itself more accessible to contribute to. The project can also be talked about on Arm-in-Arm’s media pages in order to showcase the project to others who might want to contribute to their cause.
+  
+### Developed by TCNJ Software Engineering Students for Arm In Arm
+  * [Setting up SSH keys with GitHub](docs/Setting_up_SSH_keys_GitHub.md)
+  * [Setting up the correct database](docs/SQLite3_to_Postgres_on_Rails.md)
+* [More helpful information](docs/More_helpful_info.md)
+* [Guide to the .gitignore file](docs/.gitignore_Guide.md)
+
+
+
 ### Project Name: Client Profile:
 ### An engaging description of the project, including how and why it will add value to extant understanding of the project:
     Our project will involve creating a software system that allows clients of Arm In Arm to create individual client profiles that hold client specific data that is valuable for Arm In Arm volunteers to use when crafting a client’s bag. Data such as a client’s food preferences, allergies, dietary restrictions and data pertaining to a client’s household all are valuable for volunteers when enabling the best experience for clients. Clients can also update,delete and modify these profiles to ensure data correctness and validity. By being able to have easy to reference information about clients, there will be less guess work on Arm In Arm’s part about their client’s needs. Instead there will be more confidence from Arm In Arm that they are sufficiently serving their clients as well as clients feeling valued and understood by the Arm In Arm staff. Client Profiles would limit the issue of long lines and increase client safety but allow clients to simply come in, give the volunteer their name and receive their personalized bag. This would also lessen disorganization within Arm In Arm through that come-and-go process, giving the staff ample time to pre-build bags and allow for more efficiency. Our project goes beyond creating profiles, it redefines the experience for clients choosing to come to Arm In Arm. We recognize that every individual has unique needs and preferences, especially when it comes to building a grocery bag for a client and their families. Our software will offer a seamless way for clients to get the most out of their weekly grocery bags through individualized client profiles. Admins will be able to search for a client's data by a client identifier which is client ID, first name and last name. 
