@@ -65,6 +65,6 @@ class HouseholdsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def household_params
-      params.require(:household).permit(:headname, :headdob, :headgender, :headethnicity, :numadults, :numchild, :streetaddr, :city, :state, :county, :zipcode, :phonenum, :incomesource, :qualifiercode, :netincome, :householdtype, :foodstamps)
+      params.require(:household).permit(:headname, :headdob, :headgender, :headethicity, :numadults, :numchild, :streetaddr, :city, :state, :county, :zipcode, :phonenum, :incomesource, :qualifiercode, :netincome, :householdtype, :user_id, :foodstamps)
     end
 end
