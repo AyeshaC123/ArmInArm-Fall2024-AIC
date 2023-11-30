@@ -20,7 +20,7 @@ class HouseholdsController < ApplicationController
   end
 
   # POST /households or /households.json
-
+  def create
     if current_user.registered == false
       @household = Household.new(household_params)
       @household.user_id = current_user.id
