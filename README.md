@@ -34,13 +34,13 @@ Each team member will learn how to use Ruby on Rails to integrate our web app. W
 The functionality that we will implement during the course of the semester is depicted in the use case diagram - we plan to create an application that will ask the user to enter their interests and they will be assigned to a task accordingly. For prototype one we will be setting up the classes needed for our application. In prototype two we will finish implementing our algorithm needed for the application’s volunteer organization with the ability to test through the ruby file. Prototype three will have our project linked to a database to store info as well as linking to a web interface for user interaction and making finishing touches.  Something that is beyond the semester scope is expanding our application to Arm in Arm’s other branches, but this could be implemented in future versions.
 
 ## Diagrams  
-* [Use Case Diagram](https://github.com/TCNJ-SE/ArmInArm-F23/blob/collab13-prototype2/docs/Team13-use-case.md)
-* [Use Case Descriptions](https://github.com/TCNJ-SE/ArmInArm-F23/blob/collab13-prototype2/docs/Team13-use-case-description.md)
-* [Detailed Design Class Diagram](https://github.com/TCNJ-SE/ArmInArm-F23/blob/collab13-prototype2/docs/Team13-class-diagram.md)
-* [System Sequence Diagrams](https://github.com/TCNJ-SE/ArmInArm-F23/blob/collab13-prototype2/docs/Team13-system-sequence-diagram.md)
-* [Statecharts](https://github.com/TCNJ-SE/ArmInArm-F23/blob/collab13-prototype2/docs/Team13-state-charts.md)
-* [Test Case Design](https://github.com/TCNJ-SE/ArmInArm-F23/blob/collab13-prototype2/docs/Team13-test-case-design.md)
-* [UI Mockup](https://github.com/TCNJ-SE/ArmInArm-F23/blob/collab13-prototype2/docs/Team13-ui-mockup.md)
+* [Use Case Diagram](https://github.com/TCNJ-SE/ArmInArm-F23/blob/collab13-prototype3/docs/Team13-use-case.md)
+* [Use Case Descriptions](https://github.com/TCNJ-SE/ArmInArm-F23/blob/collab13-prototype3/docs/Team13-use-case-description.md)
+* [Detailed Design Class Diagram](https://github.com/TCNJ-SE/ArmInArm-F23/blob/collab13-prototype3/docs/Team13-class-diagram.md)
+* [System Sequence Diagrams](https://github.com/TCNJ-SE/ArmInArm-F23/blob/collab13-prototype3/docs/Team13-system-sequence-diagram.md)
+* [Statecharts](https://github.com/TCNJ-SE/ArmInArm-F23/blob/collab13-prototype3/docs/Team13-state-charts.md)
+* [Test Case Design](https://github.com/TCNJ-SE/ArmInArm-F23/blob/collab13-prototype3/docs/Team13-test-case-design.md)
+* [UI Mockup](https://github.com/TCNJ-SE/ArmInArm-F23/blob/collab13-prototype3/docs/Team13-ui-mockup.md)
 
 
 ## Requirements and Analysis
