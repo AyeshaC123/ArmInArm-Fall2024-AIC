@@ -25,8 +25,9 @@ class BookerController < ApplicationController
 
   #deletion
   def destroy
+    @appointment = Appointment.find(params[:id])
     @appointment.destroy
-    redirect_to appointments_path, notice: 'Appointment was successfully destroyed.'
+    redirect_back(fallback_location: root_path, notice: 'Appointment deleted successfully')
   end
 
   def book
