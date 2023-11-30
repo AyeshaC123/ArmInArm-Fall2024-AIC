@@ -33,13 +33,22 @@
               <a class="dropdown-item" href="#">And Another</a>
             </div>
           </li>
-          <li>
-            <select onchange="changeLanguage(this.value)">
-              <option value="en" <%= if current_user&.locale == 'en' then 'selected'.html_safe else '' end %>>English</option>
-              <option value="es" <%= if current_user&.locale == 'es' then 'selected'.html_safe else '' end %>>Spanish</option>
-              <option value="ht" <%= if current_user&.locale == 'ht' then 'selected'.html_safe else '' end %>>Haitian Creole</option>
-            </select>
-          </li>
+          <% unless current_user.nil? %>
+            <li>
+              <span>🌐</span>
+              <select class="language-selector" onchange="changeLanguage(this.value)">
+                <option value="en" <%= if current_user&.locale == 'en' then 'selected'.html_safe else '' end %>>
+		  <%= nil %> English
+                </option>
+                <option value="es" <%= if current_user&.locale == 'es' then 'selected'.html_safe else '' end %>>
+                  <%= nil %> Español
+                </option>
+                <option value="ht" <%= if current_user&.locale == 'ht' then 'selected'.html_safe else '' end %>>
+                  <%= nil %> Kreyòl Ayisyen
+                </option>
+              </select>
+            </li>
+          <% end %>
         </ul>
         <ul class="navbar-nav">
           <%# If user, show account, else sign in %>
