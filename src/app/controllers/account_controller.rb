@@ -5,14 +5,14 @@ class AccountController < ApplicationController
   before_action :load_users, only: [:index]
 
   def index
-    @user = current_user
-    # @household = @user.household
-    # @qr_code_url = generate_qr_code_url(@user.id)
-    @qr_code = generate_qr_code("http://csc415-team22.hpc.tcnj.edu:3000/households/1") # placeholder, replace with url
+    user_id = current_user.id
+    user_household = Household.find_by_user_id
+    @qr_code_url = generate_qr_code_url(user_household.id)
+    @qr_code = generate_qr_code(@qr_code_url) # placeholder, replace with url
   end
 
-  def generate_qr_code_url(user_id)
-    "http://csc415-team22.hpc.tcnj.edu:3000/households/#{user_id}"
+  def generate_qr_code_url(household_id)
+    "http://csc415-team22.hpc.tcnj.edu:3000/households/#{household_id}"
   end
 
   def generate_qr_code(url)
