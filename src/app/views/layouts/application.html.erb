@@ -83,5 +83,14 @@
         <%= render "home/header"%>
       <%= yield %>
     </div>
+
+    <!-- Stops the navbar from locking after navigating to a new page -->
+    <script>
+      $(document).ready(function() {
+        $('.dropdown-toggle').dropdown();
+      });
+    </script>
+
+  
   </body>
 </html>
