@@ -29,12 +29,12 @@ class HouseholdsController < ApplicationController
         if @household.save
           format.html { redirect_to household_url(@household), notice: "Household was successfully created." }
           format.json { render :show, status: :created, location: @household }
+          current_user.update(registered: true)
         else
           format.html { render :new, status: :unprocessable_entity }
           format.json { render json: @household.errors, status: :unprocessable_entity }
         end
       end
-      current_user.update(registered: true)
 
     else
         redirect_to root_path
