@@ -11,5 +11,8 @@
 6. For any clients that want to register members under their household, instructions will be shown on the pre-registration form page as a text box.
 7. These instructions will say that members are filled in on the "my account" page
 8. After submitting the form go to the my account page which will display your qr code and already filled in information
-9. Here a button to add additional members will be there which you can then select to add your members
+9. At the bottom click edit, this will allow you to edit any information that you would like to be changed
+10. Also this edit button will display a new button at the bottom of the page that gives you the ability to add additional members
+11. Once that button is clicked additional members can be added as desired
+12. This is the instructions to use the pre-registration form and "my account" page module 
 
