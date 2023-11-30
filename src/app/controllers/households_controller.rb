@@ -21,12 +21,9 @@ class HouseholdsController < ApplicationController
 
   # POST /households or /households.json
   def create
-    
-
     if current_user.registered == false
       @household = Household.new(household_params)
       @household.user_id = current_user.id
-
       respond_to do |format|
         if @household.save
           format.html { redirect_to household_url(@household), notice: "Household was successfully created." }
@@ -41,7 +38,6 @@ class HouseholdsController < ApplicationController
     else
         redirect_to root_path
         flash.alert = "You already have a registered household."
-
     end
   end
 
