@@ -8,6 +8,7 @@ class BookerController < ApplicationController
 
   def new
     @client = current_user.client if current_user.present?
+
   end
 
   def times

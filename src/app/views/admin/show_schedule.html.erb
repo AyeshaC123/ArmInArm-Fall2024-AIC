@@ -1,0 +1,45 @@
+<h1>Schedule for <%= @selected_date.strftime("%Y-%m-%d") %> at <%= @selected_location %></h1>
+
+<style>
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th, .table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.table th {
+  background-color: #f4f4f4;
+}
+</style>
+<%= button_tag 'Print Schedule', type: 'button', onclick: 'window.print()', class: 'btn btn-primary' %>
+
+<% if @appointments.any? %>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Time</th>
+        <th>Location</th>
+        <th>Last Name</th>
+        <th>Date of Birth</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @appointments.each do |appointment| %>
+        <tr>
+          <td><%= appointment.time_of_appts.strftime("%I:%M %p") %></td>
+          <td><%= appointment.location %></td>
+          <td><%= appointment.last_name %></td>
+          <td><%= appointment.dob.strftime("%Y-%m-%d") %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>No appointments for this date.</p>
+<% end %>
+

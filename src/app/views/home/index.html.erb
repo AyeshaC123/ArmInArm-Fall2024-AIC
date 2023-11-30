@@ -34,6 +34,8 @@
           <a href="/search" class="btn btn-primary"><%= I18n.t 'client_profile.home.search' %></a>
           <% if current_user.email == 'admin@example.com' %>
             <%= link_to 'Admin Panel', admin_panels_path, class: "btn btn-primary" %>
+            <%= link_to 'Schedule Generator', schedule_generator_path, class: "btn btn-primary" %>
+
           <% end %>
         <% end %>
       <% end %>

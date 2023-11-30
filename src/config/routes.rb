@@ -9,6 +9,7 @@
 Rails.application.routes.draw do
 
 
+  get 'admin/schedule_generator'
   resources :admin_panels
 
 
@@ -17,6 +18,13 @@ Rails.application.routes.draw do
   post 'booker/times', to: 'booker#times', as: 'booker_times'
 
   post 'booker/book', to: 'booker#book', as: 'book_appointment'
+
+  get 'admin/schedule_generator', to: 'admin#schedule_generator', as: 'schedule_generator'
+
+  get 'admin/show_schedule', to: 'admin#show_schedule', as: 'show_schedule'
+
+  get 'admin/show_schedule_pdf', to: 'admin#show_schedule_pdf', as: 'show_schedule_pdf'
+
 
   delete 'booker/appointments/:id', to: 'booker#destroy', as: 'delete_appointment'
 
