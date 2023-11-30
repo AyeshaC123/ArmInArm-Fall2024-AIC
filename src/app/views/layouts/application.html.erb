@@ -13,11 +13,12 @@
     <%# Bootstrap css %>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   </head>
-  <body>
+  <link href="https://fonts.cdnfonts.com/css/opendyslexic" rel="stylesheet">
+  <body class="<%= 'dyslexic-font' if session[:dyslexic_font] == 'enabled' %>">
     <%# Bootstrap js & dependencies %>
 
     <%# Navigation Bar %>
-    <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
+    <nav class="navbar navbar-expand-md fixed-top <%= session[:colorblind] == 'enabled' ? 'navbar-colorblind' : 'navbar-standard' %>">
       <a class="navbar-brand" href="/"><%= app_name %></a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
       aria-expanded="false" aria-label="Toggle navigation">
@@ -31,11 +32,11 @@
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Dropdown
+              Accessibility
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="#">A Link</a>
-              <a class="dropdown-item" href="#">Another Link</a>
+              <%= link_to 'Toggle Colorblind Mode', toggle_colorblind_path, class: "dropdown-item", method: :post %>
+              <%= link_to 'Toggle Dyslexic Font', toggle_dyslexic_font_path, class: "dropdown-item", method: :post %>
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="#">And Another</a>
             </div>
