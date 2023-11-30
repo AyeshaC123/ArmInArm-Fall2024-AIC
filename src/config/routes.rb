@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   # root 'controller#method_in_controller'
   get 'households/new'
   get 'account/index'
+  get 'members/new'
   
   # Devise authentification pages. This controlls the user login
   # and authentification system.

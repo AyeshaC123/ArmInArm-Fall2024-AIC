@@ -24,6 +24,7 @@ class HouseholdsController < ApplicationController
     if current_user.registered == false
       @household = Household.new(household_params)
       @household.user_id = current_user.id
+      
       respond_to do |format|
         if @household.save
           format.html { redirect_to household_url(@household), notice: "Household was successfully created." }
