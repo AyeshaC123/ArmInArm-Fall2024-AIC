@@ -57,9 +57,7 @@ class ClientsController < ApplicationController
       render :new
     else
       cparams = client_params
-      puts cparams
-      cparams[:dob] = Date.strptime(cparams[:dob], '%m/%d/%Y')
-      puts cparams
+      # cparams[:dob] = Date.strptime(cparams[:dob], '%m/%d/%Y')
       @client = Client.new(cparams)
       if @client.save
         if current_user.needs_client_profile?

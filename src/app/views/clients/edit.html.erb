@@ -8,7 +8,7 @@
   <%= text_field_tag :last_name, @client.last_name %><br>
 
   <%= label_tag :dob, "Date of Birth (mm/dd/yyyy)" %>
-  <%= text_field_tag :dob, @client.dob ? @client.dob.strftime("%m/%d/%Y") : '' %><br>
+  <%= date_field_tag :dob, @client.dob %><br>
 
   <h2>Allergies</h2>
   <% Client::COMMON_ALLERGENS.each do |allergen, allergen_name| %>
