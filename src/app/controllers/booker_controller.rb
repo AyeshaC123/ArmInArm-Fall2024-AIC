@@ -1,4 +1,5 @@
 class BookerController < ApplicationController
+
   def new
     @client = current_user.client if current_user.present?
   end
@@ -50,3 +51,4 @@ class BookerController < ApplicationController
     available_times
   end
 end
+
