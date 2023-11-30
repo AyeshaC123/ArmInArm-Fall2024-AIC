@@ -54,7 +54,7 @@ Our scheduling software for Arm In Arm will offer a feature that allows users to
   
 
 ### State Diagram
-![State Diagram](docs/StateDiagram.png)
+![State Diagram](docs/CAB-StateDiagram-Updated.png)
 
 The "Existing Appointments" section displaying the client's booked appointmnets will replace the need for sending an appointment notification. 
 
