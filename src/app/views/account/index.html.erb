@@ -49,6 +49,9 @@ You have not registered your household yet. You will see your information here o
     <p>Income Source: <%= @user_household.incomesource %></p>
     <p>Qualifier Code: <%= @user_household.qualifiercode %></p>
     <p>Net Income: <%= @user_household.netincome %></p>
+
+    <%= button_to 'Edit', edit_household_path(@user_household), method: :get, class: 'btn btn-primary' %>
+
   </div>
 </div>
 <% end %>
