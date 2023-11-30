@@ -7,8 +7,17 @@
 # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 
 Rails.application.routes.draw do
+
   post 'toggle_dyslexic_font', to: 'application#toggle_dyslexic_font'
   post 'toggle_colorblind', to: 'application#toggle_colorblind'
+
+
+
+  resources :admin_panels
+  get '/graphs/nassau', to: 'graphs#nassau'
+  get '/graphs/hudson', to: 'graphs#hudson'
+  get '/graphs/mobile', to: 'graphs#mobile'
+
 
   get 'booker/new', to: 'booker#new', as: 'new_appointment'
 
@@ -28,21 +37,25 @@ Rails.application.routes.draw do
   
   # Devise authentification pages. This controlls the user login
   # and authentification system.
+
   # Admin route
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   
   # Root route
   root 'home#index'
 
-  # Resources for clients
+
   resources :clients, only: [:new, :create, :show, :edit, :update, :destroy]
+
   resources :new_client, only: [:index]
   resources :my_client, only: [:index]
   resources :search, only: [:index]
+  # resources :appointments, only: [:index]
+
+  
+  resources :appointments
 
 
   # Devise authentication
   devise_for :users
-
-  # Your other routes can go here as needed, following the same pattern
 end

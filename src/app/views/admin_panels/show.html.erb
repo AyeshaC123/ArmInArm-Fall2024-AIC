@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Appointment length:</strong>
+  <%= @admin_panel.appointment_length %>
+</p>
+
+<p>
+  <strong>Max appointment count:</strong>
+  <%= @admin_panel.max_appointment_count %>
+</p>
+
+<p>
+  <strong>Booking days:</strong>
+  <%= @admin_panel.booking_days %>
+</p>
+
+<p>
+  <strong>Service time:</strong>
+  <%= @admin_panel.service_time %>
+</p>
+
+<%= link_to 'Edit', edit_admin_panel_path(@admin_panel) %> |
+<%= link_to 'Back', admin_panels_path %>
