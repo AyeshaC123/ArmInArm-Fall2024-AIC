@@ -42,6 +42,9 @@ Our scheduling software for Arm In Arm will offer a feature that allows users to
 
 [Team Guidelines](Team14%20-%20Team%20Code.md)
 
+**UML Diagrams & Descriptions**
+[UML Diagrams & Descriptions](https://github.com/TCNJ-SE/ArmInArm-F23/blob/5/docs/UML_Diagrams_Description.md)
+
 ### Use Case Diagrams
 - Use Case 1
   ![Use Case 1](docs/Usecase1.png)
