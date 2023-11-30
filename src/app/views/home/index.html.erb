@@ -16,6 +16,11 @@
   </div>
   <div class="row">
     <div class="mx-auto">
+
+      <a href="/new_client" class="btn btn-primary">Home</a>
+      <a href="/search" class="btn btn-primary">Search</a>
+      <a href="/appointments" class="btn btn-primary">Appointment Maker</a>
+
       <% if not current_user.nil? %>
         <% if current_user.can_create_other_client_profiles? %>
           <a href="/new_client" class="btn btn-primary"><%= I18n.t 'client_profile.home.create' %></a>
@@ -31,6 +36,7 @@
           <a href="/search" class="btn btn-primary"><%= I18n.t 'client_profile.home.search' %></a>
         <% end %>
       <% end %>
+
     </div>
   </div>
 </div>

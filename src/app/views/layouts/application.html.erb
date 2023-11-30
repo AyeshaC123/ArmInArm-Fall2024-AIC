@@ -55,6 +55,12 @@
               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                 <%# The rails administration panel link %>
                 <% if Rails.env.development? %><%= link_to 'Rails Admin', rails_admin_path, class: "dropdown-item" %><% end %>
+
+                <!--if user is on admin account, user will have access to admin panel-->
+                <% if current_user.email == 'admin@example.com' %>
+                  <%= link_to 'Admin Panel', admin_panels_path, class: "dropdown-item" %>
+                <% end %>
+
                 <%# <a class="dropdown-item" href="#">Action</a> %>
                 <%# <a class="dropdown-item" href="#">Another action</a> %>
                 <div class="dropdown-divider"></div>
@@ -88,9 +94,8 @@
     <script>
       $(document).ready(function() {
         $('.dropdown-toggle').dropdown();
-      });
+
     </script>
 
-  
   </body>
 </html>

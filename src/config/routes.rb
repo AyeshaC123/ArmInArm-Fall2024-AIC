@@ -7,6 +7,11 @@
 # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 
 Rails.application.routes.draw do
+
+
+  resources :admin_panels
+
+
   get 'booker/new', to: 'booker#new', as: 'new_appointment'
 
   post 'booker/times', to: 'booker#times', as: 'booker_times'
@@ -25,21 +30,25 @@ Rails.application.routes.draw do
   
   # Devise authentification pages. This controlls the user login
   # and authentification system.
+
   # Admin route
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   
   # Root route
   root 'home#index'
 
-  # Resources for clients
+
   resources :clients, only: [:new, :create, :show, :edit, :update, :destroy]
+
   resources :new_client, only: [:index]
   resources :my_client, only: [:index]
   resources :search, only: [:index]
+  # resources :appointments, only: [:index]
+
+  
+  resources :appointments
 
 
   # Devise authentication
   devise_for :users
-
-  # Your other routes can go here as needed, following the same pattern
 end
