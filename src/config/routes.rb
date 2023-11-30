@@ -1,35 +1,45 @@
-# frozen_string_literal: true
+# Project name: Arm in Arm Appointment Booker - Team 14
+# Description: Allows clients to create/view/delete appointments and admin to manage existing appointments
+# Filename: routes.rb
+# Description: Defines URL-to-controller mappings for the application
+# Last modified on: 11/29/23
 
-# This file tells the Rails server how incoming requests are sent to which
-# controller and method.
-#
-#
 # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 
 Rails.application.routes.draw do
-  mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
+  get 'booker/new', to: 'booker#new', as: 'new_appointment'
+
+  post 'booker/times', to: 'booker#times', as: 'booker_times'
+
+  post 'booker/book', to: 'booker#book', as: 'book_appointment'
+
+  delete 'booker/appointments/:id', to: 'booker#destroy', as: 'delete_appointment'
+
+  resources :households
   # The root page, e.g. www.example.com/, is sent here
   # root 'controller#method_in_controller'
-  root 'home#index'
+  get 'households/new'
+  get 'account/index'
+  
+  get '/apointments/display_wait_Nassau', to: redirect('/')
+  
   # Devise authentification pages. This controlls the user login
   # and authentification system.
+  # Admin route
+  mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
+  
+  # Root route
+  root 'home#index'
+
+  # Resources for clients
+  resources :clients, only: [:new, :create, :show, :edit, :update]
+  resources :new_client, only: [:index]
+  resources :my_client, only: [:index]
+  resources :search, only: [:index]
+
+
+  # Devise authentication
   devise_for :users
 
-  # Examples:
-  #
-  # # Add app CRUD operations from a controller. Used with scaffolding.
-  # # CRUD -> create (API/POST), new (page/GET), index, show,
-  #           edit(page/GET), update(API/PATCH|PUT), destroy(API/DELETE)
-  # resources :my_controller
-  #
-  # # Add GET path for photos controller, index method
-  # get 'photos/index'
-  #
-  # # Resources, but only register these methods
-  # resources :photos, only: [:index, :new, :create, :destroy]
-  #
-  # # Add PUT path for the given url, but send it to a different controller
-  # # than rails would assume by the name. to: 'controller#method_name'.
-  # # It would have extected to: 'add_tags#add', which would fail
-  # put '/add_tags/add', to: 'users#add_tags'
+  # Your other routes can go here as needed, following the same pattern
 end
