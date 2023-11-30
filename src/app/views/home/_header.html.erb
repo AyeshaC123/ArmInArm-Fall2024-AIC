@@ -65,9 +65,9 @@
                 <% if Rails.env.development? %><%= link_to 'Rails Admin', rails_admin_path, class: "dropdown-item" %><% end %>
 
                 <!--if user is on admin account, user will have access to admin panel-->
-                <% if current_user.email == 'admin@example.com' %>
+                <%# if current_user.email == 'admin@example.com' %>
                   <%= link_to 'Admin Panel', admin_panels_path, class: "dropdown-item" %>
-                <% end %>
+                <%# end %>
 
                 <!--<a class="dropdown-item" href="#">Action</a>-->
                 <!--<a class="dropdown-item" href="#">Another action</a>-->
