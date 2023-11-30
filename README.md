@@ -13,7 +13,7 @@
 -    [Analysis Class Diagram]()
 -    [Test Case Design](https://github.com/TCNJ-SE/ArmInArm-F23/blob/collab22-prototype3-Mike/docs/Team%2022%20-%20Test%20Case%20Design%20.jpg)
 
-# Installation/Usage Insturctions 
+# Team 22 - Installation/Usage Insturctions 
 - [InstallationAndUsageInstructions](https://github.com/TCNJ-SE/ArmInArm-F23/blob/collab22-prototype3-Mike/InstallationAndUsageInstructions.md)
 
    
