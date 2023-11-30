@@ -4,7 +4,27 @@
 
 Rails.application.routes.draw do
 
+
   resources :admin_panels
+
+
+  get 'booker/new', to: 'booker#new', as: 'new_appointment'
+
+  post 'booker/times', to: 'booker#times', as: 'booker_times'
+
+  post 'booker/book', to: 'booker#book', as: 'book_appointment'
+
+
+  resources :households
+  # The root page, e.g. www.example.com/, is sent here
+  # root 'controller#method_in_controller'
+  get 'households/new'
+  get 'account/index'
+  
+  get '/apointments/display_wait_Nassau', to: redirect('/')
+  
+  # Devise authentification pages. This controlls the user login
+  # and authentification system.
 
   # Admin route
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
@@ -13,11 +33,11 @@ Rails.application.routes.draw do
   root 'home#index'
 
   # Resources for clients
-  resources :clients, only: [:new, :create, :show]
-  resources :booker, only: [:new, :create, :show]
 
+  resources :clients, only: [:new, :create, :show, :edit, :update]
 
   resources :new_client, only: [:index]
+  resources :my_client, only: [:index]
   resources :search, only: [:index]
   # resources :appointments, only: [:index]
 

@@ -1,5 +1,14 @@
 # Implements logic for searching for client profiles.
 class SearchController < ApplicationController
+  before_action :check_permission
+
+  # User should have permission to visit this page.
+  def check_permission
+    if current_user.nil? or not current_user.can_search?
+      redirect_to root_path
+    end
+  end
+
   def index
     # The built-up parts of the WHERE clause.
     where = []
