@@ -27,7 +27,7 @@ class HouseholdsController < ApplicationController
       
       respond_to do |format|
         if @household.save
-          format.html { redirect_to household_url(@household), notice: "Household was successfully created." }
+          format.html { redirect_to household_url(@household), notice: "Household was successfully created. Add additional members through the edit button on My Account page." }
           format.json { render :show, status: :created, location: @household }
           current_user.update(registered: true)
         else
