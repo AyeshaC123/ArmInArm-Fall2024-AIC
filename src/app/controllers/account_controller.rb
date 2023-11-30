@@ -5,9 +5,9 @@ class AccountController < ApplicationController
   before_action :load_users, only: [:index]
 
   def index
-    user_id = current_user.id
-    user_household = Household.find_by_user_id
-    @qr_code_url = generate_qr_code_url(user_household.id)
+    @user_id = current_user.id
+    @user_household = Household.find_by(user_id: @user_id)
+    @qr_code_url = generate_qr_code_url(@user_household.id)
     @qr_code = generate_qr_code(@qr_code_url) # placeholder, replace with url
   end
 
@@ -18,7 +18,7 @@ class AccountController < ApplicationController
   def generate_qr_code(url)
     qrcode = RQRCode::QRCode.new(url)
     # You can customize the size and other options
-    qrcode.as_svg(module_size: 3).html_safe
+    qrcode.as_svg(module_size: 6).html_safe
   end
 
   def load_users

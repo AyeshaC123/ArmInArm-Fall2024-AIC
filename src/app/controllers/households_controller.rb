@@ -20,18 +20,10 @@ class HouseholdsController < ApplicationController
   end
 
   # POST /households or /households.json
-  def create
-    user = User.find_by(id: user_id)
-    if user && user.registered == true
-      begin
-        raise StandardError, "-- Household already exists for this user --"
-      rescue StandardError => e
-        flash[:error] = e.message
-        redirect_to root_path
-      end
-    else
-      @household = Household.new(household_params)
 
+    if current_user.registered == false
+      @household = Household.new(household_params)
+      @household.user_id = current_user.id
       respond_to do |format|
         if @household.save
           format.html { redirect_to household_url(@household), notice: "Household was successfully created." }
@@ -41,7 +33,11 @@ class HouseholdsController < ApplicationController
           format.json { render json: @household.errors, status: :unprocessable_entity }
         end
       end
-      user.registered = true
+      current_user.update(registered: true)
+
+    else
+        redirect_to root_path
+        flash.alert = "You already have a registered household."
     end
   end
 
@@ -62,10 +58,15 @@ class HouseholdsController < ApplicationController
   def destroy
     @household.destroy
 
+    user_id = @household.user_id
+
     respond_to do |format|
       format.html { redirect_to households_url, notice: "Household was successfully destroyed." }
       format.json { head :no_content }
     end
+
+    user = User.find_by_id(id: user_id)
+    user.update(registered: false)
   end
 
   private
@@ -76,6 +77,6 @@ class HouseholdsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def household_params
-      params.require(:household).permit(:headname, :headdob, :headgender, :headethicity, :numadults, :numchild, :streetaddr, :city, :state, :county, :zipcode, :phonenum, :incomesource, :qualifiercode, :netincome, :householdtype, :foodstamps)
+      params.require(:household).permit(:headname, :headdob, :headgender, :headethnicity, :numadults, :numchild, :streetaddr, :city, :state, :county, :zipcode, :phonenum, :incomesource, :qualifiercode, :netincome, :householdtype, :foodstamps)
     end
 end

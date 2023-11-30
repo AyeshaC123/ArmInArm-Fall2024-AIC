@@ -21,9 +21,11 @@
             <%= link_to "Households List", households_path, class:"nav-link" %>
           </li>   
           <% end %>
+          <% if !can?(:access, :rails_admin)%>
           <li class="nav-item">
             <%= link_to "My Account", account_index_path, class:"nav-link" %>
           </li>        
+          <% end %>
         </ul>
     
         <ul class="navbar-nav">
@@ -31,7 +33,7 @@
           <% if user_signed_in? %>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
-            aria-expanded="false">
+                  aria-expanded="false">
                 Account
               </a>
               <%# Change to rails "link_to" for the actual links when implementing %>
