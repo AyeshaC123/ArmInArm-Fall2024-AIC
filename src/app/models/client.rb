@@ -1,4 +1,6 @@
 class Client < ApplicationRecord
+
+  has_many :appointments
     # ActiveRecord automatically creates attribute accessors for all the database columns
   
     # Validations

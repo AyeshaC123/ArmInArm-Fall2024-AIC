@@ -3,6 +3,12 @@
 # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 
 Rails.application.routes.draw do
+  get 'booker/new', to: 'booker#new', as: 'new_appointment'
+
+  post 'booker/times', to: 'booker#times', as: 'booker_times'
+
+  post 'booker/book', to: 'booker#book', as: 'book_appointment'
+
 
   resources :households
   # The root page, e.g. www.example.com/, is sent here

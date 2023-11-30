@@ -22,7 +22,11 @@
         <% end %>
         <% if not current_user.client.nil? %>
           <a href="/my_client" class="btn btn-primary">View or modify your Client Profile</a>
-        <% end %>
+
+          <!-- Button for appointment portal -->
+
+          <%= link_to 'Appointments', new_appointment_path, class: 'btn btn-primary' %>
+          <% end %>
         <% if current_user.can_search? %>
           <a href="/search" class="btn btn-primary">Search</a>
         <% end %>

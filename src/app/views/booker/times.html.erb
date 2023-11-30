@@ -1,0 +1,42 @@
+<h1>Book a New Appointment</h1>
+
+<body>
+  <table>
+    <tr>
+      <th>ID</th>
+      <td><%= @client.id %></td>
+    </tr>
+    <tr>
+      <th>First Name</th>
+      <td><%= @client.first_name %></td>
+    </tr>
+    <tr>
+      <th>Last Name</th>
+      <td><%= @client.last_name %></td>
+    </tr>
+    <tr>
+      <th>Date of Birth</th>
+      <td><%= @client.dob %></td>
+    </tr>
+    <tr>
+      <th>Address</th>
+      <td><%= @client.address %></td>
+    </tr>
+  </table>
+
+  <h1>Available Times for <%= @date %> at <%= @location %></h1>
+
+  <% if @available_times.present? %>
+    <ul>
+      <% @available_times.each do |time| %>
+        <li>
+          <%= time %>
+          <%= button_to 'Book This Time', book_appointment_path(time: time, date: @date, location: @location), method: :post %>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p>No available times.</p>
+  <% end %>
+  
+</body>
