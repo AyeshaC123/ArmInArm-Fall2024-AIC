@@ -1,5 +1,3 @@
-<%= debug current_user %>
-
 <h1>My Account</h1>
 
 This will be a page to view your account information, household info, and QR code
@@ -9,30 +7,29 @@ This will be a page to view your account information, household info, and QR cod
     <%= raw @qr_code %>
 </div>
 
-  <!-- Display household information 
+  <!-- Display household information -->
   <div class="household-info">
     <h3>General Information</h3>
-    <p>Name of Head of Household: <%= @household.headname %></p>
-    <p>Date of Birth: <%= @household.headdob %></p>
-    <p># of Adults in Household: <%= @household.numadults %></p>
+    <p>Name of Head of Household: <%= @user_household.headname %></p>
+    <p>Date of Birth: <%= @user_household.headdob %></p>
+    <p># of Adults in Household: <%= @user_household.numadults %></p>
 
     <h3>Household Address</h3>
-    <p>Street Address: <%= @household.streetaddr %></p>
-    <p>City: <%= @household.city %></p>
-    <p>State: <%= @household.state %></p>
-    <p>County: <%= @household.county %></p>
-    <p>Zip Code: <%= @household.zipcode %></p>
+    <p>Street Address: <%= @user_household.streetaddr %></p>
+    <p>City: <%= @user_household.city %></p>
+    <p>State: <%= @user_household.state %></p>
+    <p>County: <%= @user_household.county %></p>
+    <p>Zip Code: <%= @user_household.zipcode %></p>
 
     <h3>Household Demographics</h3>
-    <p>Household Type: <%= @household.householdtype %></p>
-    <p>Head of Household Gender: <%= @household.headgender %></p>
-    <p>Head of Household Race/Ethnicity: <%= @household.headethicity %></p>
+    <p>Household Type: <%= @user_household.householdtype %></p>
+    <p>Head of Household Gender: <%= @user_household.headgender %></p>
+    <p>Head of Household Race/Ethnicity: <%= @user_household.headethicity %></p>
 
     <h3>Household Income & Benefits</h3>
-    <p>SNAP (Food Stamps): <%= @household.foodstamps %></p>
-    <p>Income Source: <%= @household.incomesource %></p>
-    <p>Qualifier Code: <%= @household.qualifiercode %></p>
-    <p>Net Income: <%= @household.netincome %></p>
+    <p>SNAP (Food Stamps): <%= @user_household.foodstamps %></p>
+    <p>Income Source: <%= @user_household.incomesource %></p>
+    <p>Qualifier Code: <%= @user_household.qualifiercode %></p>
+    <p>Net Income: <%= @user_household.netincome %></p>
   </div>
 </div>
--->

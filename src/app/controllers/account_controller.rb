@@ -5,9 +5,9 @@ class AccountController < ApplicationController
   before_action :load_users, only: [:index]
 
   def index
-    user_id = current_user.id
-    user_household = Household.find_by_user_id
-    @qr_code_url = generate_qr_code_url(user_household.id)
+    @user_id = current_user.id
+    @user_household = Household.find_by(user_id: @user_id)
+    @qr_code_url = generate_qr_code_url(@user_household.id)
     @qr_code = generate_qr_code(@qr_code_url) # placeholder, replace with url
   end
 
