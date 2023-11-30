@@ -1,0 +1,4 @@
+class TimeSlot < ApplicationRecord
+ 
+end
+  

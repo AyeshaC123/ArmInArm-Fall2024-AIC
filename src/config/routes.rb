@@ -13,6 +13,8 @@ Rails.application.routes.draw do
   get 'volunteers/form', to: 'volunteers#form', as: 'volunteer_form'
  #post 'volunteers', to: 'volunteers#create'
   post 'volunteers/serverendpoint', to: 'volunteers#create'
+  post 'clear_database', to: 'empty_data#clear_database'
+  get 'upcoming_hours', to: 'volunteers#upcoming_hours'
 
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   # The root page, e.g. www.example.com/, is sent here
