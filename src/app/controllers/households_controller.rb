@@ -21,16 +21,27 @@ class HouseholdsController < ApplicationController
 
   # POST /households or /households.json
   def create
-    @household = Household.new(household_params)
-
-    respond_to do |format|
-      if @household.save
-        format.html { redirect_to household_url(@household), notice: "Household was successfully created." }
-        format.json { render :show, status: :created, location: @household }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @household.errors, status: :unprocessable_entity }
+    user = User.find_by(id: user_id)
+    if user && user.registered == true
+      begin
+        raise StandardError, "-- Household already exists for this user --"
+      rescue StandardError => e
+        flash[:error] = e.message
+        redirect_to root_path
       end
+    else
+      @household = Household.new(household_params)
+
+      respond_to do |format|
+        if @household.save
+          format.html { redirect_to household_url(@household), notice: "Household was successfully created." }
+          format.json { render :show, status: :created, location: @household }
+        else
+          format.html { render :new, status: :unprocessable_entity }
+          format.json { render json: @household.errors, status: :unprocessable_entity }
+        end
+      end
+      user.registered = true
     end
   end
 
