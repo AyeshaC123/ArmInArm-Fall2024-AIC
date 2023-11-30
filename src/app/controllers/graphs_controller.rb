@@ -21,7 +21,7 @@ class GraphsController < ApplicationController
      
     respond_to do |format|
       format.html #This will render a format for later-Sourced from ROJ
-      format.json { render json: @location_wait_times } # Optionally, respond with JSON if needed
+      format.json { render json: @wait_times } # Optionally, respond with JSON if needed
     end
   end
 
