@@ -1,4 +1,4 @@
-The following rules and guidelines are meant for anyone who wants to work on or contribute to this project.
+The following code of conduct is meant for anyone who wants to work on or contribute to this project.
 
 Code of Conduct:
   Do:
