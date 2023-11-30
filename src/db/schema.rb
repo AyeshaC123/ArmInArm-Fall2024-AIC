@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_11_29_022148) do
+ActiveRecord::Schema.define(version: 2023_11_30_015728) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,7 +37,7 @@ ActiveRecord::Schema.define(version: 2023_11_29_022148) do
     t.string "headname"
     t.date "headdob"
     t.string "headgender"
-    t.string "headethicity"
+    t.string "headethnicity"
     t.integer "numadults"
     t.integer "numchild"
     t.string "streetaddr"
@@ -55,6 +55,17 @@ ActiveRecord::Schema.define(version: 2023_11_29_022148) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "members", force: :cascade do |t|
+    t.string "firstname"
+    t.string "lastname"
+    t.date "dob"
+    t.string "relationship"
+    t.bigint "household_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["household_id"], name: "index_members_on_household_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -64,8 +75,10 @@ ActiveRecord::Schema.define(version: 2023_11_29_022148) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "admin"
+    t.boolean "registered"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "members", "households"
 end
