@@ -8,7 +8,6 @@
 
 Rails.application.routes.draw do
   post 'toggle_dyslexic_font', to: 'application#toggle_dyslexic_font'
-
   post 'toggle_colorblind', to: 'application#toggle_colorblind'
 
   get 'booker/new', to: 'booker#new', as: 'new_appointment'
