@@ -22,6 +22,20 @@ ActiveRecord::Schema.define(version: 2023_11_30_001202) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "appointments", force: :cascade do |t|
+    t.bigint "client_id", null: false
+    t.datetime "date_of_appt"
+    t.datetime "time_of_appt"
+    t.string "location"
+    t.string "last_name"
+    t.date "dob"
+    t.date "date_of_appts"
+    t.time "time_of_appts"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["client_id"], name: "index_appointments_on_client_id"
+  end
+
   create_table "clients", force: :cascade do |t|
     t.string "first_name"
     t.string "last_name"

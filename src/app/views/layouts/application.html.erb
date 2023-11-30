@@ -81,8 +81,16 @@
         <p class="alert alert-danger"><%= alert %></p>
       <% end %>
         <%= render "home/header"%>
-        TCNJ SE Application for Arm in Arm <br/><br/>
       <%= yield %>
     </div>
+
+    <!-- Stops the navbar from locking after navigating to a new page -->
+    <script>
+      $(document).ready(function() {
+        $('.dropdown-toggle').dropdown();
+      });
+    </script>
+
+  
   </body>
 </html>
