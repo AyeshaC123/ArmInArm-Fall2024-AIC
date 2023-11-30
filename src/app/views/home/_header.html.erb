@@ -33,6 +33,13 @@
               <a class="dropdown-item" href="#">And Another</a>
             </div>
           </li>
+          <li>
+            <select onchange="changeLanguage(this.value)">
+              <option value="en" <%= if current_user&.locale == 'en' then 'selected'.html_safe else '' end %>>English</option>
+              <option value="es" <%= if current_user&.locale == 'es' then 'selected'.html_safe else '' end %>>Spanish</option>
+              <option value="ht" <%= if current_user&.locale == 'ht' then 'selected'.html_safe else '' end %>>Haitian Creole</option>
+            </select>
+          </li>
         </ul>
         <ul class="navbar-nav">
           <%# If user, show account, else sign in %>
@@ -61,4 +68,13 @@
           <% end %>
         </ul>
       </div>
+      <script type="text/javascript">
+        function changeLanguage(newLanguage) {
+          if (location.search != '') {
+	    location.search += '&locale=' + newLanguage;
+          } else {
+            location.search = '?locale=' + newLanguage;
+          }
+        }
+      </script>
     </nav>
