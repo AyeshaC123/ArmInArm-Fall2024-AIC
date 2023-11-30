@@ -18,7 +18,7 @@ class AccountController < ApplicationController
   def generate_qr_code(url)
     qrcode = RQRCode::QRCode.new(url)
     # You can customize the size and other options
-    qrcode.as_svg(module_size: 3).html_safe
+    qrcode.as_svg(module_size: 6).html_safe
   end
 
   def load_users
