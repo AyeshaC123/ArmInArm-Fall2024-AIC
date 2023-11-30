@@ -20,7 +20,7 @@ class ApplicationController < ActionController::Base
     #   the user is not visiting the /clients page (creating a client),
     #   the user is not visiting the /new_client page (avoid infinite redirect), and
     #   the user needs a client profile associated with their account.
-    if not current_user.nil? and request.path != '/clients' and request.path != '/new_client' and current_user.needs_client_profile?
+    if not current_user.nil? and request.path != '/clients' and request.path != '/new_client' and request.path != '/users/sign_out' and current_user.needs_client_profile?
       redirect_to '/new_client'
     end
   end

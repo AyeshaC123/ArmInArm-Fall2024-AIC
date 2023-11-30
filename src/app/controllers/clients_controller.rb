@@ -30,6 +30,22 @@ class ClientsController < ApplicationController
   end
 
   
+  def destroy
+    @client = Client.find(params[:id])
+    User.where(client: @client).each do |user|
+      user.client = nil 
+      user.save
+    end
+    if @client.destroy
+      flash[:notice] = "Client profile was successfully deleted."
+    else
+      @client.errors.full_messages
+      flash[:alert] = "There was a problem deleting the client profile."
+    end
+    redirect_to root_path # or wherever you want to redirect after deletion
+  end
+
+  
   
   
 
