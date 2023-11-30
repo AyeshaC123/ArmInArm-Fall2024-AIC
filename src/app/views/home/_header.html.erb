@@ -27,9 +27,8 @@
              View Wait Times
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item"  <%= link_to "Trenton", graphs_hudson_path, class:"nav-link" %></a>
-              <a class="dropdown-item" <%= link_to "Princeton", graphs_nassau_path, class:"nav-link" %></a>
-              <div class="dropdown-divider"></div>
+              <%= link_to 'Trenton', graphs_hudson_path, class: "dropdown-item" %>
+              <%= link_to "Princeton", graphs_nassau_path, class:"dropdown-item" %>
               <a class="dropdown-item" <%= link_to "Mobile Pantry", graphs_mobile_path, class:"nav-link" %></a>
             </div>
           </li>

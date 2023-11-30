@@ -16,8 +16,18 @@ class GraphsController < ApplicationController
       @wait_times[hour] ||= 0
       @wait_times[hour] += admin_panel.service_time
     end
-    @labels = @wait_times.keys
-    @data = @wait_times.values 
+    # Preserve original keys in the hash
+    original_keys = @wait_times.keys
+
+    # Create constant labels from 9:00 to 15:00
+    @labels = (9..15).map { |hour| format('%02d:00', hour) }
+
+    # Match data to the new labels
+    @data = @labels.map { |label| @wait_times[label] || 0 }
+
+    # Restore original keys in the hash
+    @wait_times = @wait_times.transform_keys { |key| original_keys.include?(key) ? key : nil }
+
      
     respond_to do |format|
       format.html #This will render a format for later-Sourced from ROJ
