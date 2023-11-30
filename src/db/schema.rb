@@ -15,6 +15,15 @@ ActiveRecord::Schema.define(version: 2023_11_30_001202) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "admin_panels", force: :cascade do |t|
+    t.integer "appointment_length"
+    t.integer "max_appointment_count"
+    t.integer "service_time"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "booking_days", default: [], array: true
+  end
+
   create_table "app_configs", force: :cascade do |t|
     t.string "name"
     t.string "logo_url"

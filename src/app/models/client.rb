@@ -2,7 +2,9 @@ class Client < ApplicationRecord
 
   has_many :appointments
     # ActiveRecord automatically creates attribute accessors for all the database columns
-  
+    
+    has_many :appointments
+    
     # Validations
     validates :first_name, :last_name, :dob, presence: true
   
