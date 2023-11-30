@@ -62,27 +62,30 @@ class BookerController < ApplicationController
   # Ensures clients can only book available times
   def calculate_available_times(location, date)
 
+    #gets first row of admin panel database
     admin_panel = AdminPanel.first 
 
-    # Default to 1 if no admin_panel record is found
+    # default to 1 if no admin_panel record is found
     max_appointments_per_slot = admin_panel&.max_appointment_count
 
-    # Limits to 1 appointment per time slot (for testing purposes)
-
     available_times = []
-    start_time = Time.zone.parse('9:00 AM')
-    end_time = Time.zone.parse('1:00 PM')
 
-    while start_time < end_time
-      appointments_count = Appointment.where(location: location, date_of_appts: date, time_of_appts: start_time).count
-      available_times << start_time.strftime('%I:%M %p') if appointments_count < max_appointments_per_slot
+    if admin_panel.booking_days&.include?(date.strftime('%A'))
 
-      start_time += admin_panel&.appointment_length.minutes
+      start_time = Time.zone.parse('9:00 AM')
+      end_time = Time.zone.parse('1:00 PM')
+
+      while start_time < end_time
+        appointments_count = Appointment.where(location: location, date_of_appts: date, time_of_appts: start_time).count
+        available_times << start_time.strftime('%I:%M %p') if appointments_count < max_appointments_per_slot
+
+        start_time += admin_panel&.appointment_length.minutes
+
+      end
+      
+      available_times
 
     end
-    
-
-    available_times
   end
 end
 
