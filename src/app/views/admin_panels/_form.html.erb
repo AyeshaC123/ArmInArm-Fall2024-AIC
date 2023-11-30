@@ -66,6 +66,22 @@
           </div>
         </div>
 
+        <div class="row">
+        <div class="col-md-6">
+          <div class="field text-center">
+            <%= form.label :start_time, "Start Time" %>
+            <%= form.time_field :start_time, class: "form-control" %>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="field text-center">
+              <%= form.label :end_time, "End Time" %>
+              <%= form.time_field :end_time, class: "form-control" %>
+            </div>
+          </div>
+        </div>
+
         <br>
 
         <div class="row">

@@ -74,6 +74,6 @@ class AdminPanelsController < ApplicationController
     # end
 
     def admin_panel_params
-      params.require(:admin_panel).permit(:appointment_length, :max_appointment_count, :service_time, booking_days: [])
+      params.require(:admin_panel).permit(:appointment_length, :max_appointment_count, :service_time, :start_time, :end_time, booking_days: [])
     end
 end
