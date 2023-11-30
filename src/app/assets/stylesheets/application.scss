@@ -38,6 +38,9 @@
     text-decoration: underline
   }
 
+  .dyslexic-font {
+    font-family: 'OpenDyslexic', Arial, sans-serif;
+  }
 
 /* Styling for the image */
 #my-element {
@@ -53,6 +56,24 @@
   background-color: initial;
   border: initial;
   color: rgba(255, 255, 255, .5);
+}
+
+
+.navbar-standard {
+  background-color: #5a5454;
+}
+
+/* Color for the colorblind mode */
+.navbar-colorblind {
+  background-color: #268b48; 
+}
+
+/* Ensures navbar text remains white */
+.navbar-standard .navbar-brand,
+.navbar-standard .nav-link,
+.navbar-colorblind .navbar-brand,
+.navbar-colorblind .nav-link {
+  color: white !important;
 }
 
 
