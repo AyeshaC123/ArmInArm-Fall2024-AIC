@@ -34,3 +34,5 @@
   * [Setting up the correct database](docs/SQLite3_to_Postgres_on_Rails.md)
 * [More helpful information](docs/More_helpful_info.md)
 * [Guide to the .gitignore file](docs/.gitignore_Guide.md)
+* [Code of conduct for this community](CODE_OF_CONDUCT.md)
+* [Installation and usage instructions](docs/Installation_Guide.md)

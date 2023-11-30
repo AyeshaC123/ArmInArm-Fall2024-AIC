@@ -1,4 +1,8 @@
-# config/routes.rb
+# Project name: Arm in Arm Appointment Booker - Team 14
+# Description: Allows clients to create/view/delete appointments and admin to manage existing appointments
+# Filename: routes.rb
+# Description: Defines URL-to-controller mappings for the application
+# Last modified on: 11/29/23
 
 # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 
@@ -14,6 +18,7 @@ Rails.application.routes.draw do
 
   post 'booker/book', to: 'booker#book', as: 'book_appointment'
 
+  delete 'booker/appointments/:id', to: 'booker#destroy', as: 'delete_appointment'
 
   resources :households
   # The root page, e.g. www.example.com/, is sent here
@@ -32,9 +37,8 @@ Rails.application.routes.draw do
   # Root route
   root 'home#index'
 
-  # Resources for clients
 
-  resources :clients, only: [:new, :create, :show, :edit, :update]
+  resources :clients, only: [:new, :create, :show, :edit, :update, :destroy]
 
   resources :new_client, only: [:index]
   resources :my_client, only: [:index]
@@ -43,6 +47,7 @@ Rails.application.routes.draw do
 
   
   resources :appointments
+
 
   # Devise authentication
   devise_for :users

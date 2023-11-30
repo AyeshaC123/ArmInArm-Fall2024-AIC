@@ -33,6 +33,22 @@
               <a class="dropdown-item" href="#">And Another</a>-->
             </div>
           </li>
+          <% unless current_user.nil? %>
+            <li>
+              <span>🌐</span>
+              <select class="language-selector" onchange="changeLanguage(this.value)">
+                <option value="en" <%= if current_user&.locale == 'en' then 'selected'.html_safe else '' end %>>
+		  <%= nil %> English
+                </option>
+                <option value="es" <%= if current_user&.locale == 'es' then 'selected'.html_safe else '' end %>>
+                  <%= nil %> Español
+                </option>
+                <option value="ht" <%= if current_user&.locale == 'ht' then 'selected'.html_safe else '' end %>>
+                  <%= nil %> Kreyòl Ayisyen
+                </option>
+              </select>
+            </li>
+          <% end %>
         </ul>
         <ul class="navbar-nav">
           <%# If user, show account, else sign in %>
@@ -67,4 +83,17 @@
           <% end %>
         </ul>
       </div>
+      <script type="text/javascript">
+        function changeLanguage(newLanguage) {
+          if (location.search != '') {
+	    location.search += '&locale=' + newLanguage;
+          } else {
+            location.search = '?locale=' + newLanguage;
+          }
+        }
+
+        $(document).ready(function() {
+          $('.dropdown-toggle').dropdown();
+        });
+      </script>
     </nav>

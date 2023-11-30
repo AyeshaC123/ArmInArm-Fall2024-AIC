@@ -1,3 +1,9 @@
+# Project name: Arm in Arm Appointment Booker - Team 14
+# Description: Allows clients to create/view/delete appointments and admin to manage existing appointments
+# Filename: booker_controller.rb
+# Description: Controller for booking appointments, includes functions to limit number of appointments and filter available times
+# Last modified on: 11/29/23
+
 class BookerController < ApplicationController
 
   def new
@@ -8,8 +14,19 @@ class BookerController < ApplicationController
     @client = current_user.client if current_user.present?
     @location = params[:location]
     @date = params[:date].to_date
+  
+    if has_appointment_this_week?(@client, @date)
+      flash.now[:alert] = 'You already have an appointment this week. Please choose a different week.'
+      render :new and return
+    end
+  
     @available_times = calculate_available_times(@location, @date)
-    @available_times ||= ["9:00 AM", "10:00 AM", "11:00 AM"]
+  end
+
+  #deletion
+  def destroy
+    @appointment.destroy
+    redirect_to appointments_path, notice: 'Appointment was successfully destroyed.'
   end
 
   def book
@@ -25,23 +42,33 @@ class BookerController < ApplicationController
 
 
     if @appointment.save
-      # Redirect back to the new appointment page with a success message
       redirect_to new_appointment_path, notice: 'Appointment successfully booked!'
     else
-      # Handle errors
-      # You might want to show the error messages and render the 'times' view again
+      
       render :times
     end
   end
 
   private
 
+  # Limits client appointments to one per week
+  def has_appointment_this_week?(client, date)
+    start_of_week = date.beginning_of_week
+    end_of_week = date.end_of_week
+
+    client.appointments.where("date_of_appts >= ? AND date_of_appts <= ?", start_of_week, end_of_week).exists?
+  end
+
+  # Ensures clients can only book available times
   def calculate_available_times(location, date)
 
-    admin_panel = AdminPanel.first 
 
-    # Default to 1 if no admin_panel record is found
-    max_appointments_per_slot = admin_panel&.max_appointment_count || 1
+#     admin_panel = AdminPanel.first 
+
+#     # Default to 1 if no admin_panel record is found
+#     max_appointments_per_slot = admin_panel&.max_appointment_count || 1
+
+    # Limits to 1 appointment per time slot (for testing purposes)
 
     max_appointments_per_slot = 1
     available_times = []
@@ -57,6 +84,7 @@ class BookerController < ApplicationController
       start_time += admin_panel&.appointment_length.minutes
 
     end
+    
 
     available_times
   end
