@@ -9,7 +9,7 @@
 -    [Use Case Diagram]()
 -    [Use Case Descriptions]()
 -    [System Sequence Diagrams]()
--    [State Diagram](docs/Team 22 - State Diagram.jpg)
+-    [State Diagram](docs/Team%2022%20-%20State%20Diagram.jpg)
 -    [Analysis Class Diagram]()
 -    [Test Case Design]()
 
