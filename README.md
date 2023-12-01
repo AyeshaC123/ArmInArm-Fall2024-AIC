@@ -13,6 +13,10 @@
 -    [Analysis Class Diagram](docs/)
 -    [Test Case Design](docs/Team%2022%20-%20Test%20Case%20Design.pdf)
 
+# Contribute
+- [How to contribute to the ArmInArm project](https://github.com/TCNJ-SE/ArmInArm-F23/blob/collab22-prototype3/docs/contributions.md)
+
+
 # Team 22 - Installation/Usage Insturctions 
 - [InstallationAndUsageInstructions](InstallationAndUsageInstructions.md)
 
