@@ -10,7 +10,7 @@
 -    [Use Case Descriptions](docs/Team%2022%20-%20Use%20Case%20Descriptions.pdf)
 -    [System Sequence Diagrams](docs/Team%2022%20-%20System%20Sequence%20Diagrams.pdf)
 -    [State Diagram](docs/Team%2022%20-%20State%20Diagram.jpg)
--    [Analysis Class Diagram](docs/)
+-    [Analysis Class Diagram](docs/Team%2022%20-%20Analysis%20Class%20Diagram.pdf)
 -    [Test Case Design](docs/Team%2022%20-%20Test%20Case%20Design.pdf)
 
 # Contribute
