@@ -44,7 +44,7 @@ The functionality that we will implement during the course of the semester is de
 
 
 ## Requirements and Analysis
-The current changes made:
+The current changes made for this iteration:
  - Created three html files insde app/views
   - _volfourm.html.erb -> Holding the questions to be asked to upcoming voluneteers looking for a position
   - _viewHours.html.erb -> Holding the signed in users current hours for their upcoming shift
@@ -55,12 +55,20 @@ The current changes made:
  - Added text boxes to enter name/number, radio buttons to select interests, and submit button on the Volunteer Form page
 
 ## Design
-The current changes made:
+The current changes made for this iteration:
  - Created database to hold volunteers
  - Created an admin system to allow admin users to see all data and grant admin privilege to others
  - Added a home button on the web app
  - Volunteer form now stores data in database
  - Provided a summary of all volunteers in the database
+
+## Construction: Implementation and Testing
+The current changes made for this iteration:
+- Added days to the form for users to select a day out of the week
+- Implemented the complex algorithm to assign volunteers to a role
+- Updated the upcoming hours page to show the volunteers and their roles for the week
+- Created a "Clear database" button for admins to clear the database for the next week of volunteers
+- Created more tables in the database for different types of data (roles, timeslots, etc.)
 
 ## Team Code
 [Team 13 - Team Code](https://github.com/TCNJ-SE/ArmInArm-F23/blob/a95e1cc5ba7152c65820deddf1798b04d4099144/docs/Team13-TeamCode.md)
