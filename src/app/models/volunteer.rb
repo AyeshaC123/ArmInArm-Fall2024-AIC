@@ -21,40 +21,48 @@ class Volunteer < ApplicationRecord
     # Initialize potential roles based on interests
     potential_roles = selected_interests.flat_map { |interest| INTEREST_ROLE_MAP[interest] }.uniq
   
-    # Check and assign primary interest role if available
-    if selected_interests.include?("Interpersonal Interaction and Language Communication")
-      interpersonal_roles = ["Client Interaction", "Sign In"]
-      if role_available?(*interpersonal_roles, selected_day)
-        Rails.logger.info "Assigning Interpersonal roles"
-        assign_role(interpersonal_roles, selected_day)
-        return
-      end
+    # Check for primary interest role availability
+    primary_interest = "Interpersonal Interaction and Language Communication"
+    if selected_interests.include?(primary_interest)
+      primary_roles = INTEREST_ROLE_MAP[primary_interest]
+      primary_role_assigned = primary_roles.any? { |role| assign_role_if_available(role, selected_day) }
+      
+      return if primary_role_assigned
     end
   
-    # If primary interest role is not available or not selected, check other interests
-    least_assigned_role = find_least_assigned_role(potential_roles, selected_day)
-    if least_assigned_role
-      Rails.logger.info "Found least assigned role: #{least_assigned_role}"
-      assign_role([least_assigned_role], selected_day)
-    else
-      # Randomly assign to an open role if all selected interests are full
-      all_roles = Role.pluck(:role_name)
-      open_roles = all_roles.select { |role| role_available?(role, selected_day) }
-      if open_roles.any?
-        random_role = open_roles.sample
-        Rails.logger.info "Randomly assigning to an open role: #{random_role}"
-        assign_role([random_role], selected_day)
-      else
-        # Inform volunteer to try next week if no open roles
-        Rails.logger.info "No open roles available. Please try volunteering next week."
-      end
-    end
+    # Check other interest roles if primary is not available or not selected
+    other_roles = potential_roles - INTEREST_ROLE_MAP[primary_interest]
+    other_role_assigned = other_roles.any? { |role| assign_role_if_available(role, selected_day) }
+  
+    # Assign a random role if no preferred role is available
+    assign_random_role(selected_day) unless other_role_assigned
   end
   
   
   
 
   private
+
+  def assign_role_if_available(role_name, day)
+    if role_available?(role_name, day)
+      assign_role([role_name], day)
+      true
+    else
+      false
+    end
+  end
+
+  def assign_random_role(day)
+    all_roles = Role.pluck(:role_name)
+    open_roles = all_roles.select { |role| role_available?(role, day) }
+    if open_roles.any?
+      random_role = open_roles.sample
+      Rails.logger.info "Randomly assigning to an open role: #{random_role}"
+      assign_role([random_role], day)
+    else
+      Rails.logger.info "No open roles available. Please try volunteering next week."
+    end
+  end
 
   def role_available?(*role_names, day)
     # Check if there is availability in the given roles for the selected day

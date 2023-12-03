@@ -48,11 +48,13 @@
         }
 
         .form-check {
-            margin-top: 10px;
+            display: block; 
+            margin-right: 10px; 
         }
 
         .form-check-label {
-            margin-left: 5px;
+            display: inline; 
+            margin-left: 5px; 
         }
 
         .btn-primary {
@@ -95,6 +97,7 @@
                 <%= form.select :availability_day, [['Monday', 'Monday'], ['Tuesday', 'Tuesday'], ['Wednesday', 'Wednesday']], prompt: "Select a day", class: "form-control" %>
             </div>
 
+            <!-- Inside the form, for each interest -->
             <div class="form-group">
                 <%= form.label :interests, "Select Interests:" %>
                 <% ['Interpersonal Interaction and Language Communication', 'Logistics & Organization', 'Health & Nutrition', 'Resource Management', 'Maintenance'].each do |interest| %>
