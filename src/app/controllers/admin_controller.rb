@@ -1,3 +1,10 @@
+# Project name: Arm in Arm Appointment Booker - Team 14
+# Description: Allows clients to create/view/delete appointments and admin to manage existing appointments
+# Filename: admin_controller.rb
+# Description: Simple controller to show the appointments for parameters location and date
+# Last modified on: 11/29/23
+
+
 class AdminController < ApplicationController
   def schedule_generator
   end
