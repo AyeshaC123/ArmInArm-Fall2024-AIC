@@ -15,7 +15,10 @@
 
 
 ## Update Use Case Diagram
-![UseCaseIV](https://github.com/TCNJ-SE/ArmInArm-F23/blob/collab12-prototype2/docs/UseCaseIV.jpeg)
+![UseCaseIV](https://github.com/TCNJ-SE/ArmInArm-F23/blob/collab12-prototype3/docs/Updated_Use_Case_Diagram.png)
+
+##Updated Changes
+![Updated documents.pdf](https://github.com/TCNJ-SE/ArmInArm-F23/blob/collab12-prototype3/docs/Updated%20documents.pdf)
 
 
 
