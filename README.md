@@ -1,7 +1,5 @@
 # README
 
-# README
-
 ### Team Guidelines:
 [Team Code](https://github.com/TCNJ-SE/ArmInArm-F23/blob/cd8ab52b797cbe58af846f47ced510cdc292da74/src/Team_21_Team_Code.md)
 
