@@ -3,6 +3,8 @@
 ### Team Guidelines:
 [Team Code](https://github.com/TCNJ-SE/ArmInArm-F23/blob/cd8ab52b797cbe58af846f47ced510cdc292da74/src/Team_21_Team_Code.md)
 
+
+
 # Group 21 Appointment with Wait Times
 
 ### This project will be implementing a appointments system that will allow clients to schedule a time they want to come to arm in arm to pick up food. This appointment system will allow for the creation, deletion, and viewing of appointments. When you view an appointment you will also be able to see an estimated wait time display. These wait times will be calculated using data from Arm-in-Arm about their processing times, and the number of users who have already pre-registered for certain times. In doing this, the number of people coming to arm-in-arm should be spread out throughout the day.
@@ -22,6 +24,8 @@ The estimated wait time portion of the project is innovative because it would he
 ## Prototype Details
 The first prototype will allow registering users to log in or create an account, create appointments, view appointments, and cancel appointments. The first prototype will also allow the admin users to log into their account and enter an admin dashboard. The Second prototype will allow admin users to create the appointment blocks registering users will be able to use. Admin users will also be able view made user appointments and any user feedback that is given. In our third prototype we will give the registering user the ability to see past appointments, view wait time for the appointments, and allow admin users to provide wait time parameters that will change the wait time calculation for users with appointments.
 
+### Maintainance and Communication
+[Maintainance and Communicaiton](https://github.com/TCNJ-SE/ArmInArm-F23/blob/collab21-final-prototype3/docs/contribute_collab_21.md)
 
 ## Use Case Diagram
 <img width="481" alt="image" src="https://github.com/TCNJ-SE/ArmInArm-F23/assets/106837490/a2b59f27-03f4-4c78-9c35-fabd8e65ba85">
