@@ -77,14 +77,12 @@
 
                 <!--if user is on admin account, user will have access to admin panel-->
                 <% if current_user.email == 'admin@example.com' %>
-                
+
                   <% if Rails.env.development? %><%= link_to 'Rails Admin', rails_admin_path, class: "dropdown-item" %><% end %>
 
                   <%= link_to 'Admin Panel', admin_panels_path, class: "dropdown-item" %>
                 <% end %>
-
-                <!--<a class="dropdown-item" href="#">Action</a>-->
-                <!--<a class="dropdown-item" href="#">Another action</a>-->
+                
                 <div class="dropdown-divider"></div>
                 <%# Devise requires that the logout command be sent using the 'delete' HTTP verb (method) %>
                 <%= link_to "Logout", destroy_user_session_path, class: "dropdown-item", method: :delete %>
