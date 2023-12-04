@@ -73,10 +73,13 @@
               <%# Make sure to include the css class as shown in the login example %>
               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                 <%# The rails administration panel link %>
-                <% if Rails.env.development? %><%= link_to 'Rails Admin', rails_admin_path, class: "dropdown-item" %><% end %>
+                
 
                 <!--if user is on admin account, user will have access to admin panel-->
                 <% if current_user.email == 'admin@example.com' %>
+                
+                  <% if Rails.env.development? %><%= link_to 'Rails Admin', rails_admin_path, class: "dropdown-item" %><% end %>
+
                   <%= link_to 'Admin Panel', admin_panels_path, class: "dropdown-item" %>
                 <% end %>
 
