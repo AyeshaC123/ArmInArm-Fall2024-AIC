@@ -26,7 +26,6 @@ class AdminPanelsController < ApplicationController
     respond_to do |format|
       if @admin_panel.save
         
-        # format.html { redirect_to admin_panel_url(@admin_panel), notice: "Admin panel was successfully created." }
         format.html { redirect_to admin_panels_path, notice: "Admin panel was successfully created." }
         format.json { render :show, status: :created, location: @admin_panel }
       else
@@ -40,7 +39,6 @@ class AdminPanelsController < ApplicationController
   def update
     respond_to do |format|
       if @admin_panel.update(admin_panel_params)
-        # format.html { redirect_to admin_panel_url(@admin_panel), notice: "Admin panel was successfully updated." }
         format.html { redirect_to admin_panels_path, notice: "Admin panel was successfully updated."}
         format.json { render :show, status: :ok, location: @admin_panel }
       else
@@ -67,12 +65,6 @@ class AdminPanelsController < ApplicationController
     end
 
     # Only allow a list of trusted parameters through.
-    
-    # def admin_panel_params
-    #   params.require(:admin_panel).permit(:appointment_length, :max_appointment_count, :booking_days, :service_time)
-
-    # end
-
     def admin_panel_params
       params.require(:admin_panel).permit(:appointment_length, :max_appointment_count, :service_time, :start_time, :end_time, booking_days: [])
     end
