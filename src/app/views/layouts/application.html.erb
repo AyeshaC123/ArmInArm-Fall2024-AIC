@@ -23,10 +23,9 @@
       });
     </script>
     <%# Bootstrap js & dependencies %>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
     <%# Navigation Bar %>
+<%# collab13-final %>
 <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
   <a class="navbar-brand" href="#">VolunteerScheduler</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -51,6 +50,35 @@
         </div>
       </li>
     </ul>
+    <%# collab13-final %>
+    
+<%# collab12-14-final %>
+    <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
+      <a class="navbar-brand" href="/"><%= app_name %></a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+      aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <!--
+          <li class="nav-item">
+            <a class="nav-link" href="#">NavLink</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Dropdown
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="#">A Link</a>
+              <a class="dropdown-item" href="#">Another Link</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="#">And Another</a>
+            </div>
+          </li>
+          -->
+        </ul>
+<%# collab12-14-final %>
         <ul class="navbar-nav">
           <%# If user, show account, else sign in %>
           <% if user_signed_in? %>
@@ -65,8 +93,18 @@
                 <%# The rails administration panel link %>
                 <%if current_user.admin?%>
                 <% if Rails.env.development? %><%= link_to 'Rails Admin', rails_admin_path, class: "dropdown-item" %><% end %>
+<%# collab13-final %>
                  <%= button_to 'Clear Database', clear_database_path, method: :post, data: { confirm: 'Are you sure?' }, class: "dropdown-item" %>
                 <%end%>
+<%# collab13-final %>
+                <!--if user is on admin account, user will have access to admin panel-->
+                <% if current_user.email == 'admin@example.com' %>
+                  <%= link_to 'Admin Panel', admin_panels_path, class: "dropdown-item" %>
+                <% end %>
+
+                <%# <a class="dropdown-item" href="#">Action</a> %>
+                <%# <a class="dropdown-item" href="#">Another action</a> %>
+<%# collab12-14-final %>
                 <div class="dropdown-divider"></div>
                 <%# Devise requires that the logout command be sent using the 'delete' HTTP verb (method) %>
                 <%= link_to "Logout", destroy_user_session_path, class: "dropdown-item", method: :delete %>
@@ -90,7 +128,17 @@
       <% if alert %>
         <p class="alert alert-danger"><%= alert %></p>
       <% end %>
+        <%= render "home/header"%>
       <%= yield %>
     </div>
+
+    <!-- Stops the navbar from locking after navigating to a new page -->
+    <script>
+      $(document).ready(function() {
+        $('.dropdown-toggle').dropdown();
+
+    </script>
+
   </body>
 </html>
+  <%# collab12-14-final %>

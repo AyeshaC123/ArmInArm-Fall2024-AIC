@@ -29,3 +29,31 @@
 // and require_self *cannot* be removed.
 
 // Your code here...
+#client-profile-title {
+    color: navy; /* Setting the text color to navy blue */
+    text-align: center; /* Aligning the text to the center */
+    margin-top: 20px; /* Centering vertically on the screen */
+    transform: translateY(-50%); /* Fine-tuning the vertical centering */
+    font-size: 2em; /* Increasing the font size */
+    text-decoration: underline
+  }
+
+
+/* Styling for the image */
+#my-element {
+  width: 180px;
+  height: auto;
+  text-align: center;
+  margin-left: auto;
+  margin-right: 20px; /* Adjust this value to move the image more to the left */
+}
+
+.language-selector {
+  height: 100%;
+  background-color: initial;
+  border: initial;
+  color: rgba(255, 255, 255, .5);
+}
+
+
+

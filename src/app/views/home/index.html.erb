@@ -65,3 +65,50 @@
 </body>
 
 </html>
+
+
+<style>
+  .main-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 90vh;
+  }
+</style>
+<div class="main-container">
+  <div class="row mx-auto">
+    <%= image_tag 'image.png', id: 'my-element', alt: 'Arm in Arm' %>
+  </div>
+  <div class="text-center" style="padding-bottom: 100px">
+   <h2 style="color: dark grey;"><%= I18n.t 'client_profile.home.title' %></h2>
+
+  </div>
+  <div class="row">
+    <div class="mx-auto">
+
+    
+      <% if not current_user.nil? %>
+        <% if current_user.can_create_other_client_profiles? %>
+          <a href="/new_client" class="btn btn-primary"><%= I18n.t 'client_profile.home.create' %></a>
+        <% end %>
+        <% if not current_user.client.nil? %>
+          <a href="/my_client" class="btn btn-primary"><%= I18n.t 'client_profile.home.modify' %></a>
+
+          <!-- Button for appointment portal -->
+
+          <%= link_to 'Appointments', new_appointment_path, class: 'btn btn-primary' %>
+          
+        <% end %>
+        <% if current_user.can_search? %>
+          <a href="/search" class="btn btn-primary"><%= I18n.t 'client_profile.home.search' %></a>
+          <% if current_user.email == 'admin@example.com' %>
+            <%= link_to 'Admin Panel', admin_panels_path, class: "btn btn-primary" %>
+            <%= link_to 'Schedule Generator', schedule_generator_path, class: "btn btn-primary" %>
+
+          <% end %>
+        <% end %>
+      <% end %>
+
+    </div>
+  </div>
+</div>

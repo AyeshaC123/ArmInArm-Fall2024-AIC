@@ -5,8 +5,8 @@ ruby '3.0.2'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 6.0.2', '>= 6.0.2.1'
-# Use sqlite3 as the database for Active Record
-gem 'sqlite3', '~> 1.4'
+# Use PostgreSQL as the database for Active Record
+gem "pg", "~> 1.5"
 # Use Puma as the app server
 gem "puma", ">= 5.6.7"
 # Use SCSS for stylesheets
@@ -68,4 +68,6 @@ gem 'bootstrap-sass'
 # Administration Panel
 gem 'rails_admin', '~> 2.0'
 
-gem "pg", "~> 1.5"
+gem 'wicked_pdf'
+
+gem 'wkhtmltopdf-binary'
