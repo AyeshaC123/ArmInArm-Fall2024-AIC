@@ -3,9 +3,7 @@
 ### Team Guidelines:
 [Team Code](https://github.com/TCNJ-SE/ArmInArm-F23/blob/cd8ab52b797cbe58af846f47ced510cdc292da74/src/Team_21_Team_Code.md)
 
-# Appointments_With_Wait_Time
-
-
+# Group 21 Appointment with Wait Times
 
 ### This project will be implementing a appointments system that will allow clients to schedule a time they want to come to arm in arm to pick up food. This appointment system will allow for the creation, deletion, and viewing of appointments. When you view an appointment you will also be able to see an estimated wait time display. These wait times will be calculated using data from Arm-in-Arm about their processing times, and the number of users who have already pre-registered for certain times. In doing this, the number of people coming to arm-in-arm should be spread out throughout the day.
 * 
