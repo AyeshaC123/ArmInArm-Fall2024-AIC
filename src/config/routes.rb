@@ -18,9 +18,16 @@ Rails.application.routes.draw do
 
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
 
+  post 'toggle_dyslexic_font', to: 'application#toggle_dyslexic_font'
+  post 'toggle_colorblind', to: 'application#toggle_colorblind'
+
+
 
   get 'admin/schedule_generator'
   resources :admin_panels
+  get '/graphs/nassau', to: 'graphs#nassau'
+  get '/graphs/hudson', to: 'graphs#hudson'
+  get '/graphs/mobile', to: 'graphs#mobile'
 
 
   get 'booker/new', to: 'booker#new', as: 'new_appointment'

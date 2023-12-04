@@ -17,6 +17,16 @@ class ApplicationController < ActionController::Base
   # Switch locale for requests
   around_action :switch_locale
 
+  def toggle_colorblind
+    session[:colorblind] = session[:colorblind] == "enabled" ? "disabled" : "enabled"
+    redirect_back(fallback_location: root_path)
+  end
+  
+  def toggle_dyslexic_font
+    session[:dyslexic_font] = session[:dyslexic_font] == 'enabled' ? nil : 'enabled'
+    redirect_back(fallback_location: root_path)
+  end
+
   def require_profile
     # Redirect user to client creation page if:
     #   the user is logged in,

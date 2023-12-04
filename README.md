@@ -2,6 +2,46 @@
 # README
 
 
+### Team Guidelines:
+[Team Code](https://github.com/TCNJ-SE/ArmInArm-F23/blob/cd8ab52b797cbe58af846f47ced510cdc292da74/src/Team_21_Team_Code.md)
+
+
+
+# Group 21 Appointment with Wait Times
+
+### This project will be implementing a appointments system that will allow clients to schedule a time they want to come to arm in arm to pick up food. This appointment system will allow for the creation, deletion, and viewing of appointments. When you view an appointment you will also be able to see an estimated wait time display. These wait times will be calculated using data from Arm-in-Arm about their processing times, and the number of users who have already pre-registered for certain times. In doing this, the number of people coming to arm-in-arm should be spread out throughout the day.
+
+## Description of the problem to be solved. 
+The current wait times for people getting food from the different arm and arm locations are not optimal. Having long lines or long wait times to get food causes problems in the community when families just want to come in and get their food and leave. 
+
+## Description of the objective of the proposed project to address the problem.
+Our objective will be to create an appointment system that will allow people who want to get food to be able to get their food in a timely manner. We also want to integrate an estimated wait so that people who do have appointments can know how long they might have to wait to get service.
+
+## Description of how the project will meet this objective.
+The project will meet the objective by splitting different aspects of the project between team members while getting input from Arm in Arm to make a coherent product.
+
+## Explanation of what aspect of the project is innovative, and why.
+The estimated wait time portion of the project is innovative because it would help both people who make an appointment and those who don’t make an appointment make decisions on the best time to come to the different arm in arm locations. This could drastically lower lines and improve the system vastly.
+
+## Prototype Details
+The first prototype will allow registering users to log in or create an account, create appointments, view appointments, and cancel appointments. The first prototype will also allow the admin users to log into their account and enter an admin dashboard. The Second prototype will allow admin users to create the appointment blocks registering users will be able to use. Admin users will also be able view made user appointments and any user feedback that is given. In our third prototype we will give the registering user the ability to see past appointments, view wait time for the appointments, and allow admin users to provide wait time parameters that will change the wait time calculation for users with appointments.
+
+### Maintainance and Communication
+[Maintainance and Communicaiton](https://github.com/TCNJ-SE/ArmInArm-F23/blob/collab21-final-prototype3/docs/contribute_collab_21.md)
+
+## Use Case Diagram
+<img width="481" alt="image" src="https://github.com/TCNJ-SE/ArmInArm-F23/assets/106837490/a2b59f27-03f4-4c78-9c35-fabd8e65ba85">
+
+How will we as a group perform user testing?: 
+Accessibility Testing: involving users with various disabilities to interact with the UI and evaluate the system's accessibility features.
+
+A/B testing: Two different UI’s can be given to users and the users can explain which interface they found easier to navigate.
+
+How can we as a group raise interest in this project?
+  Our group could label working on the project as community service to encourage others in the community to contribute to it. Also, just leaving behind really clear instructions and documentation will help others to get into the project more easily and make the project itself more accessible to contribute to. The project can also be talked about on Arm-in-Arm’s media pages in order to showcase the project to others who might want to contribute to their cause.
+  
+
+
 # Team 22 - Pre-registration module, QR code Generator, and My Account Page 
 
 >  The project that Team 22 will be designing is a pre registration system for Arm in Arm clients, which will allow clients to be identified quickly and easily when picking up food from an Arm in Arm location. This application will be based on a set of questions Arm in Arm has provided for us. We will use the questions to create an online form. This online form will allow applicants to register as an Arm in Arm customer from a remote device as opposed to going in person and getting asked these questions face to face. This will save Arm in Arm a lot of time and resources to register an applicant into the system. In terms of the user (applicant) that uses this application, we will implement it in a way that it is easy and straightforward to use. This way they can sign up as soon as possible, and receive the proper help they need. Once the user fills out this form they will be generated an unique QR-code that is associated with all of their personal information. After the form is submitted and the QR-code is generated it will be displayed on a "my account" page which will allow them to screenshot their personal Qr-code and edit/update any personal information they answered on the pre-registration form. Also on this "my account" page the client will also be able to add additional members to their household (i.e., spouse, siblings, dependents, etc.). The QR-code is displayed on this page to be screenshotted and used to identify themselves at food pickup locations, so they can receive their food fast. Arm in Arm has already stressed the more people that are pre-registered the faster the line moves at pickup locations. Our goal is to increase the number of applicants that can pre-register online assuming they have access to a remote device. The user's newly entered information will be held in a database where Arm in Arm can access it whenever it is needed. Overall this should not completely resolve the issue of non registered customers showing up to locations and asking for food, but the goal is to lessen that number. We hope to make Arm in Arm’s life easier with this application!
@@ -27,6 +67,7 @@
     By moving Arm In Arm’s clientele to our software, several issues must be addressed and have been communicated within our team. We understand a majority of Arm In Arm’s clients may not speak or understand English and would be disadvantaged due to a language barrier. For that we have implemented a way for our software to include a drop down menu that allows the users to choose which language our project should conduct in. We have chosen English, Spanish, Creole and French as those were the languages we observed from our previous visit. Our project directly relates with data handling and management, and this can be concerning to many users. The issue of ensuring privacy for secure data is one we make sure to keep in mind as we build our project. Our group thought of utilizing a 2 factor identification system to ensure that the user logging in and getting access is the correct user to do so. This will allow clients to feel more safe about inputting sensitive information as well as prevent any security data leakage. We will also implement a saving functionality to ensure none of the data inputted by the client will ever be lost. We must practice a high degree of confidentiality in order to satisfy the concerns of the clients regarding their information and data privacy. The software should reveal information on a need-to-know basis and with the consent of those whose information is being recorded and revealed. Additionally, our software should be accessible to clients and should take caution not to discriminate intentionally or unintentionally. Accessibility for clients would mean accommodating language barriers; no client should be excluded from this system due to not speaking a “required language”. Taking caution to not discriminate with this system would mean ensuring the system does not inherently discriminate against any demographic groups based on how the software is designed. For example, the software should not inherently be unusable or exclude people of certain nationalities or different age groups. We plan on crafting our system to be very inclusive and accessible through our language preference and food preference options.
 
 # Arm In Arm Project
+
 
 ### Developed by TCNJ Software Engineering Students for Arm In Arm
   * [Setting up SSH keys with GitHub](docs/Setting_up_SSH_keys_GitHub.md)
