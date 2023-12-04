@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Volunteer Sign Up</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .main-container {
+            background-color: white;
+            width: 60%;
+            margin: 20px auto;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            border-top: 5px solid #007bff;
+        }
+
+        h1 {
+            color: #0056b3;
+            text-shadow: 1px 1px 2px #b0c4de;
+        }
+
+        p {
+            font-size: 16px;
+            color: #666;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .form-check {
+            display: block; 
+            margin-right: 10px; 
+        }
+
+        .form-check-label {
+            display: inline; 
+            margin-left: 5px; 
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+        .btn-primary:active {
+            box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <%= form_with(model: @volunteer, url: volunteers_path, local: true, html: { id: 'volunteer_form' }) do |form| %>
+            <h1>Volunteer Sign Up Form</h1>
+            <p>Please fill out the questions below to be assigned to a volunteer role.</p>
+
+            <div class="form-group">
+                <%= form.label :volunteer_name, "Name:" %>
+                <%= form.text_field :volunteer_name, placeholder: "Enter your name", class: "form-control" %>
+            </div>
+
+            <div class="form-group">
+                <%= form.label :volunteer_phone, "Phone Number:" %>
+                <%= form.telephone_field :volunteer_phone, placeholder: "Enter your phone number", class: "form-control" %>
+            </div>
+
+            <div class="form-group">
+                <%= form.label :availability_day, "Select Day:" %>
+                <%= form.select :availability_day, [['Monday', 'Monday'], ['Tuesday', 'Tuesday'], ['Wednesday', 'Wednesday']], prompt: "Select a day", class: "form-control" %>
+            </div>
+
+            <!-- Inside the form, for each interest -->
+            <div class="form-group">
+                <%= form.label :interests, "Select Interests:" %>
+                <% ['Interpersonal Interaction and Language Communication', 'Logistics & Organization', 'Health & Nutrition', 'Resource Management', 'Maintenance'].each do |interest| %>
+                    <div class="form-check">
+                        <%= form.check_box :interests, { multiple: true, name: "volunteer[interests][]", id: "volunteer_interests_#{interest.parameterize}" }, interest, nil %>
+                        <%= form.label "volunteer[interests][]", interest, class: "form-check-label" %>
+                    </div>
+                <% end %>
+            </div>
+
+            <%= form.submit "Submit", class: "btn btn-primary", id: "submit_button", data: { disable_with: false } %>
+        <% end %>
+
+        <script>
+            document.getElementById('volunteer_form').addEventListener('submit', function(event) {
+                if (!validateForm()) {
+                    event.preventDefault(); // Prevent form submission if validation fails
+                } else {
+                    // If validation passes, show a confirmation message
+                    alert('Thank you for signing up! Your information has been submitted.');
+                }
+            });
+
+            function validateForm() {
+                return validateName() && validatePhoneNumber() && validateDay() && validateInterests();
+            }
+
+            function validateName() {
+                var name = document.querySelector('[name="volunteer[volunteer_name]"]').value.trim();
+                if (name === '') {
+                    alert('Name cannot be empty.');
+                    return false;
+                }
+                return true;
+            }
+
+            function validatePhoneNumber() {
+                var phone = document.querySelector('[name="volunteer[volunteer_phone]"]').value.trim();
+                if (phone === '') {
+                    alert('Phone Number cannot be empty.');
+                    return false;
+                }
+                return true;
+            }
+
+            function validateDay() {
+                var day = document.querySelector('[name="volunteer[availability_day]"]').value.trim();
+                if (day === '') {
+                    alert('Please select a day.');
+                    return false;
+                }
+                return true;
+            }
+
+            function validateInterests() {
+                var interests = document.querySelectorAll('[name="volunteer[interests][]"]:checked');
+                if (interests.length === 0) {
+                    alert('Please select at least one interest.');
+                    return false;
+                }
+                return true;
+            }
+        </script>
+    </div>
+</body>
+</html>

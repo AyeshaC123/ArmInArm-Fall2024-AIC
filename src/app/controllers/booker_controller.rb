@@ -2,12 +2,13 @@
 # Description: Allows clients to create/view/delete appointments and admin to manage existing appointments
 # Filename: booker_controller.rb
 # Description: Controller for booking appointments, includes functions to limit number of appointments and filter available times
-# Last modified on: 11/29/23
+# Last modified on: 11/29/23 
 
 class BookerController < ApplicationController
 
   def new
     @client = current_user.client if current_user.present?
+
   end
 
   def times

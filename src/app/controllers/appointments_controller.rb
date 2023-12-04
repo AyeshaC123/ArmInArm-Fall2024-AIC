@@ -1,3 +1,11 @@
+# Project name: Arm in Arm Appointment Booker - Team 14
+# Description: Allows clients to create/view/delete appointments and admin to manage existing appointments
+# Filename: appointments_controller.rb
+# Description: Controller for initial appointments page, where the clients interactons to see times and their made appointments are shown
+# Last modified on: 11/29/23
+
+
+
 class AppointmentsController < ApplicationController
     def index
       # The built-up parts of the WHERE clause.

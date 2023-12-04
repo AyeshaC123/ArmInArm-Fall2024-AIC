@@ -2,8 +2,11 @@
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
     <%# Navigation Bar %>
     <nav class="navbar navbar-expand-md fixed-top <%= session[:colorblind] == 'enabled' ? 'navbar-colorblind' : 'navbar-standard' %>">
+
+        
       <%= link_to "Home", root_path, class:"navbar-brand"%>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
       aria-expanded="false" aria-label="Toggle navigation">
@@ -13,14 +16,19 @@
         <ul class="navbar-nav mr-auto">
           <li class="nav-item">
             <%= link_to "Pre-Register", households_new_path, class:"nav-link" %>
-          </li>               
+          </li>
+          <% if can?(:access, :rails_admin) %>     
           <li class="nav-item">
             <%= link_to "Households List", households_path, class:"nav-link" %>
           </li>   
-
+          <% end %>
+          <% if !can?(:access, :rails_admin)%>
           <li class="nav-item">
             <%= link_to "My Account", account_index_path, class:"nav-link" %>
-          </li>
+
+          </li>        
+<!-- collab-22>
+
 
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -59,21 +67,28 @@
                 </option>
               </select>
             </li>
+
           <% end %>
         </ul>
+<!-- collab-22>    
         <ul class="navbar-nav">
           <%# If user, show account, else sign in %>
           <% if user_signed_in? %>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
-            aria-expanded="false">
+                  aria-expanded="false">
                 Account
               </a>
               <%# Change to rails "link_to" for the actual links when implementing %>
               <%# Make sure to include the css class as shown in the login example %>
               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                 <%# The rails administration panel link %>
-                
+
+<!-- collab22-dev >
+                <% if can?(:access, :rails_admin) %><%= link_to 'Rails Admin', rails_admin_path, class: "dropdown-item" %>
+<!-- collab22-dev >
+                <% if Rails.env.development? %><%= link_to 'Rails Admin', rails_admin_path, class: "dropdown-item" %><% end %>
+
 
                 <!--if user is on admin account, user will have access to admin panel-->
                 <% if current_user.email == 'admin@example.com' %>
@@ -84,6 +99,7 @@
                 <% end %>
                 
                 <div class="dropdown-divider"></div>
+                <% end %>
                 <%# Devise requires that the logout command be sent using the 'delete' HTTP verb (method) %>
                 <%= link_to "Logout", destroy_user_session_path, class: "dropdown-item", method: :delete %>
               </div>

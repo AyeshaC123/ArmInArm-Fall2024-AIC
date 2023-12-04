@@ -1,3 +1,11 @@
+# Project name: Arm in Arm Appointment Booker - Team 14 / 21
+# Description: Allows clients to create/view/delete appointments and admin to manage existing appointments
+# Filename: admin_panel_controller.rb
+# Description: Controller for the admin panel that interacts with the view for the panel to make changes made by teams 14 and 21
+# Last modified on: 11/29/23
+
+
+
 class AdminPanelsController < ApplicationController
   before_action :set_admin_panel, only: %i[ show edit update destroy ]
 

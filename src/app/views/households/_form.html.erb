@@ -68,34 +68,34 @@
   <h3>Household Demographics</h3>
   <div class="field">
     <%= form.label nil, "Household Type" %>
-    <%= form.text_field :householdtype %>
+    <%= form.select :householdtype, [['Single Individual', 'single'], ['Adults Only', 'adultonly'], ['Family with children under 18', 'family']]%>
   </div>
 
   <div class="field">
     <%= form.label nil, "Head of Household Gender" %>
-    <%= form.text_field :headgender %>
+    <%= form.select :headgender, [['Female','female'],['Male','male'],['Other','other']] %>
   </div>
 
   <div class="field">
-    <%= form.label nil, "Head of Household Race / Ethinicity" %>
-    <%= form.text_field :headethicity %>
+    <%= form.label nil, "Head of Household Race / Ethnicity" %>
+    <%= form.select :headethnicity, [['African American / Black','black'],['Latino','latino'],['White','white'],['Asian','asian'],['Multiracial','multiracial']] %>
   </div>
 
   <br/>
   <h3>Household Income & Benefits</h3>
   <div class="field">
     <%= form.label nil, "Does the client receive SNAP (Food Stamps)?" %>
-    <%= form.text_field :foodstamps %>
+    <%= form.select :foodstamps, [['Yes','yes'], ['No','no']] %>
   </div>
 
   <div class="field">
-    <%= form.label nil, "Income Source" %>
-    <%= form.text_field :incomesource %>
+    <%= form.label nil, "Primary Income Source" %>
+    <%= form.select :incomesource, [['Child Support','csupport'],['Employment','employment'],['General Assistance','genassist'],['Social Security (SSI)','ssi'],['Social Security Disability (SSD)','ssd'],['Retirement','retirement'],['TANF','tanf'],['Unemployment Benefits','unemployment'],['None','none']] %>
   </div>
 
   <div class="field">
     <%= form.label nil, "Qualifier Code" %>
-    <%= form.text_field :qualifiercode %>
+    <%= form.select :qualifiercode, [['1 - TANF','1'],['2 - SNAP','2'],['3 - SSI','3'],['4 - WIC','4'],['5 - Medicaid','5'],['6 - Income Eligible','6'],['7 - Disaster','7']] %>
   </div>
 
   <div class="field">

@@ -4,7 +4,7 @@ class CreateHouseholds < ActiveRecord::Migration[6.0]
       t.string :headname
       t.date :headdob
       t.string :headgender
-      t.string :headethicity
+      t.string :headethnicity
       t.integer :numadults
       t.integer :numchild
       t.string :streetaddr
@@ -18,8 +18,9 @@ class CreateHouseholds < ActiveRecord::Migration[6.0]
       t.integer :netincome
       t.string :householdtype
       t.string :foodstamps
-
+      
       t.timestamps
+      
     end
   end
 end

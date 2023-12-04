@@ -1,3 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Arm In Arm Volunteer Scheduler</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f7f7f7;
+    }
+
+    header {
+      background-color: #2c3e50;
+      color: #ecf0f1;
+      text-align: center;
+      padding: 1em;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+    }
+
+    img.logo {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 20px auto;
+      border-radius: 8px;
+    }
+
+    p {
+      font-size: 18px;
+      line-height: 1.6;
+      color: #333;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1>Arm In Arm Volunteer Scheduler</h1>
+  </header>
+
+  <div class="container">
+    <img class="logo" src="https://arminarm.org/wp-content/uploads/2016/07/20171012_1153150-e1508772260159.jpg" alt="logo" width="700" height="350">
+    <p>
+      Thank you for your interest in volunteering at Arm in Arm!
+    </p>
+    <p>
+      Arm in Arm is a nonprofit organization based in Mercer County, New Jersey. Arm In Arm's mission has historically been to ensure that community members in the Mercer County area have their basic needs met and are empowered to achieve stable and self-sufficient lives.
+    </p>
+    <img class="logo" src="https://arminarm.org/wp-content/uploads/2016/09/cropped-Web-Logo-with-previous-name_V2-e1474384601787.png" alt="logo" width="500" height="200">
+  </div>
+
+</body>
+
+</html>
+
+
 <style>
   .main-container {
     display: flex;
@@ -34,6 +103,8 @@
           <a href="/search" class="btn btn-primary"><%= I18n.t 'client_profile.home.search' %></a>
           <% if current_user.email == 'admin@example.com' %>
             <%= link_to 'Admin Panel', admin_panels_path, class: "btn btn-primary" %>
+            <%= link_to 'Schedule Generator', schedule_generator_path, class: "btn btn-primary" %>
+
           <% end %>
         <% end %>
       <% end %>
