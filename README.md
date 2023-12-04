@@ -23,7 +23,7 @@ The estimated wait time portion of the project is innovative because it would he
 The first prototype will allow registering users to log in or create an account, create appointments, view appointments, and cancel appointments. The first prototype will also allow the admin users to log into their account and enter an admin dashboard. The Second prototype will allow admin users to create the appointment blocks registering users will be able to use. Admin users will also be able view made user appointments and any user feedback that is given. In our third prototype we will give the registering user the ability to see past appointments, view wait time for the appointments, and allow admin users to provide wait time parameters that will change the wait time calculation for users with appointments.
 
 
-## Updated use case diagram 
+## Use Case Diagram
 <img width="481" alt="image" src="https://github.com/TCNJ-SE/ArmInArm-F23/assets/106837490/a2b59f27-03f4-4c78-9c35-fabd8e65ba85">
 
 How will we as a group perform user testing?: 
