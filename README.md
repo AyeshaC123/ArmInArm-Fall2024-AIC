@@ -6,7 +6,6 @@
 # Group 21 Appointment with Wait Times
 
 ### This project will be implementing a appointments system that will allow clients to schedule a time they want to come to arm in arm to pick up food. This appointment system will allow for the creation, deletion, and viewing of appointments. When you view an appointment you will also be able to see an estimated wait time display. These wait times will be calculated using data from Arm-in-Arm about their processing times, and the number of users who have already pre-registered for certain times. In doing this, the number of people coming to arm-in-arm should be spread out throughout the day.
-* 
 
 ## Description of the problem to be solved. 
 The current wait times for people getting food from the different arm and arm locations are not optimal. Having long lines or long wait times to get food causes problems in the community when families just want to come in and get their food and leave. 
