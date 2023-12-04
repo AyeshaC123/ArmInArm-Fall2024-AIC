@@ -10,7 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_11_29_123456) do
+
+ActiveRecord::Schema.define(version: 2023_11_30_032647) do
+
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -86,7 +88,7 @@ ActiveRecord::Schema.define(version: 2023_11_29_123456) do
     t.string "headname"
     t.date "headdob"
     t.string "headgender"
-    t.string "headethicity"
+    t.string "headethnicity"
     t.integer "numadults"
     t.integer "numchild"
     t.string "streetaddr"
@@ -102,6 +104,19 @@ ActiveRecord::Schema.define(version: 2023_11_29_123456) do
     t.string "foodstamps"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "user_id", null: false
+    t.index ["user_id"], name: "index_households_on_user_id"
+  end
+
+  create_table "members", force: :cascade do |t|
+    t.string "firstname"
+    t.string "lastname"
+    t.date "dob"
+    t.string "relationship"
+    t.bigint "household_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["household_id"], name: "index_members_on_household_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -112,6 +127,7 @@ ActiveRecord::Schema.define(version: 2023_11_29_123456) do
     t.datetime "remember_created_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.boolean "registered", default: false
     t.boolean "admin", default: false
     t.bigint "client_id"
     t.integer "role", default: 0, null: false
@@ -121,6 +137,9 @@ ActiveRecord::Schema.define(version: 2023_11_29_123456) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "households", "users"
+  add_foreign_key "members", "households"
+  
   create_table "volunteer_assignments", id: :serial, force: :cascade do |t|
     t.integer "volunteer_id"
     t.integer "role_id"

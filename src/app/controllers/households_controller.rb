@@ -21,16 +21,24 @@ class HouseholdsController < ApplicationController
 
   # POST /households or /households.json
   def create
-    @household = Household.new(household_params)
-
-    respond_to do |format|
-      if @household.save
-        format.html { redirect_to household_url(@household), notice: "Household was successfully created." }
-        format.json { render :show, status: :created, location: @household }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @household.errors, status: :unprocessable_entity }
+    if current_user.registered == false
+      @household = Household.new(household_params)
+      @household.user_id = current_user.id
+      
+      respond_to do |format|
+        if @household.save
+          format.html { redirect_to household_url(@household), notice: "Household was successfully created. Add additional members through the edit button on My Account page." }
+          format.json { render :show, status: :created, location: @household }
+          current_user.update(registered: true)
+        else
+          format.html { render :new, status: :unprocessable_entity }
+          format.json { render json: @household.errors, status: :unprocessable_entity }
+        end
       end
+
+    else
+        redirect_to root_path
+        flash.alert = "You already have a registered household."
     end
   end
 
@@ -51,10 +59,15 @@ class HouseholdsController < ApplicationController
   def destroy
     @household.destroy
 
+    user_id = @household.user_id
+
     respond_to do |format|
       format.html { redirect_to households_url, notice: "Household was successfully destroyed." }
       format.json { head :no_content }
     end
+
+    user = User.find_by_id(id: user_id)
+    user.update(registered: false)
   end
 
   private
@@ -65,6 +78,6 @@ class HouseholdsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def household_params
-      params.require(:household).permit(:headname, :headdob, :headgender, :headethicity, :numadults, :numchild, :streetaddr, :city, :state, :county, :zipcode, :phonenum, :incomesource, :qualifiercode, :netincome, :householdtype, :foodstamps)
+      params.require(:household).permit(:headname, :headdob, :headgender, :headethnicity, :numadults, :numchild, :streetaddr, :city, :state, :county, :zipcode, :phonenum, :incomesource, :qualifiercode, :netincome, :householdtype, :foodstamps)
     end
 end

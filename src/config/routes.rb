@@ -38,13 +38,13 @@ Rails.application.routes.draw do
 
   delete 'booker/appointments/:id', to: 'booker#destroy', as: 'delete_appointment'
 
+  resources :members
   resources :households
   # The root page, e.g. www.example.com/, is sent here
   # root 'controller#method_in_controller'
   get 'households/new'
   get 'account/index'
-  
-  get '/apointments/display_wait_Nassau', to: redirect('/')
+  get 'members/new'
   
   # Devise authentification pages. This controlls the user login
   # and authentification system.
