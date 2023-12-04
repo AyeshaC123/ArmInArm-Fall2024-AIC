@@ -10,7 +10,14 @@ Development Branch: collab14-dev
 
 During our visit to Arm in Arm, we noticed long lines that wrapped around the corner, resulting in impatient clients. Our objective is to reduce the wait time for the Arm in Arm clients by providing them with booked appointments to come to the food pantry at their specified time slot. Staff members will ask clients during their registration process if they would like to sign up for a weekly appointment slot, at which point their information will be written down on a report that our software will generate. After the initial registration, the handwritten information will be moved into the software so that the Arm in Arm Staff can run reports and statistics on the information.
 
+## Update Use Case Diagram
+![UseCaseIV](https://github.com/TCNJ-SE/ArmInArm-F23/blob/collab12-prototype3/docs/Updated_Use_Case_Diagram.png)
+
+## Updated Changes
+ [Updated documents](https://github.com/TCNJ-SE/ArmInArm-F23/blob/collab12-prototype3/docs/Updated%20documents.pdf)
+
 Our project is an integral component for the way charitable organizations like Arm in Arm distribute food to those in need. The Appointment Scheduler is designed to alleviate the struggles of both clients and volunteers as they face long lines and higher customer demands. By being able to schedule appointments, a client’s time and dignity is respected. However, it's not just about smaller wait times and greater convenience; the project also adds immense value to the topic by addressing the core issue of efficiency. Arm in Arm volunteers, who are often stretched to their limits during peak distribution hours, will now experience a more manageable workload. Additionally, the system will offer a level of flexibility by allowing staff to adjust appointment windows, manage client number per slot, and accommodate special preferences. 
+
 
 **Objectives:**
 
