@@ -4,12 +4,13 @@
 
 Rails.application.routes.draw do
 
+  resources :members
   resources :households
   # The root page, e.g. www.example.com/, is sent here
   # root 'controller#method_in_controller'
   get 'households/new'
   get 'account/index'
-  
+  get 'members/new'
   
   # Devise authentification pages. This controlls the user login
   # and authentification system.
