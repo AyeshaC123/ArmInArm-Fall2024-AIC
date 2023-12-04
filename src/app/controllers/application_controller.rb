@@ -11,4 +11,39 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   # See if the current user is logged in
   before_action :authenticate_user!
+  # See if the current user has a client profile
+  before_action :require_profile
+
+  # Switch locale for requests
+  around_action :switch_locale
+
+  def require_profile
+    # Redirect user to client creation page if:
+    #   the user is logged in,
+    #   the user is not visiting the /clients page (creating a client),
+    #   the user is not visiting the /new_client page (avoid infinite redirect), and
+    #   the user needs a client profile associated with their account.
+    if not current_user.nil? and request.path != '/clients' and request.path != '/new_client' and request.path != '/users/sign_out' and current_user.needs_client_profile?
+      redirect_to '/new_client'
+    end
+  end
+
+  def switch_locale(&action)
+    if not current_user.nil?
+      if params.has_key? :locale
+        current_user.locale = params[:locale]
+        current_user.save
+        params.delete :locale
+        redirect_to request.path, **params.to_unsafe_h
+      else
+        if I18n.available_locales.map(&:to_s).include? current_user.locale
+          I18n.with_locale(current_user.locale, &action)
+        else
+          I18n.with_locale(I18n.default_locale, &action)
+        end
+      end
+    else
+      I18n.with_locale(I18n.default_locale, &action)
+    end
+  end
 end

@@ -16,7 +16,7 @@ pre {
 a {
   color: #000; }
 
-a:visited {
+a:visited:not(.btn) {
   color: #666; }
 
 a:hover {
@@ -63,3 +63,4 @@ div.actions {
 
 label {
   display: block; }
+

@@ -1,0 +1,59 @@
+<p id="notice"><%= notice %></p>
+
+
+<div class = "d-flex justify-content-center"> 
+    <h1>Admin Panel</h1>
+</div>
+
+<br>
+
+<% if @admin_panels.any? %>
+  <table class = "table">
+    <thead class = "thead-light">
+      <tr>
+        <th>Appointment length (minutues) </th>
+        <th>Maximum number of appointments at one time</th>
+        <th>What days do you want to have time slots on?</th>
+        <th>How many minutes does it take to service 1 person?</th>
+        <th>Start time for appointments</th>
+        <th>End time for appointments</th>
+        <th>Actions</th>
+
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @admin_panels.each do |admin_panel| %>
+        <tr>
+          <td><%= admin_panel.appointment_length %></td>
+          <td><%= admin_panel.max_appointment_count %></td>
+          <!--gets rid of zeros that show up-->
+          <td><%= admin_panel.booking_days.reject { |day| day == '0' }.join(', ') %></td>
+          <td><%= admin_panel.service_time %></td>
+          <!--<td><%#= admin_panel.start_time %></td>
+          <td><%#= admin_panel.end_time %></td>-->
+          <td><%= admin_panel.start_time.strftime('%I:%M %p') %></td>
+          <td><%= admin_panel.end_time.strftime('%I:%M %p')  %></td>
+          <td><%= link_to 'Edit', edit_admin_panel_path(admin_panel) %></td>
+          <td><%= link_to 'Destroy', admin_panel, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+
+  <div class = "d-flex justify-content-center"> 
+    <p>Admin Panel has not yet been initialized</p>
+</div>
+  
+  <div class = "d-flex justify-content-center"> 
+    <%= link_to 'Initialize Admin Panel', new_admin_panel_path, class: "btn btn-primary" %>
+</div>
+
+<% end %>
+
+<br>
+
+
+
+

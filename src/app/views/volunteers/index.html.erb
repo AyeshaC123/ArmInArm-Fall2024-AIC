@@ -1,0 +1,16 @@
+<h1>All Volunteers</h1>
+
+<table>
+  <tr>
+    <th style="padding-right: 20px;">Volunteer Name</th>
+    <th style="padding-right: 20px;">Volunteer Phone</th>
+    <th>Roles</th>
+  </tr>
+  <% @volunteers.each do |volunteer| %>
+    <tr>
+      <td style="padding-right: 20px;"><%= volunteer.volunteer_name %></td>
+      <td style="padding-right: 20px;"><%= volunteer.volunteer_phone %></td>
+      <td>TBA</td> <!-- Placeholder for roles -->
+    </tr>
+  <% end %>
+</table>

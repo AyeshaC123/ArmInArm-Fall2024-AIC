@@ -12,7 +12,7 @@
     <%= form.text_field :last_name %><br>
 
     <%= form.label :dob, "Please enter date of birth (mm/dd/yyyy):" %>
-    <%= form.text_field :dob %><br>
+    <%= form.date_field :dob %><br>
 
     <button type="button" onclick="showStep(2)">Next</button>
   </div>
@@ -31,13 +31,17 @@
   </div>
 
   <div id="step3" style="display:none;">
-    <%= form.label "Is dietary restriction an allergy? (Enter y/n)" %>
-    <%= form.select :is_allergy, [['Yes', 'y'], ['No', 'n']] %><br>
-
-    <%= form.label :allergies, "Please describe allergy (optional):" %>
-    <%= form.text_field :allergies %><br>
-
-    <%= form.label :restrictions, "Please describe dietary restriction (optional):" %>
+    <h2>Allergies</h2>
+    <% Client::COMMON_ALLERGENS.each do |param, name| %>
+      <%= form.label param, name %>
+      <%= form.check_box param %><br>
+    <% end %>
+    <h2>Dietary restrictions</h2>
+    <%= form.label :gluten_free, "Gluten-free" %>
+    <%= form.check_box :gluten_free %><br>
+    <%= form.label :vegan, "Vegan" %>
+    <%= form.check_box :vegan %><br>
+    <%= form.label :restrictions, "Any other allergens or dietary restrictions? Leave blank if not applicable." %>
     <%= form.text_field :restrictions %><br>
 
     <%= form.submit "Create Client" %>
@@ -51,5 +55,3 @@
     }
   }
 </script>
-
-
