@@ -76,8 +76,6 @@ Rails.application.routes.draw do
   # # It would have extected to: 'add_tags#add', which would fail
   # put '/add_tags/add', to: 'users#add_tags'
   
-  # Admin route
-  mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   
   # Root route
   root 'home#index'

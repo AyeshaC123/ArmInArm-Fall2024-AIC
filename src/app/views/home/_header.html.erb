@@ -17,17 +17,41 @@
           <li class="nav-item">
             <%= link_to "Pre-Register", households_new_path, class:"nav-link" %>
           </li>
+          <li class="nav-item">
+            <%= link_to "Appointments", new_appointment_path, class:"nav-link" %>
+          </li> 
           <% if can?(:access, :rails_admin) %>     
           <li class="nav-item">
             <%= link_to "Households List", households_path, class:"nav-link" %>
           </li>   
+          <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Volunteer
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <%= link_to 'View Upcoming Volunteer Hours', upcoming_hours_path, class: 'dropdown-item' %>
+          <%= link_to 'Fill out Volunteer Form', volunteer_form_path, class: 'dropdown-item' %>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#">And Another</a>
+        </div>
+      </li>
           <% end %>
           <% if !can?(:access, :rails_admin)%>
-          <li class="nav-item">
-            <%= link_to "My Account", account_index_path, class:"nav-link" %>
-
-          </li>        
-<!-- collab-22>
+          
+          <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Volunteer
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <%= link_to 'View Upcoming Volunteer Hours', upcoming_hours_path, class: 'dropdown-item' %>
+          <%= link_to 'Fill out Volunteer Form', volunteer_form_path, class: 'dropdown-item' %>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#">And Another</a>
+        </div>
+      </li>
+                 
+  <%end%>
+<!-- collab-22-->
 
 
           <li class="nav-item dropdown">
@@ -67,10 +91,15 @@
                 </option>
               </select>
             </li>
+            <li class="nav-item">
+            <%= link_to "My Account", account_index_path, class:"nav-link" %>
+          </li> 
 
           <% end %>
         </ul>
-<!-- collab-22>    
+        
+<!-- collab-22-->    
+
         <ul class="navbar-nav">
           <%# If user, show account, else sign in %>
           <% if user_signed_in? %>
@@ -78,22 +107,22 @@
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
                   aria-expanded="false">
                 Account
+                
               </a>
+              
               <%# Change to rails "link_to" for the actual links when implementing %>
               <%# Make sure to include the css class as shown in the login example %>
               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                 <%# The rails administration panel link %>
 
-<!-- collab22-dev >
+
                 <% if can?(:access, :rails_admin) %><%= link_to 'Rails Admin', rails_admin_path, class: "dropdown-item" %>
-<!-- collab22-dev >
-                <% if Rails.env.development? %><%= link_to 'Rails Admin', rails_admin_path, class: "dropdown-item" %><% end %>
+
+                
 
 
                 <!--if user is on admin account, user will have access to admin panel-->
                 <% if current_user.email == 'admin@example.com' %>
-
-                  <% if Rails.env.development? %><%= link_to 'Rails Admin', rails_admin_path, class: "dropdown-item" %><% end %>
 
                   <%= link_to 'Admin Panel', admin_panels_path, class: "dropdown-item" %>
                 <% end %>
@@ -108,9 +137,11 @@
             <li class="nav-item">
               <%= button_to "Login", new_user_session_path, class: "btn btn-outline-primary" %>
             </li>
+          
           <% end %>
         </ul>
       </div>
+      
       <script type="text/javascript">
         function changeLanguage(newLanguage) {
           if (location.search != '') {

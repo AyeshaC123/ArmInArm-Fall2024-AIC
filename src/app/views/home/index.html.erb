@@ -48,40 +48,22 @@
 <body>
 
   <header>
-    <h1>Arm In Arm Volunteer Scheduler</h1>
+    <h1>Arm In Arm</h1>
   </header>
 
   <div class="container">
     <img class="logo" src="https://arminarm.org/wp-content/uploads/2016/07/20171012_1153150-e1508772260159.jpg" alt="logo" width="700" height="350">
-    <p>
-      Thank you for your interest in volunteering at Arm in Arm!
-    </p>
+    
     <p>
       Arm in Arm is a nonprofit organization based in Mercer County, New Jersey. Arm In Arm's mission has historically been to ensure that community members in the Mercer County area have their basic needs met and are empowered to achieve stable and self-sufficient lives.
     </p>
     <img class="logo" src="https://arminarm.org/wp-content/uploads/2016/09/cropped-Web-Logo-with-previous-name_V2-e1474384601787.png" alt="logo" width="500" height="200">
   </div>
-
-</body>
-
-</html>
-
-
-<style>
-  .main-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    height: 90vh;
-  }
-</style>
-<div class="main-container">
-  <div class="row mx-auto">
-    <%= image_tag 'image.png', id: 'my-element', alt: 'Arm in Arm' %>
-  </div>
   <div class="text-center" style="padding-bottom: 100px">
-   <h2 style="color: dark grey;"><%= I18n.t 'client_profile.home.title' %></h2>
 
+  <% if can?(:access, :rails_admin) %> 
+   <h2 style="color: dark grey;"><%= I18n.t 'client_profile.home.title' %></h2>
+    <%end%>
   </div>
   <div class="row">
     <div class="mx-auto">
@@ -108,7 +90,9 @@
           <% end %>
         <% end %>
       <% end %>
-
+      <%= link_to 'Appointments', new_appointment_path, class: 'btn btn-primary' %>
     </div>
   </div>
-</div>
+</body>
+</html>
+

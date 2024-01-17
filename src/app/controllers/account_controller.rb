@@ -5,10 +5,14 @@ class AccountController < ApplicationController
   before_action :load_users, only: [:index]
 
   def index
-    @user_id = current_user.id
-    @user_household = Household.find_by(user_id: @user_id)
-    @qr_code_url = generate_qr_code_url(@user_household.id)
-    @qr_code = generate_qr_code(@qr_code_url) # placeholder, replace with url
+    @user_id = current_user.id if current_user.present?
+    if @user_id
+      @user_household = Household.find_by(user_id: @user_id)
+      @qr_code_url = generate_qr_code_url(@user_household.id) if @user_household.present?
+      @qr_code = generate_qr_code(@qr_code_url) if @qr_code_url.present?
+    else
+      # Handle the case when current_user is nil
+    end
   end
 
   def generate_qr_code_url(household_id)
