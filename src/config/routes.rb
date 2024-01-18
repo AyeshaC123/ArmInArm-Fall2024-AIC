@@ -12,6 +12,11 @@ Rails.application.routes.draw do
   get 'volunteers/upcoming_hours', to: 'volunteers#upcoming_hours', as: 'upcoming_hours'
   get 'volunteers/form', to: 'volunteers#form', as: 'volunteer_form'
  #post 'volunteers', to: 'volunteers#create'
+  get 'admin/schedule_generator', to: 'admin#schedule_generator', as: 'schedule_generator'
+  
+  get 'admin/show_schedule', to: 'admin#show_schedule', as: 'show_schedule'
+
+  get 'admin/show_schedule_pdf', to: 'admin#show_schedule_pdf', as: 'show_schedule_pdf'
   post 'volunteers/serverendpoint', to: 'volunteers#create'
   post 'clear_database', to: 'empty_data#clear_database'
   get 'upcoming_hours', to: 'volunteers#upcoming_hours'
@@ -36,11 +41,11 @@ Rails.application.routes.draw do
 
   post 'booker/book', to: 'booker#book', as: 'book_appointment'
 
-  get 'admin/schedule_generator', to: 'admin#schedule_generator', as: 'schedule_generator'
+  #get 'admin/schedule_generator', to: 'admin#schedule_generator', as: 'schedule_generator'
 
-  get 'admin/show_schedule', to: 'admin#show_schedule', as: 'show_schedule'
+  #get 'admin/show_schedule', to: 'admin#show_schedule', as: 'show_schedule'
 
-  get 'admin/show_schedule_pdf', to: 'admin#show_schedule_pdf', as: 'show_schedule_pdf'
+  #get 'admin/show_schedule_pdf', to: 'admin#show_schedule_pdf', as: 'show_schedule_pdf'
 
 
   delete 'booker/appointments/:id', to: 'booker#destroy', as: 'delete_appointment'
