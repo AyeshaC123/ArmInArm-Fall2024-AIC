@@ -17,9 +17,11 @@
           <li class="nav-item">
             <%= link_to "Pre-Register", households_new_path, class:"nav-link" %>
           </li>
+          <% if !can?(:access, :rails_admin) %>
           <li class="nav-item">
             <%= link_to "Appointments", new_appointment_path, class:"nav-link" %>
           </li> 
+          <%end%>
           <% if can?(:access, :rails_admin) %>     
           <li class="nav-item">
             <%= link_to "Households List", households_path, class:"nav-link" %>
