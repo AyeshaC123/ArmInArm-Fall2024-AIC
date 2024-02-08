@@ -1,4 +1,4 @@
-# README: Arm in Arm Integrated Solution
+# README: ArmInArm Application
 ## Introduction
 This project is designed to enhance the efficiency and effectiveness of Arm in Arm, a food distribution pantry. The project aims to streamline client service, lessen wait times, better volunteer coordination, and improve overall management through an integrated system comprising appointment scheduling, pre-registration, and volunteer assignment.
 Clients can schedule, view, and cancel appointments for food pickup.
