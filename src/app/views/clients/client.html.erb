@@ -1,0 +1,51 @@
+<table>
+  <tr>
+    <th>ID</th>
+    <td><%= @client.id %>
+  </tr>
+  <tr>
+    <th>First Name</th>
+    <td><%= @client.first_name %></td>
+  </tr>
+  <tr>
+    <th>Last Name</th>
+    <td><%= @client.last_name %></td>
+  </tr>
+  <tr>
+    <th>Date of Birth</th>
+    <td><%= @client.dob %></td>
+  </tr>
+  <tr>
+    <th>Address</th>
+    <td><%= @client.address %></td>
+  </tr>
+  <tr>
+    <th>Language</th>
+    <td><%= @client.language %></td>
+  </tr>
+  <tr>
+    <th>Religion</th>
+    <td><%= @client.religion %></td>
+  </tr>
+  <tr>
+    <th>Allergies</th>
+    <td><%= @client.allergies_string %></td>
+  </tr>
+  <tr>
+    <th>Gluten-free</th>
+    <td><%= if @client.gluten_free then 'Yes' else 'No'end %></td>
+  </tr>
+  <tr>
+    <th>Vegan</th>
+    <td><%= if @client.vegan then 'Yes' else 'No' end %></td>
+  </tr>
+  <tr>
+    <th>Dietary Restrictions</th>
+    <td><%= @client.restrictions %></td>
+  </tr>
+  <%= link_to 'Edit', edit_client_path(@client) %>
+  <%= link_to 'Delete', client_path(@client), method: :delete, data: { confirm: 'Are you sure?' } %>
+
+
+</table>
+

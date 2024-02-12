@@ -1,0 +1,160 @@
+    <%# Bootstrap js & dependencies %>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <%# Navigation Bar %>
+    <nav class="navbar navbar-expand-md fixed-top <%= session[:colorblind] == 'enabled' ? 'navbar-colorblind' : 'navbar-standard' %>">
+
+        
+      <%= link_to "Home", root_path, class:"navbar-brand"%>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+      aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <%= link_to "Pre-Register", households_new_path, class:"nav-link" %>
+          </li>
+          <% if !can?(:access, :rails_admin) %>
+          <li class="nav-item">
+            <%= link_to "Appointments", new_appointment_path, class:"nav-link" %>
+          </li> 
+          <%end%>
+          <% if can?(:access, :rails_admin) %>     
+          <li class="nav-item">
+            <%= link_to "Households List", households_path, class:"nav-link" %>
+          </li>   
+          <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Volunteer
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <%= link_to 'View Upcoming Volunteer Hours', upcoming_hours_path, class: 'dropdown-item' %>
+          <%= link_to 'Fill out Volunteer Form', volunteer_form_path, class: 'dropdown-item' %>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#">And Another</a>
+        </div>
+      </li>
+          <% end %>
+          <% if !can?(:access, :rails_admin)%>
+          
+          <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Volunteer
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <%= link_to 'View Upcoming Volunteer Hours', upcoming_hours_path, class: 'dropdown-item' %>
+          <%= link_to 'Fill out Volunteer Form', volunteer_form_path, class: 'dropdown-item' %>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#">And Another</a>
+        </div>
+      </li>
+                 
+  <%end%>
+<!-- collab-22-->
+
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Accessibility
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <%= link_to 'Toggle Colorblind Mode', toggle_colorblind_path, class: "dropdown-item", method: :post %>
+              <%= link_to 'Toggle Dyslexic Font', toggle_dyslexic_font_path, class: "dropdown-item", method: :post %>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="#">And Another</a>
+             </div>
+          </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          View Wait Times
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <%= link_to 'Trenton', graphs_hudson_path, class: "dropdown-item" %>
+              <%= link_to "Princeton", graphs_nassau_path, class:"dropdown-item" %>
+              <a class="dropdown-item" <%= link_to "Mobile Pantry", graphs_mobile_path, class:"nav-link" %></a>
+
+            </div>
+          </li>
+          <% unless current_user.nil? %>
+            <li>
+              <span>🌐</span>
+              <select class="language-selector" onchange="changeLanguage(this.value)">
+                <option value="en" <%= if current_user&.locale == 'en' then 'selected'.html_safe else '' end %>>
+		  <%= nil %> English
+                </option>
+                <option value="es" <%= if current_user&.locale == 'es' then 'selected'.html_safe else '' end %>>
+                  <%= nil %> Español
+                </option>
+                <option value="ht" <%= if current_user&.locale == 'ht' then 'selected'.html_safe else '' end %>>
+                  <%= nil %> Kreyòl Ayisyen
+                </option>
+              </select>
+            </li>
+            <li class="nav-item">
+            <%= link_to "My Account", account_index_path, class:"nav-link" %>
+          </li> 
+
+          <% end %>
+        </ul>
+        
+<!-- collab-22-->    
+
+        <ul class="navbar-nav">
+          <%# If user, show account, else sign in %>
+          <% if user_signed_in? %>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+                  aria-expanded="false">
+                Account
+                
+              </a>
+              
+              <%# Change to rails "link_to" for the actual links when implementing %>
+              <%# Make sure to include the css class as shown in the login example %>
+              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                <%# The rails administration panel link %>
+
+
+                <% if can?(:access, :rails_admin) %><%= link_to 'Rails Admin', rails_admin_path, class: "dropdown-item" %>
+
+                
+
+
+                <!--if user is on admin account, user will have access to admin panel-->
+                <% if current_user.email == 'admin@example.com' %>
+
+                  <%= link_to 'Admin Panel', admin_panels_path, class: "dropdown-item" %>
+                <% end %>
+                
+                <div class="dropdown-divider"></div>
+                <% end %>
+                <%# Devise requires that the logout command be sent using the 'delete' HTTP verb (method) %>
+                <%= link_to "Logout", destroy_user_session_path, class: "dropdown-item", method: :delete %>
+              </div>
+            </li>
+          <% else %>
+            <li class="nav-item">
+              <%= button_to "Login", new_user_session_path, class: "btn btn-outline-primary" %>
+            </li>
+          
+          <% end %>
+        </ul>
+      </div>
+      
+      <script type="text/javascript">
+        function changeLanguage(newLanguage) {
+          if (location.search != '') {
+	    location.search += '&locale=' + newLanguage;
+          } else {
+            location.search = '?locale=' + newLanguage;
+          }
+        }
+
+        $(document).ready(function() {
+          $('.dropdown-toggle').dropdown();
+        });
+      </script>
+    </nav>

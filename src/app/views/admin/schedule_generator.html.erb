@@ -1,0 +1,26 @@
+<!--
+Project name: Arm in Arm Appointment Booker - Team 14
+Description: Allows clients to create/view/delete appointments and admin to manage existing appointments
+Filename: schedule_genrator.html.erb
+Description: Simple view to select the date and location to see the schedule
+Last modified on: 11/29/23
+-->
+
+
+<h1>Schedule Generator</h1>
+
+<%= form_with url: show_schedule_path, method: :get, local: true do |form| %>
+  <div>
+    <%= form.label :location, 'Choose Location:' %>
+    <%= form.select :location, ['Trenton', 'Princeton', 'Mobile'], {}, { class: 'form-control', required: true } %>
+  </div>
+
+  <div>
+    <%= form.label :date, 'Select Date:' %>
+    <%= form.date_field :date, required: true, class: 'form-control' %>
+  </div>
+
+  <div>
+    <%= form.submit 'Show Schedule', class: 'btn btn-primary' %>
+  </div>
+<% end %>

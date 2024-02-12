@@ -1,0 +1,7 @@
+es: 
+  client_profile:
+    home:
+      title: "Registro de Perfil de Cliente y Portal de Búsqueda"
+      create: "Crear Perfil de Cliente"
+      modify: "Ver o Modificar el Perfil de Cliente"
+      search: "Buscar"

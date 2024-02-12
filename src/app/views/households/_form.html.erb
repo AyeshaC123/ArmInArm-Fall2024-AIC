@@ -1,0 +1,110 @@
+<%= form_with(model: household, local: true) do |form| %>
+  <% if household.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(household.errors.count, "error") %> prohibited this household from being saved:</h2>
+
+      <ul>
+        <% household.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <br/> 
+  <h3>General Information</h3>
+
+  <div class="field">
+    <%= form.label nil,"Name of Head of Household" %>
+    <%= form.text_field :headname %>
+  </div>
+
+  <div class="field">
+    <%= form.label nil,"Date of Birth (MM/DD/YYYY)" %>
+    <%= form.date_select :headdob %>
+  </div>
+
+  <div class="field">
+    <%= form.label nil, "# of Adults in Household" %>
+    <%= form.text_field :numadults %>
+  </div>
+
+  <div class="field">
+    <%= form.label nil, "# of Children in household" %>
+    <%= form.text_field :numchild %>
+  </div>
+
+  <h3>Household Address</h3>
+  <div class="field">
+    <%= form.label nil, "Street Address" %>
+    <%= form.text_field :streetaddr %>
+  </div>
+
+  <div class="field">
+    <%= form.label :city %>
+    <%= form.text_field :city %>
+  </div>
+
+  <div class="field">
+    <%= form.label :state %>
+    <%= form.text_field :state %>
+  </div>
+
+  <div class="field">
+    <%= form.label :county %>
+    <%= form.text_field :county %>
+  </div>
+
+  <div class="field">
+    <%= form.label nil, "Zip code" %>
+    <%= form.text_field :zipcode %>
+  </div>
+
+  <div class="field">
+    <%= form.label nil, "Mobile Phone" %>
+    <%= form.text_field :phonenum %>
+  </div>
+  <br/>
+  <h3>Household Demographics</h3>
+  <div class="field">
+    <%= form.label nil, "Household Type" %>
+    <%= form.select :householdtype, [['Single Individual', 'single'], ['Adults Only', 'adultonly'], ['Family with children under 18', 'family']]%>
+  </div>
+
+  <div class="field">
+    <%= form.label nil, "Head of Household Gender" %>
+    <%= form.select :headgender, [['Female','female'],['Male','male'],['Other','other']] %>
+  </div>
+
+  <div class="field">
+    <%= form.label nil, "Head of Household Race / Ethnicity" %>
+    <%= form.select :headethnicity, [['African American / Black','black'],['Latino','latino'],['White','white'],['Asian','asian'],['Multiracial','multiracial']] %>
+  </div>
+
+  <br/>
+  <h3>Household Income & Benefits</h3>
+  <div class="field">
+    <%= form.label nil, "Does the client receive SNAP (Food Stamps)?" %>
+    <%= form.select :foodstamps, [['Yes','yes'], ['No','no']] %>
+  </div>
+
+  <div class="field">
+    <%= form.label nil, "Primary Income Source" %>
+    <%= form.select :incomesource, [['Child Support','csupport'],['Employment','employment'],['General Assistance','genassist'],['Social Security (SSI)','ssi'],['Social Security Disability (SSD)','ssd'],['Retirement','retirement'],['TANF','tanf'],['Unemployment Benefits','unemployment'],['None','none']] %>
+  </div>
+
+  <div class="field">
+    <%= form.label nil, "Qualifier Code" %>
+    <%= form.select :qualifiercode, [['1 - TANF','1'],['2 - SNAP','2'],['3 - SSI','3'],['4 - WIC','4'],['5 - Medicaid','5'],['6 - Income Eligible','6'],['7 - Disaster','7']] %>
+  </div>
+
+  <div class="field">
+    <%= form.label nil, "Net Income" %>
+    <%= form.text_field :netincome %>
+  </div>
+
+  <div class="actions">
+    <input type="submit" name="commit" value="Submit Form" data-disable-with="Submit Form" />
+  </div>
+<% end %>
+<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
