@@ -1,0 +1,29 @@
+<%# team 11 - this displays all of the information about the household and allows for edit, approval, denial %>
+<h1>Household Form</h1>
+
+<%# grab all of the info from the database %>
+<p><b>Head of Household:</b> <%= @household.headname %></p>
+<p><b>Head of Household DOB:</b> <%= @household.headdob %></p>
+<p><b>Date Submitted:</b> <%= @household.created_at.strftime("%Y-%m-%d") %></p>
+<p><b>Number of Adults:</b> <%= @household.numadults %></p>
+<p><b>Number of Children:</b> <%= @household.numchild %></p>
+<p><b>Street Address:</b> <%= @household.streetaddr %></p>
+<p><b>City:</b> <%= @household.city %></p>
+<p><b>State:</b> <%= @household.state %></p>
+<p><b>County:</b> <%= @household.county %></p>
+<p><b>Zipcode:</b> <%= @household.zipcode %></p>
+<p><b>Phone Number:</b> <%= @household.phonenum %></p>
+<p><b>Household Type:</b> <%= @household.householdtype %></p>
+<p><b>Head Gender:</b> <%= @household.headgender %></p>
+<p><b>Head Ethnicity</b>: <%= @household.headethnicity %></p>
+<p><b>Food Stamps:</b> <%= @household.foodstamps %></p>
+<p><b>Income Source:</b> <%= @household.incomesource %></p>
+<p><b>Qualifier Code:</b> <%= @household.qualifiercode %></p>
+<p><b>Net Income:</b> <%= @household.netincome %></p>
+
+<%# action buttons %>
+<%= link_to "Edit", edit_household_path(@household), class: "btn btn-outline-secondary" %>
+<%= link_to "Approve", approve_review_path(@household), method: :patch, data: { confirm: "Are you sure you want to approve this household?" }, class: "btn btn-outline-success ml-2" %>
+<%= link_to "Deny", deny_review_path(@household), method: :delete, data: { confirm: "Are you sure you want to delete this household?" }, class: "btn btn-outline-danger ml-2" %>
+<br>
+<br>

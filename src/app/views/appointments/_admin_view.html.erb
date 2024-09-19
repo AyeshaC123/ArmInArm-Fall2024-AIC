@@ -1,0 +1,145 @@
+<!--
+Project Name: Appointment Scheduler and Check-in - team 23
+Description: Add constraints to booking appointments and allow for clients to be checked into their slotted appointments
+FileName: _admin_view.html.erb
+Description: This is the view which admins will see where they can view all of the clients where they can proceed to
+manually check in the client or view past checked in appointments
+Last Modified: 4/22/24
+-->
+
+<!-- spacer to make it look better -->
+<div style="height: 30px;"></div>
+<div class="d-flex justify-content-between">
+  <h1>Check-Ins</h1>
+
+  <a href="<%= admin_search_path %>" class="rounded">
+    <button class="btn btn-primary h-100"> Search Appointments </button>
+  </a>
+</div>
+
+<!-- New section for existing appointments -->
+<!-- added style edits within section for easier changing -->
+<tr>
+  <td>
+    <div style="margin-top: 20px; padding: 10px; border: 1px solid #ccc; border-radius: 5px; background-color: #f9f9f9;">
+      <ul class="nav nav-pills" id="pills-tab" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button class="border-0 nav-link active" id="pills-upcoming-tab" data-bs-toggle="pill" data-bs-target="#pills-upcoming" type="button" role="tab" aria-controls="pills-upcoming" aria-selected="true"><h6>Upcoming Appointments</h6></button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="border-0 nav-link" id="pills-previous-checked-tab" data-bs-toggle="pill" data-bs-target="#pills-checked" type="button" role="tab" aria-controls="pills-checked" aria-selected="false"><h6>Previous Checked-in Appointments</h6></button>
+        </li>
+        <li class="nav-item" role="presentation">
+        <button class="border-0 nav-link" id="pills-unchecked-tab" data-bs-toggle="pill" data-bs-target="#pills-unchecked" type="button" role="tab" aria-controls="pills-unchecked" aria-selected="false"><h6>Previous Unchecked-in Appointments</h6></button>
+        </li>
+      </ul> 
+
+      <!-- find this in the helpers file -->
+      <% declare_my_appointment_array( ) %>
+
+      <div class="my-2 tab-content" id="pills-tabContent">
+        <div class="tab-pane fade show active" id="pills-upcoming" role="tabpanel" aria-labelledby="pills-upcoming-tab" tabindex="0">
+          <!-- For loop to generate upcoming appointments -->
+          <% @data["upcoming_appointments"].each_with_index do |element, index| %>
+            <button class="w-100 rounded" type="button" data-toggle="collapse" data-target="#upcoming_collapse_<%= index %>" aria-expanded="false" aria-controls="upcoming_collapse_<%= index %>">
+              <div class="d-flex justify-content-between">
+                <h3><em> <%= element[0]%></em> </h3>
+              </div>
+              
+            </button>
+              
+              <div class="collapse" id="upcoming_collapse_<%= index %>" style="width: 100%;" >
+                <div>
+                  <h4>
+                    Unchecked-In Appointments
+                  </h4>
+                  <% element[1].each do |unchecked_appointment| %>
+                    <ul style="list-style-type: none; padding: 0;" ></ul>
+                      <% store_current_appointment( unchecked_appointment ) %>
+                      <%= render partial: "appointments/admin_check_in", locals: { current_date: @data["today"], from_search: false } %>
+                    </ul>
+                  <% end %>
+                  <h4>
+                    Checked-In Appointments
+                  </h4>
+                  <% element[2].each do |unchecked_appointment| %>
+                    <ul style="list-style-type: none; padding: 0;" ></ul>
+                      <% store_current_appointment( unchecked_appointment ) %>
+                      <%= render partial: "appointments/admin_check_in", locals: { current_date: @data["today"], from_search: false } %>
+                    </ul>
+                  <% end %>
+                </div>
+                
+              </div>
+              
+            
+          <% end %>
+        </div>
+
+        <div class="tab-pane fade" id="pills-checked" role="tabpanel" aria-labelledby="pills-checked-tab" tabindex="0">
+          <!-- For loop to generate previous checked-in appointments -->
+          <% @data["previous_checked_in_appointments"].each_with_index do |element, index| %>
+            <button class="w-100 rounded" type="button" data-toggle="collapse" data-target="#checked_collapse_<%= index %>" aria-expanded="false" aria-controls="checked_collapse_<%= index %>">
+              <div class="d-flex justify-content-between">
+                <h3><em> <%= element[0]%></em> </h3>
+              </div>
+            </button>
+
+            <div class="collapse" id="checked_collapse_<%= index %>" style="width: 100%;" >
+                <div>
+                  <h4>
+                    Checked-In Appointments
+                  </h4>
+                  <% element[1].each do |checked_appointment| %>
+                    <ul style="list-style-type: none; padding: 0;" ></ul>
+                      <% store_current_appointment( checked_appointment ) %>
+                      <%= render partial: "appointments/admin_check_in", locals: { current_date: @data["today"], from_search: false } %>
+                    </ul>
+                  <% end %>
+                </div>
+                
+              </div>
+          <% end %>
+        </div>
+        
+        
+        <div class="tab-pane fade" id="pills-unchecked" role="tabpanel" aria-labelledby="pills-unchecked-tab" tabindex="0">
+          <!-- For loop to generate previous unchecked-in appointments -->
+          <% @data["previous_unchecked_in_appointments"].each_with_index do |element, index| %>
+            <button class="w-100 rounded" type="button" data-toggle="collapse" data-target="#unchecked_collapse_<%= index %>" aria-expanded="false" aria-controls="unchecked_collapse_<%= index %>">
+              <div class="d-flex justify-content-between">
+                <h3><em> <%= element[0]%></em> </h3>
+              </div>
+            </button>
+
+            <div class="collapse" id="unchecked_collapse_<%= index %>" style="width: 100%;" >
+                <div>
+                  <h4>
+                    Unchecked-In Appointments
+                  </h4>
+                  <% element[1].each do |checked_appointment| %>
+                    <ul style="list-style-type: none; padding: 0;" ></ul>
+                      <% store_current_appointment( checked_appointment ) %>
+                      <%= render partial: "appointments/admin_check_in", locals: { current_date: @data["today"], from_search: false } %>
+                    </ul>
+                  <% end %>
+                </div>
+                
+              </div>
+          <% end %>
+        </div>
+      </div>
+
+    </div>
+  </td>
+</tr>
+
+
+
+
+<!-- by this time the code has access to a list of appointments that have -->
+<!-- the value of true in their admin checked in column "check_in_user" -->
+<div style="height: 30px;"></div>
+
+
+

@@ -76,5 +76,16 @@
   color: white !important;
 }
 
+.search-form {
+  display: flex;
+  flex-wrap: wrap;
+}
 
+label {
+  width: 150px;
+  display: inline-block;
+}
 
+.fields{
+  width: 240px;
+} 

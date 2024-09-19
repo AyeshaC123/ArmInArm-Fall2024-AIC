@@ -1,5 +1,17 @@
-<h1>Pre-Registration Form</h1>
+<!-- 
+ Project Name: Admin Dashboard - Team 22
+ Description: Allows admin to view & edit household, client, & location data
+ Filename: new.html.erb
+ Description: This view renders the form to create a new household
+ and provides several buttons for quick access to different pages
+ Last Modified: 4/28/2024
+-->
+
+<!-- Team22: Changes headings based on admin/non-admin user -->
+<% if can?(:access, :rails_admin) %>
+    <h1>Create New Household</h1>
+<% else %>
+    <h1>Pre-Registration Form</h1>
+<% end %>
 
 <%= render 'form', household: @household %>
-
-<%= link_to 'Back', households_path %>

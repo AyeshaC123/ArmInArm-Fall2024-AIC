@@ -1,3 +1,16 @@
+
+# Team 14: Translations (this file has been replaced by the translations in the database)
+
+# Project name: Arm in Arm Project Team 12
+# Description of Project: The Arm in Arm Project aims to develop an application that assits its clients in need of food 
+# Filename: en.yml
+# Description: The file contains validation error messages for a registration form
+# Last modified on: April 21, 2024
+
+
+
+
+
 en:
   client_profile:
     home:
@@ -5,3 +18,211 @@ en:
       create: "Create Client Profile"
       modify: "View or Modify Client Profile"
       search: "Search"
+
+  new_client:
+    first_name: "Please enter first name:"
+    last_name: "Please enter last name:"
+    birthdate: "Please enter date of birth:"
+    next: "Next"
+    address: "Please enter home address (optional):"
+    religion: "Please enter religion (optional):"
+    allergies_label: "Allergies"
+    allergy_peanuts: "Peanuts"
+    allergy_treenuts: "Tree nuts"
+    allergy_eggs: "Eggs"
+    allergy_milk: "Milk"
+    allergy_shellfish: "Shellfish"
+    allergy_fish: "Fish"
+    allergy_wheat: "Wheat"
+    allergy_soy: "Soy"
+    restrictions_label: "Dietary Restrictions"
+    gluten_free: "Gluten-free"
+    vegan: "Vegan"
+    anything_else: "Any other allergens or dietary restrictions? Leave blank if not applicable."
+  date:
+    order:
+      - :month
+      - :day
+      - :year
+  pre_reg:
+    # ACTIVELY USED
+    header_gen_info: "General Information"
+    header_house_adr: "Household Address"
+    header_house_demo: "Household Demographics"
+    header_house_inc: "Household Income & Benefits"
+    submit_form: "Submit Form"
+    name: "Please enter your name:"
+    phone_number: "Mobile Phone:"
+    street: "Street:"
+    city: "City:"
+    state: "State:"
+    county: "County:"
+    country: "Country:"
+    zip_code: "Zip Code:"
+    household_type: "Household type:"
+    single_individual: "Single Individual"
+    adults_only: "Adults Only"
+    fam_with_children_under18: "Family with Children Under 18"
+    hoh_dob: "Date of Birth:"
+    hoh_gender: "Head of Household Gender:"
+    female: "Female"
+    male: "Male"
+    other: "Other"
+    hoh_race_ethnicity: "Head of Household Race/Ethnicity:"
+    hoh_black: "African American / Black"
+    hoh_white: "White"
+    hoh_latino: "Latino"
+    hoh_asian: "Asian"
+    hoh_multiracial: "Multiracial"
+    num_adults: "Number of adults in the household:"
+    num_children: "Number of children in the household:"
+    receive_snaps: "Does the client receive SNAP (Food Stamps)?"
+    snaps_yes: "Yes"
+    snaps_no: "No"
+    income_source: "Primary Source of Income:"
+    child_support: "Child Support"
+    employment: "Employment"
+    gen_assistance: "General Assistance"
+    soc_security: "Social Security (SSI)"
+    soc_sec_disability: "Social Security Disability (SSD)"
+    retirement: "Retirement"
+    tanf: "TANF"
+    unemployment: "Unemployment Benefits"
+    none: "None"
+    qualifier_code: "Qualifier Code:"
+    code_tanf: "1 - TANF"
+    code_snap: "2 - SNAP"
+    code_ssi: "3 - SSI"
+    code_wic: "4 - WIC"
+    code_medicaid: "5 - Medicaid"
+    code_inc_eligible: "6 - Income Eligible"
+    code_disaster: "7 - Disaster"
+    net_income: "Net Income: $"
+    # For new member page
+    non_hoh_add: "Add Household Member"
+    non_hoh_first_name: "First name: "
+    non_hoh_last_name: "Last name: "
+    non_hoh_relationship: "Relationship to the Head of Household:"
+
+    # NOT USED
+    #email: "Please enter your email:"
+    #consent_to_msgs: "Do you consent to receive text messages from us?"
+    #non_hoh_dob: "Date of Birth:"
+    #non_hoh_header: "Other Household Members (if applicable)"
+    #member: "Member"
+
+  months:
+    jan: "January"
+    feb: "February"
+    mar: "March"
+    apr: "April"
+    may: "May"
+    jun: "June"
+    jul: "July"
+    aug: "August"
+    sep: "September"
+    oct: "October"
+    nov: "November"
+    dec: "December"
+
+  non_hoh_desc:
+    spouse: "Spouse"
+    child: "Child"
+    mother: "Mother"
+    father: "Father"
+    sibling: "Sibling"
+    grandchild: "Grandchild"
+    grandparent: "Grandparent"
+    niece: "Niece"
+    nephew: "Nephew"
+    aunt: "Aunt"
+    uncle: "Uncle"
+    cousin: "Cousin"
+    son_in_law: "Son-in-Law"
+    daughter_in_law: "Daughter-in-Law"
+    parent_in_law: "Mother/Father-in-Law"
+    friend: "Friend"
+
+
+  activerecord: 
+    errors: 
+      models:
+        household:
+          attributes: 
+            headname: 
+              blank: "Head of the household name can't be blank"
+              only_letters_and_spaces: "Head of the household name only allows letters and spaces"
+            headdob:
+              selected: "Date of birth must be selected"
+            streetaddr:
+              blank: "Street address can't be blank"
+              invalid_chars: "Street address contains invalid characters"
+            city:
+              blank: "City can't be blank"
+              only_letters_and_spaces: "City only allows letters and spaces"
+            state:
+              selected: "State must be selected"
+            county:
+              selected: "County must be selected"
+            zipcode:
+              blank: "Zipcode can't be blank"
+              only_numbers: "Zipcode must be a 5-digit number"
+            phonenum:
+              blank: "Phone number can't be blank"
+              only_numbers: "Phone number must be 10 digits long"
+            netincome:
+              blank: "Net income can't be blank"
+              not_a_number: "Net income must contain only numbers"
+              at_least_zero: "Net income must be at least $0"
+            numadults: 
+              blank: "Number of adults can't be blank"
+              at_least_zero: "Number of adults must be at least 0"
+            numchild:
+              blank: "Number of children can't be blank"
+              at_least_zero: "Number of children must be at least 0"
+            householdtype:
+              selected: "Household type must be selected"
+            headgender:
+              selected: "Head of household gender must be selected"
+            headethnicity:
+              selected: "Head of household ethnicity must be selected"
+            incomesource:
+              selected: "Income source must be selected"
+            qualifiercode:
+              selected: "Qualifier code must be selected"
+            foodstamps:
+              selected: "Foodstamps must be selected"
+            pantrylocation:
+              selected: "Pantry location must be selected"
+
+
+
+  
+        member:
+          attributes: 
+            firstname: 
+              blank: "First name can't be blank"
+              only_letters_and_spaces: "First name can contain only letters and spaces"
+            lastname: 
+              blank: "Last name can't be blank"
+              only_letters_and_spaces: "Last name can contain only letters and spaces"
+            dob: 
+              selected: "Date of birth must be selected"
+            relationship: 
+              selected: "Relationship to Head must be selected"
+            household_id:
+              blank: "Household address not found"
+              greater_than_or_equal_to: "Household ID must be a non-negative number"
+
+              
+
+              
+
+
+
+
+
+            
+
+ 
+

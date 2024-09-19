@@ -8,6 +8,10 @@ require("turbolinks").start();
 require("@rails/activestorage").start();
 require("channels");
 require("@fortawesome/fontawesome-free");
+
+// Team22 - fixed error shown on page when checking inspect
+// Uncaught error: Cannot find module 'chartkick/char.js'
+import "chart.js"
   
 
 // Uncomment to copy all static images under ../images to the output folder and reference

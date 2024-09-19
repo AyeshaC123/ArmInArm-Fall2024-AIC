@@ -1,0 +1,88 @@
+<!--
+Project Name: Appointment Scheduler and Check-in - team 23
+FileName: _admin_search_options.html.erb
+Description: This is the view presents the admin with a UI to search for client appointments, be previous or upcoming.
+Last Modified: 4/22/24
+-->
+
+<!-- spacer to make it look better -->
+<div style="height: 30px;"></div>
+<div class="d-flex justify-content-between">
+  <h1>Search Appointments</h1>
+</div>
+<div class="main-container">
+    <div class="search-container">
+        <p>Enter desired filter values to query appointments for check-in.</p>
+
+        <!-- Form for searching -->
+        <%= form_with model: @appointment, url: admin_search_results_path, method: :get, local: true, class: "d-flex flex-column" do |form| %>
+
+            <div class="mb-3">
+                <%= form.label :first_name, "First Name:" %>
+                <%= form.text_field :first_name, class: "form-control", onkeyup: "enable_submit()" %>
+            </div>
+            <div class="mb-3">
+                <%= form.label :last_name, "Last Name:" %>
+                <%= form.text_field :last_name, class: "form-control", onkeyup: "enable_submit()" %>
+            </div>
+            <div class="d-flex justify-content-between mb-3">
+                <div style="width: 45%">
+                    <%= form.label :start_date, 'Start Date:' %>
+                    <%= form.date_field :start_date, class: "form-control", onchange: "date_validation()", id: "start_date", value: Date.today() %>
+                </div>
+                <div style="width: 45%">
+                    <%= form.label :end_date, 'End Date:' %>
+                    <%= form.date_field :end_date, class: "form-control", onchange: "date_validation()", id: "end_date" %>
+                </div>
+            </div>
+            
+            
+
+            <%= form.submit 'Search', class:"btn btn-primary my-2", id:"form-submit", disabled: "true", data: { disable_with: false } %>
+        <% end %>
+    </div>
+</div>
+
+
+<script defer>
+    //function to halt enable submit if one of the four form fields have values.
+    function enable_submit(){
+        let inputs = document.getElementsByClassName('form-control');
+        let btn = document.getElementById("form-submit")
+        let num_of_inputs = inputs.length;
+        let button_disabled = true;
+
+        for (var i = 0; i < inputs.length; i++){
+            let changedInput = inputs[i];
+            if (changedInput.value.trim() !== "" && changedInput.value !== null){
+                num_of_inputs--;
+            }
+        }
+
+        if(num_of_inputs < inputs.length){
+            button_disabled = false;
+        }
+        btn.disabled = button_disabled;
+    }
+
+    //function to validate if range is logically or not.
+    function date_validation(element){
+        enable_submit();
+        let btn = document.getElementById("form-submit")
+        let button_disabled = btn.disabled;
+
+        const date_1 = new Date (document.getElementById("start_date").value)
+        const date_2 = new Date (document.getElementById("end_date").value)
+
+        if(date_1 != null && date_2 != null){
+            if(date_2 < date_1){
+                button_disabled = true;
+            }
+        }
+
+        btn.disabled = button_disabled
+        
+    }
+
+    enable_submit();
+</script>

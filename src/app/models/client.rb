@@ -1,23 +1,24 @@
 class Client < ApplicationRecord
 
   has_many :appointments
-    # ActiveRecord automatically creates attribute accessors for all the database columns
-    
-    has_many :appointments
-    
-    # Validations
-    validates :first_name, :last_name, :dob, presence: true
-  
-    # Custom methods (similar to your original class)
-  
-    # def add_allergy(allergy)
-    #   self.allergies << allergy
-    # end
-   
-  
-    # def add_restriction(restriction)
-    #   self.restrictions << restriction
-    # end
+  # has_one :household, through: :user
+
+  # ActiveRecord automatically creates attribute accessors for all the database columns
+
+
+  # Validations
+  validates :first_name, :last_name, :dob, presence: true
+
+  # Custom methods (similar to your original class)
+
+  # def add_allergy(allergy)
+  #   self.allergies << allergy
+  # end
+
+
+  # def add_restriction(restriction)
+  #   self.restrictions << restriction
+  # end
 
   # Helpful constant containing list of common allergens and their names.
   COMMON_ALLERGENS = [
@@ -54,7 +55,12 @@ class Client < ApplicationRecord
     COMMON_ALLERGENS.each do |sym, name|
       # Send method calls a method by name, e.g. self.send :foo is the same as self.foo
       if send sym
-        strings.push name
+        # Team 14: Added translation here. Having to translate here makes it difficult to use the get_translation method
+        # defined in app/helpers/application_helper.rb. Using .yml files for now.
+        
+        # strings.push get_translation("new_client_#{sym}")
+        # translation = Translation.where("key = ?", "new_client_#{sym}")[0][current_user&.locale]
+        strings.push (I18n.t "new_client.#{sym}")
       end
     end
     # Join to string.

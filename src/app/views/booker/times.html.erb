@@ -4,52 +4,71 @@
     Description: View for available times page
     Last modified on: 11/29/23 -->
 
+  <!-- Project name: Arm in Arm Appointment Booker - Team 23
+    Description: Add constraints to booking appointments and allow for clients to be checked into their slotted appointments
+    Filename: times.html.erb
+    Description: View for available times page
+    Last modified on: 4/22/24 -->
+
+<% provide(:title, "Times") %>
+
 <body style="font-family: 'Arial', sans-serif; background-color: #f5f5f5; padding: 20px;">
 
-  <!-- Title: Appointment Booker -->
-  <h1 style="color: #007177; margin-bottom: 20px;">Appointment Booker</h1>
-
-  <!-- Client Information Section -->
-  <div style="margin-top: 5px; padding: 15px; border: 1px solid #ccc; border-radius: 5px; background-color: rgba(0, 182, 189, 0.2);">
-    <h2 style="color: #000000; margin-bottom: 3px; text-align: left; font-size: 2em;">Client Information</h2>
-    <table style="width: 75%; margin-top: 3px;">
-      <tr>
-        <th style="width: 20%; color: #000000; font-size: 0.9em;">ID</th>
-        <td style="width: 80%; font-size: 0.9em;"><%= @client.id %></td>
-      </tr>
-      <tr>
-        <th style="color: #000000; font-size: 0.9em;">First Name</th>
-        <td style="font-size: 0.9em;"><%= @client.first_name %></td>
-      </tr>
-      <tr>
-        <th style="color: #000000; font-size: 0.9em;">Last Name</th>
-        <td style="font-size: 0.9em;"><%= @client.last_name %></td>
-      </tr>
-      <tr>
-        <th style="color: #000000; font-size: 0.9em;">Date of Birth</th>
-        <td style="font-size: 0.9em;"><%= @client.dob %></td>
-      </tr>
-      <tr>
-        <th style="color: #000000; font-size: 0.9em;">Address</th>
-        <td style="font-size: 0.9em;"><%= @client.address %></td>
-      </tr>
-    </table>
-  </div>
 
   <!-- Available Times Section -->
-  <h2 style="color: #007177; margin-top: 20px;">Available Times for <%= @date %> at <%= @location %></h2>
+  <h1 style="color: #007177; margin-top: 20px;"><strong>Times for <%= @date %> at <%= @location %></strong></h1>
 
-<% if @available_times.present? %>
-  <ul style="list-style-type: none; padding: 0; margin-top: 10px;">
-    <% @available_times.each do |time| %>
-      <li style="display: flex; justify-content: space-between; align-items: left; margin-bottom: 10px; padding: 8px; border: 1px solid #ccc; border-radius: 5px; background-color: #fff;">
-        <strong style="margin-left: 10px; text-align: left;">Time:</strong> <%= time %>
-        <%= button_to 'Book This Time', book_appointment_path(time: time, date: @date, location: @location), method: :post, class: 'btn btn-primary', style: 'margin-left: 10px;' %>
-      </li>
-    <% end %>
-  </ul>
-<% else %>
-  <p>No available times.</p>
-<% end %>
+  <div class="dropdown-divider"></div>
+
+  <% if @available_times_hash.length( ) != 0 %>
+    <!-- are there any event id's in my hash -->
+    <ul style="list-style-type: none; padding: 0; margin-top: 10px;">
+      <!-- go through the list of event ID's that was given in the URL -->
+      <% @event_id_list.each do | event_id_string | %>
+        
+        <!-- get the even in question -->
+        <% the_event = get_the_event( event_id_string ) %>    
+
+        <h2 style="color: #007177; margin-top: 20px;">
+
+          <strong>Event: </strong><%= the_event.event_title %>
+
+        </h2>
+
+
+        <!-- go through the HASH -->
+        <% @available_times_hash[ event_id_string ].each do | time_and_duration |%>
+
+          <li style="display: flex; justify-content: space-between; align-items: left; margin-bottom: 10px; padding: 8px; border: 1px solid #ccc; border-radius: 5px; background-color: #fff;">
+            <!-- Print the time -->
+            <strong style="margin-left: 10px; text-align: left;">Time:</strong> <%= time_and_duration[ 0 ] %>
+            <strong></strong>
+
+            <!-- print the numnber of spots left -->
+            <% if time_and_duration[ 1 ] > 1 %>
+
+              <%= "#{ time_and_duration[ 1 ] } #{ "Spots".pluralize( time_and_duration[ 1 ] ) }" %> left
+
+            <% else %>
+
+              <div style="color: red;">
+                <%= "#{ time_and_duration[ 1 ] } #{ 'Spot'.pluralize( time_and_duration[ 1 ] ) }" %> left
+              </div>
+
+            <% end %>
+            <strong></strong>
+
+            <%= button_to 'Book This Time', book_appointment_path(time: time_and_duration[ 0 ], date: @date, location: @location, event_id: event_id_string.to_i), method: :post, class: 'btn btn-primary', style: 'margin-left: 10px;' %>
+          </li>
+
+        <% end %>
+
+
+      <% end %>
+    </ul>
+  <% else %>
+    <p>No available times.</p>
+
+  <% end %>
 
 </body>

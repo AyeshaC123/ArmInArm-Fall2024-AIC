@@ -1,7 +1,28 @@
+<!-- 
+ Project Name: Admin Dashboard - Team 22
+ Description: Allows admin to view & edit household, client, & location data
+ Filename: edit.html.erb
+ Description: This view renders the form to edit a current household
+ and provides several buttons for quick access to different pages
+ Last Modified: 4/28/2024
+-->
+
 <h1>Editing Household</h1>
 
 <%= render 'form', household: @household %>
 
-<%= link_to 'Show', @household %> |
-<%= link_to 'Add Additional Members', members_new_path %> |
-<%= link_to 'Back', households_path %>
+<%= button_to 'View Info', @household, method: :get, class: 'btn btn-primary' %>
+
+<br>
+
+<%= button_to 'Add Additional Members',  members_new_path, method: :get, class: 'btn btn-primary' %>
+
+<br>
+<!-- Team22: adds buttons based on user type -->
+<% unless can?(:access, :rails_admin) %>
+    <!-- Team22: allows users to go back to their My Account page -->
+    <%= button_to 'Account',  account_index_path, method: :get, class: 'btn btn-secondary' %>
+<% else %> 
+    <!-- Team22: allows admins to go back to the households main page -->
+    <%= button_to 'Households', households_path, method: :get, class: 'btn btn-secondary' %>
+<%end%>

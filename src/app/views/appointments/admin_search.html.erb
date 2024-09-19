@@ -1,0 +1,13 @@
+<% provide(:title, "Search") %>
+
+ <!-- this checks if a person is an admin and gives them a different view for checking people in to the system -->
+<% if @is_admin %>
+
+    <%= render "appointments/admin_search_options"%>
+
+<% else %>
+    <!-- the person is a regular client -->
+
+    <%= redirect_to root_path %>
+
+<% end %>

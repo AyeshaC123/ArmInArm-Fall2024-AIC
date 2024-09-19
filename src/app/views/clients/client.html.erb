@@ -1,3 +1,17 @@
+<!-- 
+ Project Name: Admin Dashboard - Team 22
+ Description: Allows admin to view & edit household, client, & location data
+ Filename: client.html.erb
+ Description: This view lists client data for a client.
+  It also provides several buttons for quick access to other relevant pages.
+ Last Modified: 4/28/2024
+-->
+
+<br>
+<h3>Client Information</h3>
+<br>
+<%# Team 14: Added 4 translations here #%>
+
 <table>
   <tr>
     <th>ID</th>
@@ -33,19 +47,26 @@
   </tr>
   <tr>
     <th>Gluten-free</th>
-    <td><%= if @client.gluten_free then 'Yes' else 'No'end %></td>
+    <td><%= if @client.gluten_free then get_translation('prereg_snaps_yes') else get_translation('prereg_snaps_no') end %></td>
   </tr>
   <tr>
     <th>Vegan</th>
-    <td><%= if @client.vegan then 'Yes' else 'No' end %></td>
+    <td><%= if @client.vegan then get_translation('prereg_snaps_yes') else get_translation('prereg_snaps_no') end %></td>
   </tr>
   <tr>
     <th>Dietary Restrictions</th>
     <td><%= @client.restrictions %></td>
   </tr>
-  <%= link_to 'Edit', edit_client_path(@client) %>
-  <%= link_to 'Delete', client_path(@client), method: :delete, data: { confirm: 'Are you sure?' } %>
-
-
 </table>
 
+<%= button_to 'Edit', edit_client_path(@client), method: :get, class: 'btn btn-primary' %>
+
+<!-- Team22: adds buttons based on user type -->
+<% if can?(:access, :rails_admin) %>
+  <!-- Team22: allows admins to delete client & go back to clients main page -->
+  <%= button_to 'Delete', client_path(@client), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-primary' %>
+  <%= button_to 'Clients', clients_path, method: :get, class: 'btn btn-primary' %>
+<% else %>
+  <!-- Team22: allows users to go back to their My Account page -->
+  <%= button_to 'Account', account_index_path, method: :get, class: 'btn btn-primary' %>
+<%end%>

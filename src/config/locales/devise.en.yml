@@ -63,3 +63,17 @@ en:
       not_saved:
         one: "1 error prohibited this %{resource} from being saved:"
         other: "%{count} errors prohibited this %{resource} from being saved:"
+# Team 14: Added Translations Here
+es:
+  devise:
+    sessions:
+      signed_in: "Spanish: Signed in successfully."
+      signed_out: "Spanish: Signed out successfully."
+      already_signed_out: "Spanish: Signed out successfully."
+ht:
+  devise:
+    sessions:
+      signed_in: "HT: Signed in successfully."
+      signed_out: "HT: Signed out successfully."
+      already_signed_out: "HT: Signed out successfully."
+

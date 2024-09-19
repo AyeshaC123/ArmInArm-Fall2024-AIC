@@ -7,6 +7,16 @@ RailsAdmin.config do |config|
   config.authenticate_with do
     warden.authenticate! scope: :user
   end
+
+  config.authorize_with do
+    # this stops regular users from accessing the admins path and 
+    # gaining administrative access
+    if( current_user.admin == 0 )
+      redirect_to '/'
+    end
+  end
+
+
   config.current_user_method(&:current_user)
   
   ## == CancanCan ==

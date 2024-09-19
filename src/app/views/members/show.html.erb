@@ -1,4 +1,20 @@
+<!-- 
+ Project Name: Admin Dashboard - Team 22
+ Description: Allows admin to view & edit household, client, & location data
+ Filename: index.html.erb
+ Description: This view lists member data for a member in the selected household.
+  It also provides several buttons for quick access to other relevant pages.
+ Last Modified: 4/28/2024
+-->
+<!--Last modified by Team 13-->
+<!--April 21, 2024-->
+<!--Changed edit link to be viewed by admins only-->
+<!--Project Arm In Arm-->
+
 <p id="notice"><%= notice %></p>
+
+<h2>Member Information</h2>
+<br>
 
 <p>
   <strong>Firstname:</strong>
@@ -24,6 +40,23 @@
   <strong>Household:</strong>
   <%= @member.household_id %>
 </p>
+<br>
 
-<%= link_to 'Edit', edit_member_path(@member) %> |
-<%= link_to 'Back', members_path %>
+<!-- Team22: admin can edit member data -->
+<% if can?(:access, :rails_admin) %>
+  <%= button_to 'Edit', edit_member_path(@member), method: :get, class: 'btn btn-primary' %>
+  <br>
+<% end %>
+
+<!-- Team22: allows users view list of members -->
+<%= button_to 'Members', household_members_path(@member.household_id), method: :get, class: 'btn btn-primary' %>
+
+<% if can?(:access, :rails_admin) %>
+  <br>
+  <!-- Team22: allows admins to go back to the households main page -->
+  <%= button_to 'Households', households_path, method: :get, class: 'btn btn-secondary' %>
+<% else %> 
+  <br>
+  <!-- Team22: allows users to go back to account page -->
+  <%= button_to 'Account', account_index_path, method: :get, class: 'btn btn-secondary' %>
+<% end %>

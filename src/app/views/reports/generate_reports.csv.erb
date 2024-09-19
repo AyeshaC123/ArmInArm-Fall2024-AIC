@@ -1,0 +1,6 @@
+<%- headers = ['User ID', 'Date', 'Name', 'Adults in Household', 'Children in Household', 'Number of Appointments', 'County', 'Location', 'ZIP Code'] -%>
+<%= CSV.generate_line headers -%>
+<%- Household.includes(user: :client).each do |appointment| -%>
+    <%- client = appointment.user.client -%>
+    <%= CSV.generate_line([appointment.user_id, appointment.created_at.strftime('%Y-%m-%d'), appointment.headname, appointment.numadults, appointment.numadults, appointment.numchild, appointment.county, appointment.city, appointment.zipcode]) -%>
+<%- end -%>

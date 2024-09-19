@@ -1,0 +1,1441 @@
+<!-- 
+Project Name: Statistics: Reports and Graph Generation - Team 21
+Description: Enable clients to generate graphs to display Arm in Arm's data of people helped over time,
+	and enable admin users to generate downloadable reports of people helped over specific time frames.
+Filename: generate_reports.html.erb
+Description:  This view file contains the user interface for generating reports for displaying Arm in Arm
+	data, as well as the Javascript manipulating this user interface, and for making post request to the 
+	web server that are handled by controller actions in reports_controller.rb.
+Last Modified: 4/24/2024
+-->
+
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+
+<style>
+	.form-check-input.shift-overA {
+		margin-left: 10px;
+		margin-bottom: 10px;
+	}
+	.form-check-label.shift-overA {
+		margin-left: 40px;
+		margin-bottom: 10px;
+	}
+	.pagination-navigator {
+		margin-top: 10px;
+		margin-bottom: 10px;
+		display: flex;
+		justify-content: center;
+	}
+	.pagination-item {
+		margin-left: 15px;
+		margin-right: 15px;
+	}
+	.generate-button {
+		width: 150px;
+		height: 80px;
+		margin-left: 80px;
+		justify-content: center;
+	}
+	.center-btn-group {
+		margin-top: 30px;
+		display: flex;
+		justify-content: center;
+	}
+	.center-mode-brn-group {
+		display: flex;
+		justify-content: center;
+	}
+	.center-loc-btn {
+		margin-top: 20px;
+		display: flex;
+		justify-content: center;
+	}
+	.date-alert {
+		margin-top: 30px;
+		width: 150px;
+		justify-content: center;
+	}
+	.is-pressed {
+            background-color: #007bff; 
+            color: white; 
+        }
+	.custom-table {
+		margin-top: 20px;
+		margin-bottom:20px;
+		margin-left: 50px;
+		margin-right: 50px;
+	}
+	.table-element {
+		text-align: center;
+	}
+	.export-dropdown {
+		float: left;
+		margin-bottom: 10px;
+	}
+	.spaced-dropdown {
+		margin-top: 50px;
+	}
+	.spaced-radio {
+		margin-top: 20px;
+	}
+	.fast-date-pick {
+		width: 240px;
+	}
+</style>
+
+<body>
+
+<h1>Generate Report of People Served</h1>
+<hr class="horizontal-divider">
+
+<br>
+
+<div class="btn-group center-mode-brn-group" role="group">
+  <button type="button" id="attendedAppointmentsButton" name="reportModeButton" class="btn btn-outline-primary is-pressed">Attended Appointments</button>
+  <button type="button" id="scheduledAppointmentsButton" name="reportModeButton" class="btn btn-outline-primary">Scheduled Appointments</button>
+  <button type="button" id="householdAppointmentsButton" name="reportModeButton" class="btn btn-outline-primary">Household Appointments</button>
+  
+</div>
+
+<%# <h1>Filter Reports of People Served</h1> %>
+
+<div class="container mt-5">
+    <%= form_with( method: :post) do |f| %>
+        <div class="row">						<!-- begin row 1 -->
+            <div class="col-md-4 mb-3"> 		<!-- begin row 1 column 1 -->
+                <%= f.label :initialDate, "Initial date:"  %>
+                <%= f.date_field :initialDate, class: "form-control", id: "initialDate" %>
+                <br>
+            <%# </div> %>
+            <%# <div class="col-md-3 mb-3"> %>
+                <%= f.label :finalDate, "Final date:" %>
+                <%= f.date_field :finalDate, class: "form-control", id: "finalDate" %>
+
+				<div class="center-btn-group" id="attendedAppointmentsQuickDate" name="attendedAppointmentDateButton">
+                    <div class="btn-group-vertical" role="group" name="attendedAppointmentDateButton" aria-label="Vertical button group">
+                        <button type="button" class="btn btn-outline-primary fast-date-pick" id="setYesterday" name="attendedAppointmentDateButton" onclick="setTimeWindow(1, ahead=false, oneDay=true)">Yesterday</button>
+                        <button type="button" class="btn btn-outline-primary fast-date-pick" id="setLastWeek" name="attendedAppointmentDateButton" onclick="setTimeWindow(7)">Last Week</button>
+                        <button type="button" class="btn btn-outline-primary fast-date-pick" id="setLast30Days" name="attendedAppointmentDateButton" onclick="setTimeWindow(30)">Last 30 Days</button>
+                        <button type="button" class="btn btn-outline-primary fast-date-pick" id="setLastYear" name="attendedAppointmentDateButton" onclick="setTimeWindow(365)">Last Year</button>
+                    </div>
+                </div>
+
+				<div class="center-btn-group" id="scheduledAppointmentsQuickDate" name="scheduledAppointmentDateButton">
+                    <div class="btn-group-vertical" role="group" name="scheduledAppointmentDateButton" aria-label="Vertical button group">
+                        <button type="button" class="btn btn-outline-primary fast-date-pick" id="setToday" name="scheduledAppointmentDateButton" onclick="setTimeWindow(0, ahead=true, oneDay=true)">Today</button>
+                        <button type="button" class="btn btn-outline-primary fast-date-pick" id="setTomorrow" name="scheduledAppointmentDateButton" onclick="setTimeWindow(1, ahead=true, oneDay=true)">Tomorrow</button>
+                        <button type="button" class="btn btn-outline-primary fast-date-pick" id="setNextWeek" name="scheduledAppointmentDateButton" onclick="setTimeWindow(7, ahead=true)">Next Week</button>
+                        <button type="button" class="btn btn-outline-primary fast-date-pick" id="setNext30Days" name="scheduledAppointmentDateButton" onclick="setTimeWindow(30, ahead=true)">Next 30 Days</button>
+                    </div>
+                </div>
+
+				<div class="center-btn-group" id="householdAppointmentsQuickDate" name="householdAppointmentDateButton">
+                    <div class="btn-group-vertical" role="group" name="householdAppointmentDateButton" aria-label="Vertical button group">
+						<button type="button" class="btn btn-outline-primary fast-date-pick" id="setNext30Days-household" name="householdAppointmentDateButton" onclick="setTimeWindow(30, ahead=true)">Next 30 Days</button>
+                        <button type="button" class="btn btn-outline-primary fast-date-pick" id="setNextWeek-household" name="householdAppointmentDateButton" onclick="setTimeWindow(7, ahead=true)">Next Week</button>
+						<button type="button" class="btn btn-outline-primary fast-date-pick" id="setToday-household" name="householdAppointmentDateButton" onclick="setTimeWindow(0, ahead=true, oneDay=true)">Today</button>
+						<button type="button" class="btn btn-outline-primary fast-date-pick" id="setLastWeek-household" name="householdAppointmentDateButton" onclick="setTimeWindow(7)">Last Week</button>
+                        <button type="button" class="btn btn-outline-primary fast-date-pick" id="setLast30Days-household" name="householdAppointmentDateButton" onclick="setTimeWindow(30)">Last 30 Days</button>
+                        <button type="button" class="btn btn-outline-primary fast-date-pick" id="setLastYear-household" name="householdAppointmentDateButton" onclick="setTimeWindow(365)">Last Year</button>
+
+                    </div>
+                </div>
+
+            </div> 								<!-- end row 1 column 1 -->
+
+            <div class="col-md-4 mb-3">			<!-- begin row 1 column 2 -->
+				<div class="form-check">
+					<input type="radio" id="orderByDate" name="orderByRadio" class="form-check-input shift-overA" checked>
+					<label for="orderByDate" name="orderByRadio" class="form-check-label shift-overA">Order by Date & Time</label>
+					<br>
+
+					<input type="radio" id="orderByLastName" name="orderByRadio" class="form-check-input shift-overA">
+					<label for="orderByLastName" name="orderByRadio" class="form-check-label shift-overA">Order by Last Name</label>
+					<br>
+				</div>
+
+				<hr class="horizontal-divider">
+
+                <div class="form-check">
+					<input type="radio" id="includeAllLocationsRadio" name="locationRadio" class="form-check-input shift-overA" checked>
+					<label for="includeTrentonRadio" name="locationRadio" class="form-check-label shift-overA">Show all Locations</label>
+					<br>
+
+					<input type="radio" id="includeTrentonRadio" name="locationRadio" class="form-check-input shift-overA" >
+					<label for="includeTrentonRadio" name="locationRadio" class="form-check-label shift-overA">Show Trenton Appointments</label>
+					<br>
+
+					<input type="radio" id="includePrincetonRadio" name="locationRadio" class="form-check-input shift-overA" >
+					<label for="includeTrentonRadio" name="locationRadio" class="form-check-label shift-overA">Show Princeton Appointments</label>
+					<br>
+					<input type="radio" id="includeMobilePantryRadio" name="locationRadio" class="form-check-input shift-overA">
+					<label for="includeTrentonRadio" name="locationRadio" class="form-check-label shift-overA">Show Mobile Pantry Appointments</label>
+				</div>
+            </div>								<!-- end row 1 column 2 -->
+
+            <div class="col-md-4 mb-3">			<!-- begin row 1 column 3 -->
+                <div class= "mt-5" style="justify-content: center;">
+					<button type="submit" class="btn btn-primary generate-button" id="generateReportButton">Generate</button>
+                    <%# <%= f.submit "Generate Dates", class: "btn btn-primary generate-button", id: "generateReportButton" %> 
+					<div id="dateAlert" class="alert alert-danger date-alert" style="display: none;" role="alert">Invalid Dates</div>
+                </div>
+            </div>								<!-- end row 1 column 3 -->
+        </div>									<!-- end row 1 -->
+    <% end %>
+</div>
+
+
+<div class="export-dropdown">
+	<div class="dropdown show spaced-dropdown">
+		<a class="btn btn-primary dropdown-toggle" href="#" role="button" id="reportExportMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Export Report</a>
+		<div class="dropdown-menu" aria-labelledby="reportExportMenu">
+			<div class="dropdown-item">
+				<button type="submit" class="btn btn-link" id="downloadPDFButton" onclick="downloadTablePDF()">PDF Document (.pdf)</button>
+				<%# <%= link_to "PDF Document (.pdf)", download_pdf_path, :target => '_blank' %> 
+			</div>
+			<div class="dropdown-item">
+				<%# <%= link_to "CSV File (.csv)", download_csv_path(format: :csv), :target => '_blank' %>
+				<button type="submit" class="btn btn-link" id="downloadCSVButton" onclick="exportTableToCSV()">CSV File (.csv)</button>
+			</div>
+			<div class="dropdown-item" style="display: none;">
+				<%= link_to "PDF Document (.pdf)", download_pdf_path, :id => 'pdfDownloadLink', :target => '_blank', :style => 'display: none' %> 
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="totalsTableContainer" class="custom-table"></div>
+<div id="tableContainer" class="custom-table"></div>
+<div id="paginationContainer"></div>
+            
+</body>
+
+<%#-----------------------------------------------------------------------------------------------------------%>
+<%#-----------------------------------------------------------------------------------------------------------%>
+
+<script>
+
+
+//// //// //// //// //// //// //// //// //// //// //// //// //// //// 
+// flags, constants, and buffers
+//// //// //// //// //// //// //// //// //// //// //// //// //// ////
+
+// date and post request dependencies
+var csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+const today = new Date();
+const daysInAYear = 365;
+const daysInAWeek = 7;
+const maxDateOffsetFromToday = 1; // yesterday
+const minDateOffsetFromToday = 5*daysInAYear + maxDateOffsetFromToday; // 5 years ago
+const initialDefaultValueDateOffsetFromToday = 1*daysInAWeek + maxDateOffsetFromToday; // 1 week ago
+const initialDateBound_attendedAppointments = 5*daysInAYear;
+const finalDateBound_attendedAppointments = 0;
+const initialDateBound_scheduledAppointments = 0;
+const finalDateBound_scheduledAppointments = 30*daysInAWeek;
+const numGroupingOptions = 3;
+
+// flags for table being displayed so that we know how to prepare the download
+const ATTENDED_APPT = 0;
+const SCHEDULED_APPT = 1;
+const HOUSEHOLD_APPT = 2;
+var tableDisplayed = null; 
+
+// pagination variables
+const rowsPerPage = 50;
+var currentData = null;
+var currentTotals = null;
+var currentPage = 0;
+var totalPages = 0;
+
+// what occurs when page is loaded
+function onLoad() {
+	displayAttendedAppointmentDateButtons(true);
+	displayScheduledAppointmentDateButtons(false);
+	displayHouseholdAppointmentDateButtons(false);
+
+	setDatesOnPageLoad();
+	getTableData_attendedAppointments();
+	tableDisplayed = ATTENDED_APPT;
+}
+window.onload = onLoad;
+
+// event handler for generate button
+document.getElementById("generateReportButton").addEventListener("click", function() {
+	var initialDate = getInitialDate(); 
+	var finalDate  = getFinalDate();
+	if (initialDate && finalDate) {
+		dateInputValid = areDatesValid();
+		displayDateAlert(!dateInputValid);
+		if (dateInputValid) {
+			if (doAttendedAppointments()) {
+				getTableData_attendedAppointments();
+			}
+			else if (doScheduledAppointments()) {
+				getTableData_scheduledAppointments();
+			}
+			else if (doHouseholdAppointments()) {
+				getTableData_householdAppointments()
+			}
+			
+		}
+	}
+
+});
+
+//// //// //// //// //// //// //// //// //// //// //// //// //// //// 
+// date input and date alert control
+//// //// //// //// //// //// //// //// //// //// //// //// //// //// 
+
+// this function accepts a date object and returns a string in format yyyy-mm-dd
+function formatDate(date) {
+  	return date.toISOString().split('T')[0];
+}
+
+// this function either returns the default initial date for the date input or the lower bound for date input
+function getMinDate(forInitialDefaultValue=false) {
+	var minDate = new Date();
+	if (forInitialDefaultValue) {
+		minDate.setDate(today.getDate() - initialDefaultValueDateOffsetFromToday);
+	} else {
+		minDate.setDate(today.getDate() - minDateOffsetFromToday);
+	}
+	return formatDate(minDate);
+}
+
+// this function returns the upper bound for date input
+function getMaxDate() {
+	var maxDate = new Date();
+	maxDate.setDate(today.getDate() - maxDateOffsetFromToday);
+	return formatDate(maxDate);
+}
+
+// this function returns the initial date input from the form
+function getInitialDate() {
+	return document.getElementById("initialDate").value;
+}
+
+// this function returns the final date input from the form
+function getFinalDate() {
+	return document.getElementById("finalDate").value;
+}
+
+// this function returns true if the initial and final inputted dates are valid and false otherwise
+function areDatesValid() {
+	var initialDate = document.getElementById("initialDate").value;
+	var finalDate = document.getElementById("finalDate").value;
+
+	var initialDateObj = new Date(initialDate);
+	var finalDateObj = new Date(finalDate);
+
+	if (initialDateObj <= finalDateObj) 
+		return true;
+	else 
+		return false;
+}
+
+// if mode is true, this function makes the invalid dates alert visible;
+// 		if false, it hides the invalid dates alert
+function displayDateAlert(mode) {
+	if (mode) 
+		document.getElementById("dateAlert").style.display = "block";
+	else
+		document.getElementById("dateAlert").style.display = "none";
+}
+
+// this function assigns the value to the initial and final date form inputs
+// it accepts an integer number of days and sets the time window to stretch from 
+// 		that many days before yesterday to yesterday
+function setTimeWindow(days, ahead=false, oneDay=false) {
+	if (oneDay) { // assigning both input fields the same day
+		newDate = new Date();
+		var newDateFormatted = null
+		if (ahead) { // time window in the future
+			newDate.setDate(today.getDate() + days);
+			newDateFormatted = formatDate(newDate);
+		}
+		else { // time window in the past
+			newDate.setDate(today.getDate() - days);
+			newDateFormatted = formatDate(newDate);
+		}
+		document.getElementById("initialDate").value = newDateFormatted;
+		document.getElementById("finalDate").value = newDateFormatted;
+	}
+	else { // assigning input fields for some time window
+		var newMinDate = new Date();
+		var newMaxDate = new Date();
+		if (ahead) { // time window in the future
+			newMaxDate.setDate(today.getDate() + days);
+			newMinDate.setDate(today.getDate());
+		}
+		else { // time window in the past
+			newMaxDate.setDate(today.getDate());
+			newMinDate.setDate(today.getDate() - days);
+		}
+		document.getElementById("initialDate").value = formatDate(newMinDate);
+		document.getElementById("finalDate").value = formatDate(newMaxDate);
+	}
+}
+
+// this function sets the bounds value to the initial and final date form inputs
+function setDateInputBounds(daysInPast, daysInFuture) {
+	var initialBound = new Date();
+	var finalBound = new Date();
+
+	initialBound.setDate(today.getDate() - daysInPast);
+	finalBound.setDate(today.getDate() + daysInFuture);
+
+	document.getElementById("initialDate").min = formatDate(initialBound);
+	document.getElementById("finalDate").min = formatDate(initialBound);
+
+	document.getElementById("initialDate").max = formatDate(finalBound);
+	document.getElementById("finalDate").max = formatDate(finalBound);
+}
+
+// set default date input
+function setDatesOnPageLoad() {
+	const minDateFormatted = getMinDate();
+	const maxDateFormatted = getMaxDate();
+
+	// set default value for date form fields
+	setTimeWindow(7);
+
+	// set min dates for date form fields
+	setDateInputBounds(initialDateBound_attendedAppointments, finalDateBound_attendedAppointments);
+	// document.getElementById("initialDate").min = minDateFormatted;
+	// document.getElementById("finalDate").min = minDateFormatted;
+}
+
+//// //// //// //// //// //// //// //// //// //// //// //// //// //// 
+// Attended vs scheduled appointment buttons control
+//// //// //// //// //// //// //// //// //// //// //// //// //// ////
+
+// returns true if the attended appointments button is pressed
+function doAttendedAppointments() {
+	button = document.getElementById("attendedAppointmentsButton");
+	return button.classList.contains("is-pressed");
+}
+
+// returns true if the scheduled appointments button is pressed
+function doScheduledAppointments() {
+	button = document.getElementById("scheduledAppointmentsButton");
+	return button.classList.contains("is-pressed");
+}
+
+// returns true if the household appointments button is pressed
+function doHouseholdAppointments() {
+	button = document.getElementById("householdAppointmentsButton");
+	return button.classList.contains("is-pressed");
+}
+
+// sets household appointments form mode
+function setHouseholdAppointmentMode(mode) {
+	if (mode) {
+		displayHouseholdAppointmentDateButtons(true);
+		document.getElementById("orderByDate").checked = false;
+		document.getElementById("orderByLastName").checked = true;
+		document.getElementsByName("orderByRadio").forEach(function(radio) {
+			radio.disabled = true;
+		});
+	}
+	else {
+		displayHouseholdAppointmentDateButtons(false);
+		document.getElementById("orderByDate").checked = true;
+		document.getElementById("orderByLastName").checked = false;
+		document.getElementsByName("orderByRadio").forEach(function(radio) {
+			radio.disabled = false;
+		});
+	}
+}
+
+// event listener for attended appointments option button
+document.getElementById("attendedAppointmentsButton").addEventListener("click", function() {
+	const alreadyPressed = this.classList.contains("is-pressed");
+	if (!alreadyPressed) {
+		otherButtons = document.getElementsByName("reportModeButton");
+		// unpress other button
+		otherButtons.forEach(function(otherButton) {
+			if (otherButton.classList.contains("is-pressed")) otherButton.classList.remove("is-pressed");
+		});
+		// press this button
+		this.classList.add("is-pressed");
+
+		// mode specific form modifications
+		setTimeWindow(7);
+		displayAttendedAppointmentDateButtons(true);
+		displayScheduledAppointmentDateButtons(false);
+		setHouseholdAppointmentMode(false);
+		setDateInputBounds(initialDateBound_attendedAppointments, finalDateBound_attendedAppointments);
+	}
+});
+
+//event listener for scheduled appointments option button
+document.getElementById("scheduledAppointmentsButton").addEventListener("click", function() {
+	const alreadyPressed = this.classList.contains("is-pressed");
+	if (!alreadyPressed) {
+		otherButtons = document.getElementsByName("reportModeButton");
+		// unpress other button
+		otherButtons.forEach(function(otherButton) {
+			if (otherButton.classList.contains("is-pressed")) otherButton.classList.remove("is-pressed");
+		});
+		// press this button
+		this.classList.add("is-pressed");
+
+		// mode specific form modifications
+		setTimeWindow(0, ahead=true);
+		displayScheduledAppointmentDateButtons(true);
+		displayAttendedAppointmentDateButtons(false);
+		setHouseholdAppointmentMode(false);
+		setDateInputBounds(initialDateBound_scheduledAppointments, finalDateBound_scheduledAppointments);
+	}
+});
+
+//event listener for household appointments option button
+document.getElementById("householdAppointmentsButton").addEventListener("click", function() {
+	const alreadyPressed = this.classList.contains("is-pressed");
+	if (!alreadyPressed) {
+		otherButtons = document.getElementsByName("reportModeButton");
+		// unpress other button
+		otherButtons.forEach(function(otherButton) {
+			if (otherButton.classList.contains("is-pressed")) otherButton.classList.remove("is-pressed");
+		});
+		// press this button
+		this.classList.add("is-pressed");
+
+		// mode specific form modifications
+		setTimeWindow(7);
+		setHouseholdAppointmentMode(true);
+		displayScheduledAppointmentDateButtons(false);
+		displayAttendedAppointmentDateButtons(false);
+		setDateInputBounds(initialDateBound_attendedAppointments, finalDateBound_scheduledAppointments);
+	}
+});
+
+// if mode is true, this function makes the quick date selection buttons for 
+//	attended appointments visible;
+// if false, it hides these buttons
+function displayAttendedAppointmentDateButtons(mode) {
+	if (mode)
+		document.getElementsByName("attendedAppointmentDateButton").forEach(element => {
+			element.style.display = "block";
+		});
+	else 
+		document.getElementsByName("attendedAppointmentDateButton").forEach(element => {
+			element.style.display = "none";
+		});
+}
+
+// if mode is true, this function makes the quick date selection buttons for 
+//	scheduled appointments visible;
+// if false, it hides these buttons
+function displayScheduledAppointmentDateButtons(mode) {
+	if (mode)
+		document.getElementsByName("scheduledAppointmentDateButton").forEach(element => {
+			element.style.display = "block";
+		});
+	else 
+		document.getElementsByName("scheduledAppointmentDateButton").forEach(element => {
+			element.style.display = "none";
+		});
+}
+
+// if mode is true, this function makes the quick date selection buttons for 
+//	household appointments visible;
+// if false, it hides these buttons
+function displayHouseholdAppointmentDateButtons(mode) {
+	if (mode)
+		document.getElementsByName("householdAppointmentDateButton").forEach(element => {
+			element.style.display = "block";
+		});
+	else 
+		document.getElementsByName("householdAppointmentDateButton").forEach(element => {
+			element.style.display = "none";
+		});
+}
+
+//// //// //// //// //// //// //// //// //// //// //// //// //// //// 
+// table control
+//// //// //// //// //// //// //// //// //// //// //// //// //// //// 
+
+// restore UI to defaults
+function restoreTableDefaults() {
+	currentData = null;
+	currentTotals = null;
+	currentPage = 0;
+	totalPages = 0;
+}
+
+// called to display previous page in report
+function gotoPreviousPage() {
+	if (currentPage > 1) {
+		--currentPage;
+		createTable_attendedAppointments();
+	}
+}
+// called to display next page in report
+function gotoNextPage() {
+	if (currentPage < totalPages) {
+		++currentPage;
+		createTable_attendedAppointments();
+	}
+}
+
+// deletes the current table
+function removeTable() {
+	var container = document.getElementById("tableContainer");
+	while (container.firstChild) {
+		container.removeChild(container.firstChild);
+	}
+	container = document.getElementById("paginationContainer");
+	while (container.firstChild) {
+		container.removeChild(container.firstChild);
+	}
+	container = document.getElementById("totalsTableContainer");
+	while (container.firstChild) {
+		container.removeChild(container.firstChild);
+	}
+}
+
+// creates the totals table for attended appointments
+function createTotalsTable_attendedAppointments() {
+	function addToRow(row, cellContent) {
+		var cell = document.createElement('td');
+		cell.setAttribute('style', 'text-align: center;');
+		cell.textContent = cellContent;
+		row.appendChild(cell);
+	}
+
+	const headers = ['', 
+			'Appointments', 
+			'Adults Served', 
+			'Children Served', 
+			'Distinct Clients', 
+			'Average Appointments per Client',
+			'Distinct Adults', 
+			'Distinct Children',
+		];	
+	tableContainer = document.getElementById("totalsTableContainer");
+	var table = tableContainer.querySelector('table');
+	var tableBody = null;
+
+	// if we need to create a new table
+	if (!table) {
+		table = document.createElement('table');
+		table.className = 'table'
+
+		var tableHead = document.createElement('thead');
+		var headerRow = document.createElement('tr');
+		headers.forEach(header => {
+			var th = document.createElement('th');
+			th.setAttribute('style', 'text-align: center;');
+			th.textContent = header;
+			headerRow.appendChild(th);
+		});
+		tableHead.appendChild(headerRow);
+		table.appendChild(tableHead);
+		
+		tableBody = document.createElement('tbody');
+		table.appendChild(tableBody);
+        tableContainer.appendChild(table);
+	}
+	else {
+		tableBody = table.querySelector('tbody');
+		if (!tableBody) {
+            tableBody = document.createElement('tbody');
+            table.appendChild(tableBody);
+        }
+	}
+
+	tableBody.innerHTML = '';
+
+	var row = document.createElement('tr');
+	addToRow(row, "Total:");
+	addToRow(row, currentTotals['numAppointments']);
+	addToRow(row, currentTotals['numAdult']);
+	addToRow(row, currentTotals['numChild']);
+	addToRow(row, currentTotals['distinctClient']);
+	addToRow(row, currentTotals['meanAppointmentsPerClient']);
+	addToRow(row, currentTotals['uniqueAdult']);
+	addToRow(row, currentTotals['uniqueChild']);
+	tableBody.appendChild(row);
+	
+	table.appendChild(tableBody);
+	tableContainer.appendChild(table);
+}
+
+// creates the table table for attended appointments
+function createTable_attendedAppointments() {
+	const headers = ['', 
+					'Date', 
+					'Time', 
+					'Name', 
+					'Adults in Household', 
+					'Children in Household', 
+					'County', 
+					'Address', 
+					'Zip Code'
+				];
+
+	var tableContainer = document.getElementById('tableContainer');
+	var table = tableContainer.querySelector('table');
+	var tableBody = null;
+
+	// if we need to create a new table
+	if (!table) {
+		table = document.createElement('table');
+		table.className = 'table';
+		table.setAttribute('id', 'currentTable');
+
+		var tableHead = document.createElement('thead');
+		tableHead.className = 'thead-dark';
+		var headerRow = document.createElement('tr');
+		headers.forEach(header => {
+			var th = document.createElement('th');
+			th.className = 'table-element';
+			th.setAttribute('style', 'text-align: center;');
+			th.textContent = header;
+			headerRow.appendChild(th);
+		});
+		tableHead.appendChild(headerRow);
+		table.appendChild(tableHead);
+		
+		tableBody = document.createElement('tbody');
+		table.appendChild(tableBody);
+        tableContainer.appendChild(table);
+	}
+	else {
+		tableBody = table.querySelector('tbody');
+		if (!tableBody) {
+            tableBody = document.createElement('tbody');
+            table.appendChild(tableBody);
+        }
+	}
+	
+	// for pagination
+	const startIndex = (currentPage-1) * rowsPerPage;
+	const endIndex = startIndex + rowsPerPage;
+	const paginatedData = currentData.slice(startIndex, endIndex);
+
+	// clear current table data
+	tableBody.innerHTML = '';
+
+	paginatedData.forEach(entry => {
+        var row = document.createElement('tr');
+        for (var key in entry) {
+            var cell = document.createElement('td');
+			cell.className = 'table-element';
+            cell.textContent = entry[key];
+            row.appendChild(cell);
+        }
+        tableBody.appendChild(row);
+    });
+	table.appendChild(tableBody);
+	tableContainer.appendChild(table);
+
+	updatePagination();
+}
+
+// creates the totals table for scheduled appointments
+function createTotalsTable_scheduledAppointments() {
+	function addToRow(row, cellContent) {
+		var cell = document.createElement('td');
+		cell.setAttribute('style', 'text-align: center;');
+		cell.textContent = cellContent;
+		row.appendChild(cell);
+	}
+
+	const headers = ['', 
+			'Appointments',
+			'Self Checked-in', 
+			'Adults Served', 
+			'Children Served', 
+			'Distinct Clients', 
+			'Average Appointments per Client',
+			'Distinct Adults', 
+			'Distinct Children',
+		];	
+	tableContainer = document.getElementById("totalsTableContainer");
+	var table = tableContainer.querySelector('table');
+	var tableBody = null;
+
+	// if we need to create a new table
+	if (!table) {
+		table = document.createElement('table');
+		table.className = 'table'
+
+		var tableHead = document.createElement('thead');
+		var headerRow = document.createElement('tr');
+		headers.forEach(header => {
+			var th = document.createElement('th');
+			th.setAttribute('style', 'text-align: center;');
+			th.textContent = header;
+			headerRow.appendChild(th);
+		});
+		tableHead.appendChild(headerRow);
+		table.appendChild(tableHead);
+		
+		tableBody = document.createElement('tbody');
+		table.appendChild(tableBody);
+        tableContainer.appendChild(table);
+	}
+	else {
+		tableBody = table.querySelector('tbody');
+		if (!tableBody) {
+            tableBody = document.createElement('tbody');
+            table.appendChild(tableBody);
+        }
+	}
+
+	tableBody.innerHTML = '';
+
+	var row = document.createElement('tr');
+	addToRow(row, "Total:");
+	addToRow(row, currentTotals['numAppointments']);
+	addToRow(row, `${currentTotals['selfCheckedIn']} of ${currentTotals['numAppointments']}`);
+	addToRow(row, currentTotals['numAdult']);
+	addToRow(row, currentTotals['numChild']);
+	addToRow(row, currentTotals['distinctClient']);
+	addToRow(row, currentTotals['meanAppointmentsPerClient']);
+	addToRow(row, currentTotals['uniqueAdult']);
+	addToRow(row, currentTotals['uniqueChild']);
+	tableBody.appendChild(row);
+	
+	table.appendChild(tableBody);
+	tableContainer.appendChild(table);
+}
+
+// creates the table for scheduled appointments
+function createTable_scheduledAppointments() {
+	function getCheckIn(cond) {
+		return cond ? '✅' : '❌'
+	}
+
+	const headers = ['', 
+					'Date', 
+					'Time', 
+					'Name', 
+					'Self Checked-in',
+					'Adults in Household', 
+					'Children in Household', 
+					'County', 
+					'Address', 
+					'Zip Code'
+				];
+
+	var tableContainer = document.getElementById('tableContainer');
+	var table = tableContainer.querySelector('table');
+	var tableBody = null;
+
+	// if we need to create a new table
+	if (!table) {
+		table = document.createElement('table');
+		table.className = 'table';
+		table.setAttribute('id', 'currentTable');
+
+		var tableHead = document.createElement('thead');
+		tableHead.className = 'thead-dark';
+		var headerRow = document.createElement('tr');
+		headers.forEach(header => {
+			var th = document.createElement('th');
+			th.className = 'table-element';
+			th.textContent = header;
+			headerRow.appendChild(th);
+		});
+		tableHead.appendChild(headerRow);
+		table.appendChild(tableHead);
+		
+		tableBody = document.createElement('tbody');
+		table.appendChild(tableBody);
+        tableContainer.appendChild(table);
+	}
+	else {
+		tableBody = table.querySelector('tbody');
+		if (!tableBody) {
+            tableBody = document.createElement('tbody');
+            table.appendChild(tableBody);
+        }
+	}
+	
+	// for pagination
+	const startIndex = (currentPage-1) * rowsPerPage;
+	const endIndex = startIndex + rowsPerPage;
+	const paginatedData = currentData.slice(startIndex, endIndex);
+
+	// clear current table data
+	tableBody.innerHTML = '';
+
+	paginatedData.forEach(entry => {
+        var row = document.createElement('tr');
+        for (var key in entry) {
+            var cell = document.createElement('td');
+			cell.className = 'table-element';
+			if (key === "checkIn") 
+				cell.textContent = getCheckIn(entry[key]);
+			else
+            	cell.textContent = entry[key];
+            row.appendChild(cell);
+        }
+        tableBody.appendChild(row);
+    });
+	table.appendChild(tableBody);
+	tableContainer.appendChild(table);
+
+	updatePagination();
+}
+
+// creates the totals table for household appointments
+function createTotalsTable_householdAppointments() {
+	function addToRow(row, cellContent) {
+		var cell = document.createElement('td');
+		cell.setAttribute('style', 'text-align: center;');
+		cell.textContent = cellContent;
+		row.appendChild(cell);
+	}
+
+	const headers = ['', 
+			'Households', 
+			'Adults', 
+			'Children',
+		];	
+	tableContainer = document.getElementById("totalsTableContainer");
+	var table = tableContainer.querySelector('table');
+	var tableBody = null;
+
+	// if we need to create a new table
+	if (!table) {
+		table = document.createElement('table');
+		table.className = 'table'
+
+		var tableHead = document.createElement('thead');
+		var headerRow = document.createElement('tr');
+		headers.forEach(header => {
+			var th = document.createElement('th');
+			th.className = 'table-element';
+			th.setAttribute('style', 'text-align: center;');
+			th.textContent = header;
+			headerRow.appendChild(th);
+		});
+		tableHead.appendChild(headerRow);
+		table.appendChild(tableHead);
+		
+		tableBody = document.createElement('tbody');
+		table.appendChild(tableBody);
+        tableContainer.appendChild(table);
+	}
+	else {
+		tableBody = table.querySelector('tbody');
+		if (!tableBody) {
+            tableBody = document.createElement('tbody');
+            table.appendChild(tableBody);
+        }
+	}
+
+	tableBody.innerHTML = '';
+
+	var row = document.createElement('tr');
+	addToRow(row, "Total:");
+	addToRow(row, currentTotals['households']);
+	addToRow(row, currentTotals['adults']);
+	addToRow(row, currentTotals['children']);
+	tableBody.appendChild(row);
+	
+	table.appendChild(tableBody);
+	tableContainer.appendChild(table);
+}
+
+// creates the table for household appointments
+function createTable_householdAppointments() {
+	const headers = ['', 
+					'Head of Household', 
+					'Adults in Household', 
+					'Children in Household', 
+					'County', 
+					'Address', 
+					'Zip Code'
+				];
+
+	var tableContainer = document.getElementById('tableContainer');
+	var table = tableContainer.querySelector('table');
+	var tableBody = null;
+
+	// if we need to create a new table
+	if (!table) {
+		table = document.createElement('table');
+		table.className = 'table';
+		table.setAttribute('id', 'currentTable');
+
+		var tableHead = document.createElement('thead');
+		tableHead.className = 'thead-dark';
+		var headerRow = document.createElement('tr');
+		headers.forEach(header => {
+			var th = document.createElement('th');
+			th.className = 'table-element';
+			th.textContent = header;
+			headerRow.appendChild(th);
+		});
+		tableHead.appendChild(headerRow);
+		table.appendChild(tableHead);
+		
+		tableBody = document.createElement('tbody');
+		table.appendChild(tableBody);
+        tableContainer.appendChild(table);
+	}
+	else {
+		tableBody = table.querySelector('tbody');
+		if (!tableBody) {
+            tableBody = document.createElement('tbody');
+            table.appendChild(tableBody);
+        }
+	}
+	
+	// for pagination
+	const startIndex = (currentPage-1) * rowsPerPage;
+	const endIndex = startIndex + rowsPerPage;
+	const paginatedData = currentData.slice(startIndex, endIndex);
+
+	// clear current table data
+	tableBody.innerHTML = '';
+
+	paginatedData.forEach(entry => {
+        var row = document.createElement('tr');
+        for (var key in entry) {
+            var cell = document.createElement('td');
+			cell.className = 'table-element';
+			cell.textContent = entry[key];
+            row.appendChild(cell);
+        }
+        tableBody.appendChild(row);
+    });
+	table.appendChild(tableBody);
+	tableContainer.appendChild(table);
+
+	updatePagination();
+}
+
+// updates pagination for report navigation
+function updatePagination() {
+	// add pagination controls
+	var paginationContainer = document.getElementById('paginationContainer');
+	// if pagination controls already exist
+	if (paginationContainer.querySelector('button')) {
+		pageIdx = document.getElementById('pageIndex');
+		pageIdx.textContent = `Page ${currentPage} of ${totalPages}`;
+	}
+	else {
+		var navigator = document.createElement('div');
+		navigator.className = 'pagination-navigator';
+
+		var aDiv = document.createElement('div');
+		aDiv.className = 'pagination-item';
+		var prevButton = document.createElement('button');
+		prevButton.className = 'btn btn-light btn-sm';
+		prevButton.textContent = 'Previous';
+		prevButton.onclick = gotoPreviousPage;
+		aDiv.appendChild(prevButton);
+		navigator.appendChild(aDiv);
+		
+		aDiv = document.createElement('div');
+		aDiv.className = 'pagination-item';
+		var pageDescriptor = document.createElement('p');
+		pageDescriptor.setAttribute('id', 'pageIndex');
+		pageDescriptor.textContent = `Page ${currentPage} of ${totalPages}`;
+		aDiv.appendChild(pageDescriptor);
+		navigator.appendChild(aDiv);
+
+		aDiv = document.createElement('div');
+		aDiv.className = 'pagination-item';
+		var nextButton = document.createElement('button');
+		nextButton.className = 'btn btn-light btn-sm';
+		nextButton.textContent = 'Next';
+		nextButton.onclick = gotoNextPage;
+		aDiv.appendChild(nextButton);
+		navigator.appendChild(aDiv);
+
+		paginationContainer.appendChild(navigator);
+	}
+}
+
+// creates post request for attended appointment data
+function getTableData_attendedAppointments() {
+	fetch('/reports/generate_reports/getTableData_attendedAppointments', {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+			'X-CSRF-Token': csrfToken
+		},
+		body: JSON.stringify({
+			initialDate: getInitialDate(),
+			finalDate: getFinalDate(),
+			showTrenton: document.getElementById("includeTrentonRadio").checked,
+			showPrinceton: document.getElementById("includePrincetonRadio").checked,
+			showMobilePantry: document.getElementById("includeMobilePantryRadio").checked,
+			orderByDate: document.getElementById("orderByDate").checked, 
+			orderByLastName: document.getElementById("orderByLastName").checked,
+		})
+	}).then(response => {
+		if (response.ok) {
+			return response.json();
+		} else {
+			restoreTableDefaults();
+			throw new Error('Failed to get table data');
+		}
+	}).then(data => {
+		// console.log(data.newData);
+		currentData = data.newData;
+		currentTotals = currentData.shift();
+		// console.log(currentTotals);
+		currentPage = 1;
+		totalPages = Math.ceil(currentData.length / rowsPerPage);
+		removeTable();
+		createTable_attendedAppointments();
+		createTotalsTable_attendedAppointments();
+		tableDisplayed = ATTENDED_APPT;
+	});
+}
+
+// creates post request for scheduled appointment data
+function getTableData_scheduledAppointments() {
+	fetch('/reports/generate_reports/getTableData_scheduledAppointments', {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+			'X-CSRF-Token': csrfToken
+		},
+		body: JSON.stringify({
+			initialDate: getInitialDate(),
+			finalDate: getFinalDate(),
+			showTrenton: document.getElementById("includeTrentonRadio").checked,
+			showPrinceton: document.getElementById("includePrincetonRadio").checked,
+			showMobilePantry: document.getElementById("includeMobilePantryRadio").checked,
+			orderByDate: document.getElementById("orderByDate").checked, 
+			orderByLastName: document.getElementById("orderByLastName").checked,
+		})
+	}).then(response => {
+		if (response.ok) {
+			return response.json();
+		} else {
+			restoreTableDefaults();
+			throw new Error('Failed to get table data');
+		}
+	}).then(data => {
+		// console.log(data.newData);
+		currentData = data.newData;
+		currentTotals = currentData.shift();
+		// console.log(currentTotals);
+		currentPage = 1;
+		totalPages = Math.ceil(currentData.length / rowsPerPage);
+		removeTable();
+		createTable_scheduledAppointments();
+		createTotalsTable_scheduledAppointments();
+		tableDisplayed = SCHEDULED_APPT;
+	});
+}
+
+// creates post request for household appointment data
+function getTableData_householdAppointments() {
+	fetch('/reports/generate_reports/getTableData_householdAppointments', {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+			'X-CSRF-Token': csrfToken
+		},
+		body: JSON.stringify({
+			initialDate: getInitialDate(),
+			finalDate: getFinalDate(),
+			showTrenton: document.getElementById("includeTrentonRadio").checked,
+			showPrinceton: document.getElementById("includePrincetonRadio").checked,
+			showMobilePantry: document.getElementById("includeMobilePantryRadio").checked,
+		})
+	}).then(response => {
+		if (response.ok) {
+			return response.json();
+		} else {
+			restoreTableDefaults();
+			throw new Error('Failed to get table data');
+		}
+	}).then(data => {
+		// console.log(data.newData);
+		currentData = data.newData;
+		currentTotals = currentData.shift();
+		currentPage = 1;
+		totalPages = Math.ceil(currentData.length / rowsPerPage);
+		removeTable();
+		createTable_householdAppointments();
+		createTotalsTable_householdAppointments();
+		tableDisplayed = HOUSEHOLD_APPT;
+	});
+}
+
+//// //// //// //// //// //// //// //// //// //// //// //// //// //// 
+// download control
+//// //// //// //// //// //// //// //// //// //// //// //// //// //// 
+
+// downloads report as csv file
+function downloadCSV(csv, filename) {
+  var csvFile;
+  var downloadLink;
+
+  csvFile = new Blob([csv], { type: 'text/csv' });
+
+  downloadLink = document.createElement('a');
+  downloadLink.download = filename;
+  downloadLink.href = window.URL.createObjectURL(csvFile);
+  downloadLink.style.display = 'none';
+
+  document.body.appendChild(downloadLink);
+
+  downloadLink.click();
+
+  document.body.removeChild(downloadLink);
+}
+
+// converts displayed table to format for csv export
+function exportTableToCSV() {
+  var table = document.getElementById('currentTable');
+  var rows = table.querySelectorAll('tr');
+  var csv = [];
+
+  for (var i = 0; i < rows.length; i++) {
+    var row = [], cols = rows[i].querySelectorAll('td, th');
+    for (var j = 0; j < cols.length; j++) {
+      row.push(cols[j].innerText);
+    }
+    csv.push(row.join(','));
+  }
+
+  downloadCSV(csv.join('\n'), `Arm-In-Arm-Data-${formatDate(today)}.csv`);
+}
+
+// removes the table being buffered in the html for pdf export
+function removePDFTable() {
+	toDelete = document.getElementById('pdfTable');
+	document.body.removeChild(toDelete);
+}
+
+// formats the attended appointment report information for pdf export
+function createTableForPDF_attendedAppointments() {
+	var container = document.createElement('div');
+	container.style.display = 'none';
+	container.setAttribute('id', 'pdfTable');
+	document.body.appendChild(container);
+
+	var clonedTotalsTable = document.getElementById('totalsTableContainer').cloneNode(true);
+	container.appendChild(clonedTotalsTable);
+	var divider = document.createElement('hr');
+	container.appendChild(divider);
+
+	const headers = ['', 
+					'Date', 
+					'Time', 
+					'Name', 
+					'Adults in Household', 
+					'Children in Household', 
+					'County', 
+					'Address', 
+					'Zip Code'
+				];
+
+	// create a new table
+	var table = document.createElement('table');
+	table.className = 'table';
+	table.setAttribute('id', 'tableForPDF');
+
+	var tableHead = document.createElement('thead');
+	tableHead.className = 'thead-dark';
+	var headerRow = document.createElement('tr');
+	headers.forEach(header => {
+		var th = document.createElement('th');
+		th.className = 'table-element';
+		th.textContent = header;
+		headerRow.appendChild(th);
+	});
+	tableHead.appendChild(headerRow);
+	table.appendChild(tableHead);
+	
+	var tableBody = document.createElement('tbody');
+	table.appendChild(tableBody);
+	tableContainer.appendChild(table);
+	
+	// add body
+	currentData.forEach(entry => {
+        var row = document.createElement('tr');
+        for (var key in entry) {
+            var cell = document.createElement('td');
+			cell.setAttribute('style', 'text-align: center;');
+            cell.textContent = entry[key];
+            row.appendChild(cell);
+        }
+        tableBody.appendChild(row);
+    });
+	table.appendChild(tableBody);
+	container.appendChild(table);
+}
+
+// formats the attended scheduled report information for pdf export
+function createTableForPDF_scheduledAppointments() {
+	function getCheckIn(cond) {
+		return cond ? 'Yes' : 'No'
+	}
+	
+	var container = document.createElement('div');
+	container.style.display = 'none';
+	container.setAttribute('id', 'pdfTable');
+	document.body.appendChild(container);
+
+	var clonedTotalsTable = document.getElementById('totalsTableContainer').cloneNode(true);
+	container.appendChild(clonedTotalsTable);
+	var divider = document.createElement('hr');
+	container.appendChild(divider);
+
+
+	const headers = ['', 
+					'Date', 
+					'Time', 
+					'Name', 
+					'Self Checked-in',
+					'Adults in Household', 
+					'Children in Household', 
+					'County', 
+					'Address', 
+					'Zip Code'
+				];
+
+	// create a new table
+	var table = document.createElement('table');
+	table.className = 'table';
+	table.setAttribute('id', 'tableForPDF');
+
+	var tableHead = document.createElement('thead');
+	tableHead.className = 'thead-dark';
+	var headerRow = document.createElement('tr');
+	headers.forEach(header => {
+		var th = document.createElement('th');
+		th.className = 'table-element';
+		th.textContent = header;
+		headerRow.appendChild(th);
+	});
+	tableHead.appendChild(headerRow);
+	table.appendChild(tableHead);
+	
+	tableBody = document.createElement('tbody');
+	table.appendChild(tableBody);
+	tableContainer.appendChild(table);
+	
+	// add body
+	currentData.forEach(entry => {
+        var row = document.createElement('tr');
+        for (var key in entry) {
+            var cell = document.createElement('td');
+			cell.className = 'table-element';
+			cell.setAttribute('style', 'text-align: center;');
+			if (key === "checkIn") 
+				cell.textContent = getCheckIn(entry[key]);
+			else
+            	cell.textContent = entry[key];
+            row.appendChild(cell);
+        }
+        tableBody.appendChild(row);
+    });
+	table.appendChild(tableBody);
+	container.appendChild(table);
+}
+
+// formats the attended household report information for pdf export
+function createTableForPDF_householdAppointments() {
+	var container = document.createElement('div');
+	container.style.display = 'none';
+	container.setAttribute('id', 'pdfTable');
+	document.body.appendChild(container);
+
+	var clonedTotalsTable = document.getElementById('totalsTableContainer').cloneNode(true);
+	container.appendChild(clonedTotalsTable);
+	var divider = document.createElement('hr');
+	container.appendChild(divider);
+
+
+	const headers = ['', 
+					'Head of Household', 
+					'Adults in Household', 
+					'Children in Household', 
+					'County', 
+					'Address', 
+					'Zip Code'
+				];
+
+	// create a new table
+	var table = document.createElement('table');
+	table.className = 'table';
+	table.setAttribute('id', 'tableForPDF');
+
+	var tableHead = document.createElement('thead');
+	tableHead.className = 'thead-dark';
+	var headerRow = document.createElement('tr');
+	headers.forEach(header => {
+		var th = document.createElement('th');
+		th.className = 'table-element';
+		th.textContent = header;
+		headerRow.appendChild(th);
+	});
+	tableHead.appendChild(headerRow);
+	table.appendChild(tableHead);
+	
+	tableBody = document.createElement('tbody');
+	table.appendChild(tableBody);
+	tableContainer.appendChild(table);
+	
+	// add body
+	currentData.forEach(entry => {
+        var row = document.createElement('tr');
+        for (var key in entry) {
+            var cell = document.createElement('td');
+			cell.className = 'table-element';
+			cell.setAttribute('style', 'text-align: center;');
+			cell.textContent = entry[key];
+            row.appendChild(cell);
+        }
+        tableBody.appendChild(row);
+    });
+	table.appendChild(tableBody);
+	container.appendChild(table);
+}
+
+// creates post request to controller for preparing the report template html page
+// and then downloads the pdf
+function downloadTablePDF() {
+
+	console.log("Preparing Template");
+	if (tableDisplayed === ATTENDED_APPT)
+		createTableForPDF_attendedAppointments();
+	else if (tableDisplayed === SCHEDULED_APPT) 
+		createTableForPDF_scheduledAppointments();
+	else if (tableDisplayed === HOUSEHOLD_APPT)
+		createTableForPDF_householdAppointments();
+
+
+	fetch('/reports/generate_reports/download_pdf', {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+			'X-CSRF-Token': csrfToken
+		},
+		body: JSON.stringify({ // send table html to controller action
+			pdfContent: document.getElementById('pdfTable').innerHTML
+		})
+	}).then(response => {
+		if (response.ok) {
+			return response.json();
+		} else {
+			removePDFTable();
+			throw new Error('Failed to generate downloadable report');
+		}
+	}).then(data => {
+		removePDFTable();
+		console.log("Template Sent: initiating download");
+		document.getElementById('pdfDownloadLink').click();
+		console.log("Download Complete: sending deletion post request.");
+		// deletePDF();
+		// console.log("Download Success");
+	});
+}
+</script>

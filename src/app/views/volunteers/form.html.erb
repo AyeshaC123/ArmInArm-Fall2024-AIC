@@ -93,8 +93,8 @@
             </div>
 
             <div class="form-group">
-                <%= form.label :availability_day, "Select Day:" %>
-                <%= form.select :availability_day, [['Monday', 'Monday'], ['Tuesday', 'Tuesday'], ['Wednesday', 'Wednesday']], prompt: "Select a day", class: "form-control" %>
+                <%= form.label :day, "Select Day:" %>
+                <%= form.select :day, [['Monday', 'Monday'], ['Tuesday', 'Tuesday'], ['Wednesday', 'Wednesday']], prompt: "Select a day", class: "form-control" %>
             </div>
 
             <!-- Inside the form, for each interest -->
@@ -144,7 +144,7 @@
             }
 
             function validateDay() {
-                var day = document.querySelector('[name="volunteer[availability_day]"]').value.trim();
+                var day = document.querySelector('[name="volunteer[day]"]').value.trim();
                 if (day === '') {
                     alert('Please select a day.');
                     return false;

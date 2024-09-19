@@ -15,33 +15,52 @@
           </div>
         <% end %>
 
+          <!-- this is the event title section -->
         <div class="row">
           <div class="col-md-12">
             <div class="field text-center">
-              <%= form.label :appointment_length, "How many minutes should a single appointment be?" %>
+              <%= form.label :event_title, "Title of the event" %>
+              <%= form.text_field :event_title, class: "form-control", :required => 'required' %>
+            </div>
+          </div>
+        </div>
+
+        <br>
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="field text-center">
+              <%= form.label :appointment_length, "How long is a time block?" %>
               <%= form.number_field :appointment_length, class: "form-control" %>
             </div>
           </div>
         </div>
 
-        <br>
-
         <div class="row">
           <div class="col-md-12">
             <div class="field text-center">
-              <%= form.label :max_appointment_count, "Maximum number of appointments at one time" %>
+              <%= form.label :max_appointment_count, "Number of appointments per time block" %>
               <%= form.number_field :max_appointment_count, class: "form-control" %>
+            </div>
+          </div>
+        </div>
+
+        
+        <div class="row">
+          <div class="col-md-12">
+            <div class="field text-center">
+              <%= form.label :check_in_grace_period, "How many minutes early can a client check-in?" %>
+              <%= form.number_field :check_in_grace_period, class: "form-control" %>
             </div>
           </div>
         </div>
 
         <br>
 
-
         <div class="row">
           <div class="col-md-12">
             <div class="field text-center">
-              <%= form.label :booking_days, "What days do you want to have time slots on?" %>
+              <%= form.label :booking_days, "What days is this event?" %>
               <div class="form-check">
                 <% days_of_week = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'] %>
                 <% days_of_week.each do |day| %>
@@ -58,29 +77,60 @@
         <br>
 
         <div class="row">
-          <div class="col-md-12">
+          <div class="col-md-6">
             <div class="field text-center">
-              <%= form.label :service_time, "How many minutes does it take to service 1 person on average?" %>
-              <%= form.number_field :service_time, class: "form-control" %>
+              <%= form.label :start_time, "Start Time" %>
+              <%= form.time_field :start_time, class: "form-control" %>
             </div>
           </div>
-        </div>
 
-        <div class="row">
-        <div class="col-md-6">
-          <div class="field text-center">
-            <%= form.label :start_time, "Start Time" %>
-            <%= form.time_field :start_time, class: "form-control" %>
-          </div>
-        </div>
-
-        <div class="col-md-6">
+          <div class="col-md-6">
             <div class="field text-center">
               <%= form.label :end_time, "End Time" %>
               <%= form.time_field :end_time, class: "form-control" %>
             </div>
           </div>
         </div>
+
+
+        <div class="row">
+          <div class="col-md-6">
+            <div class="field text-center">
+              <%= form.label :start_time, "Start Date" %>
+              <%= form.date_field :start_date, class: "form-control", :required => 'required' %>
+            </div>
+          </div>
+
+
+          <div class="col-md-6">
+            <div class="field text-center">
+              <%= form.label :start_time, "End Date" %>
+              <%= form.date_field :end_date, class: "form-control", :required => 'required' %>
+            </div>
+          </div>
+
+        </div>
+
+        <br>
+
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="field text-center">
+              <%= form.label :location, "Where is this event?" %>
+              <div class="form-check">
+                <% places = ['Trenton', 'Princeton', 'Mobile'] %>
+                <% places.each do |city| %>
+                  <label class="form-check-label mr-3">
+                    <%= form.check_box :location, { multiple: true, class: 'form-check-input', id: "city_#{city.downcase}", checked: @admin_panel.location.include?(city), value: city }, city %>
+                    <%= city %> &nbsp;
+                  </label>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+
 
         <br>
 

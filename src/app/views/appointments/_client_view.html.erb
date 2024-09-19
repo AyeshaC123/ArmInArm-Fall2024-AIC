@@ -1,0 +1,134 @@
+<!--
+Project Name: Appointment Scheduler and Check-in - team 23
+Description: Add constraints to booking appointments and allow for clients to be checked into their slotted appointments
+FileName: _client_view.html.erb
+Description: This is the view which clients will see where they can check into their appointments and view their past checked in appointments
+Last Modified: 4/22/24
+>
+
+-- spacer to make it look better -->
+<div style="height: 30px;"></div>
+
+<!-- New section for existing appointments -->
+<!-- added style edits within section for easier changing -->
+<tr>
+  <td>
+    <div style="margin-top: 20px; padding: 10px; border: 1px solid #ccc; border-radius: 5px; background-color: #f9f9f9;">
+
+      
+      <% if @user.client.appointments.any? %>
+
+        <!-- This is not pluralized corretly. I should be based on the appointments that the admin has checked in for this associated user. -->
+        <% if !@user.client.appointments.count( ).blank? %>
+
+          <h2>Existing <%= "Appointment".pluralize( @user.client.appointments.count( ) ) %></h2>
+
+        <% end %>
+
+
+
+
+        <!-- find this in the helpers file -->
+        <!-- it to hold all the appointments that have been checked in by the admin already -->
+        <% declare_my_appointment_array( ) %>
+
+        <ul style="list-style-type: none; padding: 0;">
+          <% @cliApptUnchecked.each do |appointment| %>
+
+            <li style="margin-bottom: 8px; padding: 8px; background-color: #fff; border: 1px solid #ddd; border-radius: 3px;">
+
+              <strong>Date:</strong> <%= appointment.date_of_appts.strftime('%Y-%m-%d') %>, 
+              <strong>Time:</strong> <%= appointment.time_of_appts.strftime('%I:%M %p') %>, 
+              <strong>Location:</strong> <%= appointment.location %>
+
+
+                
+
+                <!-- render different messages if the users have checked in -->
+                <% if ( appointment.client_self_check_in ) == false %>
+
+                    <strong>Self Checked In:</strong> Not Checked In
+
+                    <% if on_time?(appointment)%> 
+
+                      <!-- allow the user to check in themselves for their appointment time -->
+                      <a href="<%= check_them_in_path(false, who_is_doing_the_check_in: "individual_client", appointment_id: appointment.id ) %>" >
+
+                          <button type="button" class="btn btn-success">Check In</button>
+
+                      </a>
+                    <% else %>
+
+                      <button type="button" class="btn btn-success" disabled>Check In</button>
+
+                    <% end %>
+
+                <% else %>
+
+                    <strong>Self Checked In:</strong> Checked in
+
+                <% end %>
+
+
+            </li>
+          <% end %>
+          <%= paginate @cliApptUnchecked, param_name: :pageFut %>
+
+
+        </ul>
+      <% end %>
+    </div>
+  </td>
+</tr>
+
+
+
+
+
+
+
+<!---- spacer to make it look better -->
+<div style="height: 30px;"></div>
+
+<!-- New section for existing appointments -->
+<!-- added style edits within section for easier changing -->
+<tr>
+  <td>
+    <div style="margin-top: 20px; padding: 10px; border: 1px solid #ccc; border-radius: 5px; background-color: #f9f9f9;">
+
+      
+      <% if @cliApptChecked.any? %>
+        <h2>Past <%= "Appointment".pluralize( get_checked_in_appointments.count( ) ) %></h2>
+
+        <ul style="list-style-type: none; padding: 0;">
+          
+          <!-- this section will individuall display and paginate the contents of the checked appointments -->
+          <% @cliApptChecked.each do |appointment| %>
+
+            <li style="margin-bottom: 8px; padding: 8px; background-color: #fff; border: 1px solid #ddd; border-radius: 3px;">
+
+              <strong>Date:</strong> <%= appointment.date_of_appts.strftime('%Y-%m-%d') %>, 
+              <strong>Time:</strong> <%= appointment.time_of_appts.strftime('%I:%M %p') %>, 
+              <strong>Location:</strong> <%= appointment.location %>
+
+
+            </li>
+          <% end %>
+
+
+          <%= paginate @cliApptChecked, param_name: :pagePast %>
+        </ul>
+      <% else %>
+
+      <% if !@user.client.appointments.count( ).blank? %>
+
+        <h2>Past <%= "Appointment".pluralize( @user.client.appointments.count( ) ) %></h2>
+
+      <% end %>
+        <p>No past appointments yet</p>
+
+      <% end %>
+
+    </div>
+  </td>
+</tr>

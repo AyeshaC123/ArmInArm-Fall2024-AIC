@@ -1,0 +1,730 @@
+<!-- 
+Project Name: Statistics: Reports and Graph Generation - Team 21
+Description: Enable clients to generate graphs to display Arm in Arm's data of people helped over time,
+	and enable admin users to generate downloadable reports of people helped over specific time frames.
+Filename: graphics_generator.html.erb
+Description:  This view file contains the user interface for generating charts for displaying Arm in Arm
+	data, as well as the Javascript manipulating this user interface, and for making post request to the 
+	web server that are handled by controller actions in graphics_controller.rb.
+Last Modified: 4/21/2024
+-->
+
+<head>
+	<style>
+		.form-check-input.shift-overA {
+			margin-left: 10px;
+		}
+		.form-check-label.shift-overA {
+			margin-left: 40px;
+		}
+		.center-btn-group {
+			margin-top: 30px;
+			display: flex;
+			justify-content: center;
+		}
+		.center-loc-btn {
+			margin-top: 20px;
+			display: flex;
+			justify-content: center;
+		}
+		.center-generate-button {
+			margin-top: 800px;
+			display: flex;
+			justify-content: center;
+		}
+		.generate-button {
+			width: 150px;
+			height: 80px;
+		}
+		.date-alert {
+			margin-top: 30px;
+			width: 150px;
+			justify-content: center;
+		}
+		.graphic-title {
+			text-align: center;
+		}
+		#graphicContainer {
+			height: 600px;
+		}
+		.horizontal-divider {
+			border-top: 1px solid #ccc;
+			width: 100%;
+		}
+	</style>
+</head>
+
+<body>
+<h1>Generate a Graph of People Served</h1>
+
+<br>
+<div class="container mt-5">
+	<div class="row">
+		<div class="col-md-3 mb-3">	<%# column 1 %>
+			<%# Date inputs %>
+			<label for="initialDate">Initial date:</label>
+            <input type="date" id="initialDate" name="initialDate" class="form-control">
+            <br>
+
+			<label for="finalDate">Final date:</label>
+            <input type="date" id="finalDate" name="finalDate" class="form-control">
+			<br>
+
+			<%# Bar chart / Pie Chart radios %>
+			<div class="form-check">
+                <input type="radio" id="barGraphRadio" name="graphicType" class="form-check-input shift-overA" value="bar" checked>
+                <label for="barGraphRadio" class="form-check-label shift-overA">Bar Chart</label>
+                <br>
+
+                <input type="radio" id="pieChartRadio" name="graphicType" class="form-check-input shift-overA" value="pie">
+                <label for="pieChartRadio" class="form-check-label shift-overA">Pie Chart</label>
+            </div>
+		</div> 						<%# end column 1 %>
+
+		<div class="col-md-3 mb-3"> <%# column 2 %>
+			
+			<%# location comparison mode checkbox %>
+			<input type="checkbox" id="locationComparisonMode" name="LocationComparison" class="form-check-input shift-overA">
+            <label for="locationComparisonMode" name="LocationComparison" class="form-check-label shift-overA">Location Comparison Mode</label>
+
+			<hr name="pieChartIrrelevant" class="horizontal-divider">
+			
+			<%# demographic checkboxes %>
+			<div class="form-check">
+                <input type="checkbox" id="includeAppointments" name="demographicInclusionOption" class="form-check-input shift-overA" checked>
+                <label for="includeAppointments" name="demographicInclusionOption" class="form-check-label shift-overA">Show Appointments</label>
+            </div>
+
+            <div class="form-check">
+                <input type="checkbox" id="includeAdults" name="demographicInclusionOption" class="form-check-input shift-overA">
+                <label for="includeAdults" name="demographicInclusionOption" class="form-check-label shift-overA">Show Adults</label>
+            </div>
+
+            <div class="form-check">
+                <input type="checkbox" id="includeChildren" name="demographicInclusionOption" class="form-check-input shift-overA">
+                <label for="includeChildren" name="demographicInclusionOption" class="form-check-label shift-overA">Show Children</label>
+            </div>
+
+			<hr name="pieChartIrrelevant" class="horizontal-divider">
+
+			<%# location radios (location comparison mode is off) %>
+			<div class="form-check">
+				<input type="radio" id="includeAllLocationsRadio" name="locationRadio" class="form-check-input shift-overA" >
+                <label for="includeTrentonRadio" name="locationRadio" class="form-check-label shift-overA">Show all Locations</label>
+
+                <input type="radio" id="includeTrentonRadio" name="locationRadio" class="form-check-input shift-overA" >
+                <label for="includeTrentonRadio" name="locationRadio" class="form-check-label shift-overA">Show Trenton</label>
+
+                <input type="radio" id="includePrincetonRadio" name="locationRadio" class="form-check-input shift-overA" >
+                <label for="includePrincetonRadio" name="locationRadio" class="form-check-label shift-overA">Show Princeton</label>
+
+                <input type="radio" id="includeMobilePantryRadio" name="locationRadio" class="form-check-input shift-overA">
+                <label for="includeMobilePantryRadio" name="locationRadio" class="form-check-label shift-overA">Show Mobile Pantry</label>
+            </div>
+
+			<%# location checkboxes (location comparison mode is on) %>
+            <div class="form-check">
+                <input type="checkbox" id="includeTrenton" name="locationCheckbox" class="form-check-input shift-overA">
+                <label for="includeTrenton" name="locationCheckbox" class="form-check-label shift-overA">Show Trenton</label>
+            </div>
+
+            <div class="form-check">
+                <input type="checkbox" id="includePrinceton" name="locationCheckbox"  class="form-check-input shift-overA">
+                <label for="includePrinceton" name="locationCheckbox" class="form-check-label shift-overA">Show Princeton</label>
+            </div>
+
+            <div class="form-check">
+                <input type="checkbox" id="includeMobilePantry" name="locationCheckbox"  class="form-check-input shift-overA">
+                <label for="includeMobilePantry" name="locationCheckbox" class="form-check-label shift-overA">Show Mobile Pantry</label>
+            </div>
+
+			<hr name="pieChartIrrelevant" class="horizontal-divider">
+
+			<%# grouping radios %>
+			<div class="form-check">
+                <input type="radio" id="groupDayRadio" name="groupingOption" class="form-check-input shift-overA" value="day" checked>
+                <label for="groupDayRadio" name="groupingOption" class="form-check-label shift-overA">Group by Day</label>
+
+                <input type="radio" id="groupWeekRadio" name="groupingOption" class="form-check-input shift-overA" value="week">
+                <label for="groupWeekRadio" name="groupingOption" class="form-check-label shift-overA">Group by Week</label>
+
+                <input type="radio" id="groupMonthRadio" name="groupingOption" class="form-check-input shift-overA" value="month">
+                <label for="groupMonthRadio" name="groupingOption" class="form-check-label shift-overA">Group by Month</label>
+            </div>
+
+		</div> 						<%# end column 2 %>
+
+		<div class="col-md-3 mb-3"> <%# column 3 %>
+
+			<%# quick time frame selection buttons %>
+			<div class="center-btn-group">
+                <div class="btn-group-vertical" role="group" aria-label="Vertical button group">
+                    <button type="button" class="btn btn-outline-primary" id="setYesterday" onclick="setTimeWindow(1, oneDay=true)">Yesterday</button>
+                    <button type="button" class="btn btn-outline-primary" id="setLastWeek" onclick="setTimeWindow(7)">Last Week</button>
+                    <button type="button" class="btn btn-outline-primary" id="setLast30Days" onclick="setTimeWindow(30)">Last 30 Days</button>
+                    <button type="button" class="btn btn-outline-primary" id="setLastYear" onclick="setTimeWindow(365)">Last Year</button>
+                </div>
+            </div>
+
+		</div> 						<%# end column 3 %>
+
+		<div class="col-md-3 mb-3"> <%# column 4 %>
+
+			<%# generate button %>
+			<div class="mt-5">
+                <button type="submit" class="btn btn-primary generate-button" id="generateGraphicButton">Generate</button>
+				<div id="dateAlert" class="alert alert-danger date-alert" style="display: none;" role="alert">Invalid Dates</div>
+            </div>
+		</div> 						<%# end column 4 %>
+	</div>
+</div>
+
+<div id="graphicContainer"></div>
+
+<%#-----------------------------------------------------------------------------------------------------------%>
+<%#-----------------------------------------------------------------------------------------------------------%>
+
+<script type="text/javascript">
+//// //// //// //// //// //// //// //// //// //// //// //// //// //// 
+// global constants
+//// //// //// //// //// //// //// //// //// //// //// //// //// //// 
+const today = new Date();
+const daysInAYear = 365;
+const daysInAWeek = 7;
+const maxDateOffsetFromToday = 1; // yesterday
+const minDateOffsetFromToday = 5*daysInAYear + maxDateOffsetFromToday; // 5 years ago
+const initialDefaultValueDateOffsetFromToday = 1*daysInAWeek + maxDateOffsetFromToday; // 1 week ago
+const numGroupingOptions = 3;
+//// //// //// //// //// //// //// //// //// //// //// //// //// //// 
+// functions getting form inputs
+//// //// //// //// //// //// //// //// //// //// //// //// //// //// 
+
+// this function accepts a date object and returns a string in format yyyy-mm-dd
+function formatDate(date) {
+  	return date.toISOString().split('T')[0];
+}
+
+// this function either returns the default initial date for the date input or the lower bound for date input
+function getMinDate(forInitialDefaultValue=false) {
+	var minDate = new Date();
+	if (forInitialDefaultValue) {
+		minDate.setDate(today.getDate() - initialDefaultValueDateOffsetFromToday)
+	} else {
+		minDate.setDate(today.getDate() - minDateOffsetFromToday);
+	}
+	return formatDate(minDate);
+}
+
+// this function returns the upper bound for date input
+function getMaxDate() {
+	var maxDate = new Date();
+	maxDate.setDate(today.getDate() - maxDateOffsetFromToday);
+	return formatDate(maxDate);
+}
+
+// this function returns the initial date input from the form
+function getInitialDate() {
+	return document.getElementById("initialDate").value
+}
+
+// this function returns the final date input from the form
+function getFinalDate() {
+	return document.getElementById("finalDate").value
+}
+// this function returns true if the initial and final inputted dates are valid and false otherwise
+function areDatesValid() {
+	var initialDate = document.getElementById("initialDate").value;
+	var finalDate = document.getElementById("finalDate").value;
+
+	var initialDateObj = new Date(initialDate);
+	var finalDateObj = new Date(finalDate);
+
+	if (initialDateObj <= finalDateObj) 
+		return true;
+	else 
+		return false;
+}
+
+// this function returns 0 if grouping by day, 1 if grouping by week, and 2 if grouping by month
+function getGrouping() {
+	if (document.getElementById("groupDayRadio").checked) return 0;
+	if (document.getElementById("groupWeekRadio").checked) return 1;
+	if (document.getElementById("groupMonthRadio").checked) return 2;
+}
+
+// this function returns true if the bar chart is graphing data for one location in particular
+function consideringLocation() {return !(document.getElementById("includeAllLocationsRadio").checked); }
+
+// this function returns true if a bar chart is to be generated
+function generatingBarChart() {
+	var barChartRadio = document.getElementById("barGraphRadio").checked;
+	var locationComparisonMode = document.getElementById("locationComparisonMode").checked;
+	return barChartRadio && !locationComparisonMode;
+}
+
+// this function returns true if a pie chart is to be generated
+function generatingPieChart() {
+	var graphicRadios = document.getElementById("pieChartRadio");
+	return graphicRadios.checked;
+}
+
+// this function returns true if a stacked bar chart is to be generated
+function generatingStackedBarChart() {
+	var barChartRadio = document.getElementById("barGraphRadio").checked;
+	var locationComparisonMode = document.getElementById("locationComparisonMode").checked;
+	return barChartRadio && locationComparisonMode;
+}
+
+//// //// //// //// //// //// //// //// //// //// //// //// //// //// 
+// functions for manipulating grouped UI elements
+//// //// //// //// //// //// //// //// //// //// //// //// //// //// 
+
+// this function assigns the value to the initial and final date form inputs
+// it accepts an integer number of days and sets the time window to stretch from 
+// 		that many days before yesterday to yesterday
+// function setTimeWindow(days) {
+// 	// var maxDate = new Date();
+// 	// maxDate.setDate(today.getDate() - maxDateOffsetFromToday);
+
+// 	// newMin = new Date();
+// 	// newMin.setDate(maxDate.getDate() - days)
+
+// 	// document.getElementById("initialDate").value = formatDate(newMin);
+// 	// document.getElementById("finalDate").value = formatDate(maxDate);
+
+// 	var newMinDate = new Date();
+// 	var newMaxDate = new Date();
+
+// 	if (days === 1) // set yesterday
+// 		newMaxDate.setDate(today.getDate()-1);
+// 	else
+// 		newMaxDate.setDate(today.getDate());
+// 	newMinDate.setDate(today.getDate() - days);
+
+// 	document.getElementById("initialDate").value = formatDate(newMinDate);
+// 	document.getElementById("finalDate").value = formatDate(newMaxDate);
+// }
+
+function setTimeWindow(days, oneDay=false) {
+	if (oneDay) { // assigning both input fields the same day
+		newDate = new Date();
+		newDate.setDate(today.getDate() - days);
+		var newDateFormatted = formatDate(newDate);
+		
+		document.getElementById("initialDate").value = newDateFormatted;
+		document.getElementById("finalDate").value = newDateFormatted;
+	}
+	else { // assigning input fields for some time window
+		var newMinDate = new Date();
+		var newMaxDate = new Date();
+		
+		newMaxDate.setDate(today.getDate());
+		newMinDate.setDate(today.getDate() - days);
+
+		document.getElementById("initialDate").value = formatDate(newMinDate);
+		document.getElementById("finalDate").value = formatDate(newMaxDate);
+	}
+}
+
+// if mode is true, this function makes the location checkboxes visible;
+// 		if false, it hides the location checkboxes
+function displayLocationCheckboxes(mode) {
+	elements = document.getElementsByName("locationCheckbox")
+	elements.forEach(function(checkbox) {
+		if (mode)
+			checkbox.style.display = "block";
+		else {
+			checkbox.checked = false;
+			checkbox.style.display = "none";
+		}
+	});
+}
+
+// if mode is true, this function makes the location radios visible;
+// 		if false, it hides the location radios
+function displayLocationRadios(mode) {
+	elements = document.getElementsByName("locationRadio")
+	elements.forEach(function(radio) {
+		if (mode) 
+			radio.style.display = "block";
+		else
+			radio.style.display = "none";
+	});
+	if (mode) // set default
+		document.getElementById("includeAllLocationsRadio").checked = true;
+}
+
+// if mode is true, this function makes the option checkboxes visible;
+// 		if false, it hides the option checkboxes
+function displayDemographicCheckboxes(mode) {
+	if (mode) {
+		document.getElementsByName("demographicInclusionOption").forEach(function(checkbox) {
+			checkbox.style.display = "block";
+		});
+	}
+	else {
+		document.getElementsByName("demographicInclusionOption").forEach(function(checkbox) {
+			checkbox.style.display = "none";
+		});
+	}
+}
+
+// this function prepares the option checkboxes for location comparison mode
+// if comparingLocations is true, only the appointments checkbox is checked
+// 		and all are disabled
+// if comparing locations is false, all option checkboxes are enabled
+function toggleDemographicCheckboxes(comparingLocations) {
+	if (comparingLocations) {
+		document.getElementsByName("demographicInclusionOption").forEach(function(checkbox) {
+			checkbox.checked = false;
+			checkbox.disabled = true;
+		});
+		document.getElementById("includeAppointments").checked = true;
+	}
+	else {
+		document.getElementById("includeAppointments").checked = true;
+		document.getElementsByName("demographicInclusionOption").forEach(function(checkbox) {
+			checkbox.disabled = false;
+		});
+	}
+}
+
+// if mode is true, this function makes the grouping radios visible;
+// 		if false, it hides the grouping radios
+// note: grouping radios specify either grouping data by day, week, or month for the bar charts
+function displayGroupingRadios(mode) {
+	if (mode) {
+		document.getElementsByName("groupingOption").forEach(function(checkbox) {
+			checkbox.style.display = "block";
+		});
+	}
+	else {
+		document.getElementsByName("groupingOption").forEach(function(checkbox) {
+			checkbox.style.display = "none";
+		});
+	}
+}
+
+// if mode is true, this function makes the location comparison mode checkbox visible;
+// 		if false, it hides the location comparison mode checkbox
+function displayLocationComparisonCheckbox(mode) {
+	if (mode) {
+		document.getElementsByName("LocationComparison").forEach(function(checkbox) {
+			checkbox.style.display = "block";
+		});
+	}
+	else {
+		document.getElementsByName("LocationComparison").forEach(function(checkbox) {
+			checkbox.style.display = "none";
+		});
+	}
+}
+
+// if mode is true, this function makes the invalid dates alert visible;
+// 		if false, it hides the invalid dates alert
+function displayDateAlert(mode) {
+	if (mode) 
+		document.getElementById("dateAlert").style.display = "block";
+	else
+		document.getElementById("dateAlert").style.display = "none";
+}
+
+//// //// //// //// //// //// //// //// //// //// //// //// //// //// 
+// on page load action
+//// //// //// //// //// //// //// //// //// //// //// //// //// //// 
+
+// this function is called when the page is first loaded
+// it sets the default form mode, sets default form parameters, and generates a bar chart based on these
+function onPageLoad() {
+	const minDateFormatted = getMinDate();
+	const maxDateFormatted = getMaxDate();
+
+	// set default value for date form fields
+	setTimeWindow(7);
+
+	// set min dates for date form fields
+	document.getElementById("initialDate").min = minDateFormatted;
+	document.getElementById("finalDate").min = minDateFormatted;
+
+	// set max dates for date form fields
+	document.getElementById("initialDate").max = maxDateFormatted;
+	document.getElementById("finalDate").max = maxDateFormatted;
+
+	toggleBarChartMode(true);
+	generateBarChart();
+}
+window.onload = onPageLoad;
+
+//// //// //// //// //// //// //// //// //// //// //// //// //// //// 
+// functions for post requests
+//// //// //// //// //// //// //// //// //// //// //// //// //// //// 
+var csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+// this function creates a post request that requests for data formatted for creating a
+// 		stacked bar chart based on user form input
+function generateStackedBarChart() {
+	fetch('/statistics/graph_generator/getStackedBarChartData', {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+			'X-CSRF-Token': csrfToken
+		},
+		body: JSON.stringify({
+			initialDate: getInitialDate(),
+			finalDate: getFinalDate(),
+			includeTrenton: document.getElementById("includeTrenton").checked,
+			includePrinceton: document.getElementById("includePrinceton").checked,
+			includeMobilePantry: document.getElementById("includeMobilePantry").checked,
+			groupingOption: getGrouping(),
+		})
+	}).then(response => {
+		if (response.ok) {
+			return response.json();
+		} else {
+			throw new Error('Failed send graphic parameters');
+		}
+	}).then(data => {
+		// console.log(data.newData);
+		updateGraphic(data.newData);
+	});
+}
+
+// this function creates a post request that requests for data formatted for creating a
+// 		bar chart based on user form input
+function generateBarChart() {
+	fetch('/statistics/graph_generator/getBarChartData', {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+			'X-CSRF-Token': csrfToken
+		},
+		body: JSON.stringify({
+			initialDate: getInitialDate(),
+			finalDate: getFinalDate(),
+			includeAppointments: document.getElementById("includeAppointments").checked,
+			includeAdults: document.getElementById("includeAdults").checked,
+			includeChildren: document.getElementById("includeChildren").checked,
+			filterByLocation: consideringLocation(),
+			includeTrenton: document.getElementById("includeTrentonRadio").checked,
+			includePrinceton: document.getElementById("includePrincetonRadio").checked,
+			includeMobilePantry: document.getElementById("includeMobilePantryRadio").checked,
+			groupingOption: getGrouping(),
+		})
+	}).then(response => {
+		if (response.ok) {
+			return response.json();
+		} else {
+			throw new Error('Failed send graphic parameters');
+		}
+	}).then(data => {
+		// console.log(data.newData);
+		updateGraphic(data.newData);
+	});
+}
+
+// this function creates a post request that requests for data formatted for creating a
+// 		pie chart based on user form input
+function generatePieChart() {
+	fetch('/statistics/graph_generator/getPieChartData', {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+			'X-CSRF-Token': csrfToken
+		},
+		body: JSON.stringify({
+			initialDate: getInitialDate(),
+			finalDate: getFinalDate(),
+			includeTrenton: document.getElementById("includeTrenton").checked,
+			includePrinceton: document.getElementById("includePrinceton").checked,
+			includeMobilePantry: document.getElementById("includeMobilePantry").checked
+		})
+	}).then(response => {
+		if (response.ok) {
+			return response.json();
+		} else {
+			throw new Error('Failed send graphic parameters');
+		}
+	}).then(data => {
+		updateGraphic(data.newData);
+	});
+}
+
+//// //// //// //// //// //// //// //// //// //// //// //// //// //// 
+// create and update the displayed graphic after server sends data
+//// //// //// //// //// //// //// //// //// //// //// //// //// //// 
+
+// this function is called after the server responds to a post request for generating a chart
+// it creates the new chart corresponding to user input
+function updateGraphic(data) {
+	graphicContainer = document.getElementById("graphicContainer");
+	// remove current graph
+	if (graphicContainer.firstChild) graphicContainer.removeChild(graphicContainer.firstChild);
+
+	if (generatingStackedBarChart()) {
+		new Chartkick.ColumnChart("graphicContainer", data, {
+			title: "People Served",
+			colors: ["#4793AF", "#FF9800", "#DD5746", "#90D26D", "#F6FA70", "#7F27FF"],
+			// colors: ["#59D5E0", "#F5DD61", "#FAA300", "#F4538A"],
+			xtitle: "Dates",
+			ytitle: "Quantity", 
+			download: {
+				filename: "Arm-in-Arm-Bar-Chart",
+				background: "#fff",
+				},
+			stacked: true,
+		});
+	}
+	else if (generatingBarChart()) {
+		new Chartkick.ColumnChart("graphicContainer", data, {
+			title: "People Served",
+			colors: ["#4793AF", "#FF9800", "#DD5746", "#90D26D", "#F6FA70", "#7F27FF"],
+			// colors: ["#59D5E0", "#F5DD61", "#FAA300", "#F4538A"],
+			xtitle: "Dates",
+			ytitle: "Quantity", 
+			download: {
+				filename: "Arm-in-Arm-Bar-Chart",
+				background: "#fff",
+				}
+		});
+	} 
+	else if (generatingPieChart()) {
+		new Chartkick.PieChart("graphicContainer", data, {
+			title: "People Served",
+			colors: ["#4793AF", "#FF9800", "#DD5746", "#90D26D", "#F6FA70", "#7F27FF"],
+			// colors: ["#59D5E0", "#F5DD61", "#FAA300", "#F4538A"],
+			download: {
+				filename: "Arm-in-Arm-Pie-Chart",
+				background: "#fff",
+				}
+		});
+	}
+}
+
+//// //// //// //// //// //// //// //// //// //// //// //// //// //// 
+// prepare form for generating column chart
+//// //// //// //// //// //// //// //// //// //// //// //// //// //// 
+
+// if mode is true, this function enables and prepares the form fields necessary for creating a bar chart;
+// 		if false, this function hides these form fields
+function toggleBarChartMode(mode) {
+	if (mode) {
+		displayLocationComparisonCheckbox(true);
+		document.getElementById("locationComparisonMode").style.display = "block";
+		document.getElementById("locationComparisonMode").checked = false;
+		toggleLocationComparisonMode(false);
+		displayGroupingRadios(true);
+	}
+	else {
+		displayLocationComparisonCheckbox(false);
+		document.getElementById("locationComparisonMode").style.display = "none";
+		displayLocationCheckboxes(false);
+		displayLocationRadios(false);
+		displayGroupingRadios(false);
+		displayDemographicCheckboxes(false);
+	}
+
+}
+
+// if mode is true, this function enables and prepares the form fields necessary for location comparison mode
+// 		during bar chart creation;
+// 		if false, this function hides these form fields
+function toggleLocationComparisonMode(mode) {
+	if (mode) {
+		displayLocationCheckboxes(true);
+		displayLocationRadios(false);
+		toggleDemographicCheckboxes(comparingLocations=true);
+		displayDemographicCheckboxes(true);
+		document.getElementsByName("locationCheckbox").forEach(function(checkbox) {
+			checkbox.checked = true
+		});	
+		generateStackedBarChart();
+	}
+	else {
+		displayLocationCheckboxes(false);
+		displayLocationRadios(true);
+		toggleDemographicCheckboxes(comparingLocations=false);
+		displayDemographicCheckboxes(true);
+		document.getElementsByName("locationCheckbox").forEach(function(checkbox) {
+			checkbox.checked = false;
+		});
+		generateBarChart();
+
+	}
+}
+
+//// //// //// //// //// //// //// //// //// //// //// //// //// //// 
+// prepare form for generating pie chart
+//// //// //// //// //// //// //// //// //// //// //// //// //// //// 
+
+// if mode is true, this function enables and prepares the form fields necessary for creating a pie chart;
+// 		if false, this function hides these form fields
+function togglePieChartMode(mode) {
+	if (mode) {
+		displayLocationComparisonCheckbox(false);
+		displayGroupingRadios(false);
+		displayDemographicCheckboxes(false);
+		displayLocationCheckboxes(true);
+		document.getElementsByName("locationCheckbox").forEach(function(checkbox) {
+			checkbox.checked = true;
+		});
+		displayLocationRadios(false);
+		document.getElementsByName("pieChartIrrelevant").forEach(function(divider) {
+			divider.style.display = "none";
+		});
+	}
+	else {
+		document.getElementsByName("locationCheckbox").forEach(function(checkbox) {
+			checkbox.checked = false;
+		});
+		displayLocationRadios(false);
+		document.getElementsByName("pieChartIrrelevant").forEach(function(divider) {
+			divider.style.display = "block";
+		});
+		
+	}
+}
+
+//// //// //// //// //// //// //// //// //// //// //// //// //// //// 
+// form input event listeners
+//// //// //// //// //// //// //// //// //// //// //// //// //// //// 
+
+// event listener for "Generate" button
+// determines type of graphic to generate and creates corresponding post request
+document.getElementById("generateGraphicButton").addEventListener("click", function() {
+	dateInputValid = areDatesValid();
+	displayDateAlert(!dateInputValid);
+	if (dateInputValid) {
+		if (generatingStackedBarChart()) 
+			generateStackedBarChart();
+		else if (generatingBarChart())
+			generateBarChart();
+		else if (generatingPieChart())
+			generatePieChart();
+	}
+});
+
+// event listener for location comparison mode checkbox
+// reformats user interface to correspond with whether location comparison mode is enabled or disabled
+// only called when user interface is prepared for bar chart generation
+document.getElementById("locationComparisonMode").addEventListener("click", function() {
+	locationComparisonEnabled = document.getElementById("locationComparisonMode").checked;
+	toggleLocationComparisonMode(locationComparisonEnabled);
+});
+
+// event listener for bar chart radio button
+// reformats user interface for bar chart generation
+document.getElementById("barGraphRadio").addEventListener("click", function() {
+	togglePieChartMode(false);
+	toggleBarChartMode(true);
+});
+
+// event listener for pie chart radio button
+// reformats user interface for pie chart generation
+document.getElementById("pieChartRadio").addEventListener("click", function() {
+	toggleBarChartMode(false);
+	togglePieChartMode(true);
+	generatePieChart();
+});
+</script>
+
+</body>

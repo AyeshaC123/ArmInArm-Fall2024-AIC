@@ -1,0 +1,2 @@
+<ActionController::Parameters {"controller"=>"households", "action"=>"index"} permitted: false>
+{}

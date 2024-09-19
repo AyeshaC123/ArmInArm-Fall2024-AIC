@@ -1,38 +1,315 @@
-<p id="notice"><%= notice %></p>
+<!-- 
+ Project Name: Admin Dashboard - Team 22
+ Description: Allows admin to view & edit household, client, & location data
+ Filename: index.html.erb
+ Description: This view creates the homepage for households & lists
+   all existing households in a table. It also creates the UI that allows
+   admin users to add, edit, view, delete, search, sort, upload, & download 
+   household data.
+ Last Modified: 4/28/2024
+-->
 
-<h1>Households</h1>
+<!-- Team22: Style used for this page -->
+<style>
+  a:visited {
+    color: blue !important;
+  }
+  a:hover{
+    color: green !important;
+  }
+  body{
+    background-color: #FAFAFA;
+  }
+  h1{
+    text-align: center;
+    background-color: turquoise;
+  }
+  h2{
+    text-align: center;
+    background-color: cyan;
+  }
+  h3{
+    text-align: center;
+    background-color: silver;
+  }
+  h4{
+    text-align: center;
+  }
+  label {
+    font-size: 20px; /* Adjust the font size as needed */
+  }
+  select {
+    font-size: 22px; /* Adjust the font size as needed */
+    padding: 4px;
+  }
+  .custom-file {
+    font-size: 22px; /* Adjust the font size as needed */
+    width: 500px; /* Optional: Set a fixed width */
+  }
+  .border-blocks{
+    border: 4px solid #505353;
+    border-radius: 5px;
+    padding: 10px;
+  }
+  .table-container{
+    overflow-x: auto;
+    overflow-y: auto;
+    margin: 0 auto;
+    max-height: 1200px;
+  }
+  .table-center{
+    margin-left: auto; 
+    margin-right: auto;
+  }
+</style>
 
-This page is a basic version of an Admin-only page. Team 12 will mainly be implementing this, where admins will be able to create new households, and more importantly, search through the list of currently registered households.
-<br/>
-<br/>
-<table class="table">
-  <thead>
-    <tr>
-      <th>Head Name</th>
-      <th>Head DOB</th>
-      <th>Num Adults</th>
-      <th>Num Children</th>
-      <th>Phone Number</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+<!-- Team22: only admins can view page -->
+<% if can?(:access, :rails_admin) %> 
+  <p id="notice"><%= notice %></p>
+  
+  <h1 class="border-blocks" style="margin-bottom: -5px; padding-top: 20px;">Households</h1>
+  <h4 class="border-blocks" style="background-color: #FCF9F9;">Admin-only page to view, search, sort, download, & update household data.</h4>
 
-  <tbody>
-    <% @households.each do |household| %>
-      <tr>
-        <td><%= household.headname %></td>
-        <td><%= household.headdob %></td>
-        <td><%= household.numadults %></td>
-        <td><%= household.numchild %></td>
-        <td><%= household.phonenum %></td>
-        <td><%= link_to 'Show', household %></td>
-        <td><%= link_to 'Edit', edit_household_path(household) %></td>
-        <td><%= link_to 'Destroy', household, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+  <br>
+
+  <h3 class="border-blocks" style="margin-bottom: -5px; padding-top: 20px;">Upload spreadsheet to update current households</h3> 
+  <div class="border-blocks" style="background-color: #FCF9F9;">
+    <!-- Team22: heading with specific style applied -->
+    <h4>
+      <span style="color: red; font-weight: bold;">
+        Edits exisiting households only!
+      </span>
+      Add households below!
+    </h4>
+
+    <!-- Team22: admins can upload a csv file to update ONLY exisiting household data -->
+    <%= form_tag upload_households_path, multipart: true do %>
+      <div class="text-center">
+        <%= file_field_tag :file, class: "custom-file"%>
+        <%= submit_tag "Upload CSV", class: "btn btn-primary btn-lg"  %>
+      </div>
     <% end %>
-  </tbody>
-</table>
+  </div>
 
-<br>
+  <br>
 
+  <h3 style="margin-bottom: -4px; padding-top: 20px;", class="border-blocks">Sort table data based on chosen sorting option</h3>
+  <div class="border-blocks">
+    <!-- Team22: heading with specific style applied -->
+    <h4>Sorts table in 
+      <span style="color: blue; font-weight: bold;">
+        ascending/descending order
+      </span>  
+      <br>
+      based on
+      <span style="color: green; font-weight: bold;">
+        column name selected
+      </span>
+    </h4>
+
+    <!-- Team22: Sorts table household data based on column in ascending order -->
+    <%= form_tag households_sort_asc_path, method: :post do %>
+      <div class="text-center">
+        <%= label_tag :sort_by, "Sort By:", style: "font-weight: bold;" %>
+        <%= select_tag :sort_by, options_for_select([["Num Adults", "numadults"], ["Num Children", "numchild"], ["Pantry Location", "pantryloc"], ["City", "city"], ["Zipcode", "zip"], ["Household Type", "household"], ["Qualifier Code", "qcode"], ["Income Source", "incomesrc"], ["Food Stamps", "stamps"]]), include_blank: "Select Sorting Option" %>
+        <%= button_tag "Sort Ascending Order", class: "btn btn-primary btn-lg mb-2 ml-4"%>
+      </div> 
+    <% end %>
+
+    <!-- Team22: Sorts table household data based on column in descending order -->
+    <%= form_tag households_sort_desc_path, method: :post do %>
+      <div class="text-center">
+        <%= label_tag :sort_by, "Sort By:", style: "font-weight: bold;" %>
+        <%= select_tag :sort_by, options_for_select([["Num Adults", "numadults"], ["Num Children", "numchild"], ["Pantry Location", "pantryloc"], ["City", "city"], ["Zipcode", "zip"], ["Household Type", "household"], ["Qualifier Code", "qcode"], ["Income Source", "incomesrc"], ["Food Stamps", "stamps"]]), include_blank: "Select Sorting Option" %>
+        <%= button_tag "Sort Descending Order", class: "btn btn-primary btn-lg mb-2 ml-4"%>
+      </div> 
+    <% end %>
+  </div>
+
+  <br>
+
+  <h3 style="margin-bottom: -4px; padding-top: 20px;", class=" border-blocks">Search Households</h3>
+  
+  <div class="form-container border-blocks">
+    <h4 style="padding-bottom: 20px;">Fill out the form to search for specific household data</h4>
+    
+    <!-- Team22: Search form to search for data -->
+    <%= form_for :households, url: households_path, method: :get do |form| %>
+      <div class="row">
+        <!-- Team22: First Column/Group of Input -->
+        <div class="col-md-5">
+          <div class="form-group">
+            <div class="grid-item">
+              <%= label_tag :gender, "Gender:", style: "font-weight: bold;" %>
+              <%= select_tag :gender, options_for_select(["female", "male", "other"]), include_blank: 'Select Gender' %>
+            </div>
+            <div class="grid-item">
+              <%= label_tag :ethnicity, "Ethnicity:", style: "font-weight: bold;" %>
+              <%= select_tag :ethnicity, options_for_select(["black", "latino", "white", "asian", "multiracial"]), include_blank: 'Select Ethnicity' %>
+            </div>
+            <div class="grid-item">
+              <%= label_tag :adults, "Num Adults:", style: "font-weight: bold;" %>
+              <%= select_tag :adults, options_for_select(["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]), include_blank: 'Select # Adults' %>
+            </div>
+            <div class="grid-item">
+              <%= label_tag :children, "Num Children:", style: "font-weight: bold;" %>
+              <%= select_tag :children, options_for_select(["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]), include_blank: 'Select # Children' %>
+            </div>
+          </div>
+        </div>
+
+        <!-- Team22: Second Column/Group of Input -->
+        <div class="col-md-5">
+          <div class="form-group">
+            <div class="grid-item">
+              <%= label_tag :pantryloc, "Pantry Location:", style: "font-weight: bold;" %>
+              <%= select_tag :pantryloc, options_for_select(@locations.map { |location| [location.name, location.name] }), include_blank: 'Select Location' %>
+            </div>
+            <div class="grid-item">
+              <%= label_tag :cityName, "City:", style: "font-weight: bold;" %>
+              <%= select_tag :cityName, options_for_select(["Trenton", "Hamilton Township", "Princeton", "Ewing Township", "Lawrence Township", "Hopewell Borough", "Hopewell Township", "Pennington", "West Windsor Township", "East Windsor Township", "Robbinsville Township"]), include_blank: 'Select City' %>
+            </div>
+            <div class="grid-item">
+              <%= label_tag :stateName, "State:", style: "font-weight: bold;" %>
+              <%= select_tag :stateName, options_for_select(["New Jersey"], params[:state]), include_blank: 'Select State' %>
+            </div>
+            <div class="grid-item">
+              <%= label_tag :cnty, "County:", style: "font-weight: bold;" %>
+              <%= select_tag :cnty, options_for_select(["Mercer"]), include_blank: 'Select County'  %>
+            </div>
+            <div class="grid-item">
+              <%= label_tag :zip, "Zipcode:", style: "font-weight: bold;" %>
+              <%= select_tag :zip, options_for_select(["08501", "08502", "08504", "08505", "08510", "08512", "08515", "08520", "08525", "08528", "08530", "08534", "08536", "08540", "08542", "08550", "08551", "08553", "08555", "08560", "08561", "08608", "08609", "08610", "08611", "08618", "08619", "08620", "08628", "08629", "08638", "08641", "08648", "08690", "08691"]), include_blank: 'Select Zipcode' %>
+            </div>
+          </div>
+        </div>
+
+        <!-- Team22: Third Column/Group of Input -->
+        <div class="col-md-5">
+          <div class="form-group">
+            <div class="grid-item">
+              <%= label_tag :incomesrc, "Income Src:", style: "font-weight: bold;" %>
+              <%= select_tag :incomesrc, options_for_select(["csupport", "employment", "genassist", "ssi", "ssd", "retirement", "tnaf", "unemployment", "none"]), include_blank: 'Select Income Source' %>
+            </div>
+            <div class="grid-item">
+              <%= label_tag :code, "Qualifier Code:", style: "font-weight: bold;" %>
+              <%= select_tag :code, options_for_select(["1-TANF", "2-SNAP", "3-SSI", "4-WIC", "5-Medicaid", "6-Income Eligible", "7-Disaster"]), include_blank: 'Select Qualifier Code' %>
+            </div>
+            <div class="grid-item">
+              <%= label_tag :household, "Household Type:", style: "font-weight: bold;" %>
+              <%= select_tag :household, options_for_select(["single", "adultonly", "family"]), include_blank: 'Select Houshould Type' %>
+            </div>
+            <div class="grid-item">
+              <%= label_tag :stamps, "Food Stamps:", style: "font-weight: bold;" %>
+              <%= select_tag :stamps, options_for_select(["yes", "no"]), include_blank: 'Select if recieve' %>        
+            </div>
+          </div>      
+        </div>
+      </div>
+
+      <!-- Team22: button used to submit form -->
+      <div>
+        <%= submit_tag "Search", class: 'btn btn-primary btn-lg mt-3"' %>
+      </div>        
+    <% end %>
+  </div>
+
+  <br>
+  
+  <!-- Team22: Reset button to clear search/sort results -->
+  <%= button_to "Clear Search/Sort Results", households_path, method: :get, class: "btn btn-secondary btn-lg mt-3" %>
+
+  <br>
+
+  <!-- Team22: Adds a new household -->
+  <%= button_to "Add New Household", new_household_path, method: :get, class: "btn btn-primary btn-lg mt-3" %>
+  
+  <br>
+
+  <!-- Team22: downloads copy of current data -->
+  <h3 class="border-blocks">Download data: click <%= link_to "here", download_households_path(format: :csv) %></h3>
+  
+  <br>
+
+  <!-- Team22: Displays household data in table -->
+  <h2 class="border-blocks", style="margin-bottom: -3px;"> List of Households </h3>
+  <div class ="text-center">
+    <div class ="table-container border-blocks">
+      <table class="table table-center">
+        <thead>
+          <tr>
+            <th scope="col">User ID</th>
+            <th scope="col">Household ID</th>
+            <th scope="col">Head Name</th>
+            <th scope="col">Head DOB</th>
+            <th scope="col">Gender</th>
+            <th scope="col">Ethnicity</th>
+            <th scope="col">Num Adults</th>
+            <th scope="col">Num Children</th>
+            <th scope="col">Pantry Location</th>
+            <th scope="col">Street Address</th>
+            <th scope="col">City</th>
+            <th scope="col">State</th>
+            <th scope="col">County</th>
+            <th scope="col">Zipcode</th>
+            <th scope="col">Phone Number</th>
+            <th scope="col">Income Source</th>
+            <th scope="col">Qualifer Code</th>
+            <th scope="col">Net Income</th>
+            <th scope="col">Household Type</th>
+            <th scope="col">Food Stamps</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        
+        <tbody>
+          <!-- Team22: only diplays household data if households exist -->
+          <% if @households.empty? %>
+            <tr>
+              <p class= "text-center"><strong>No households found!!</strong></p>
+            </tr>
+          <% else %>
+            <% @households.each do |household| %>
+              <tr>
+                <td scope="col" style="text-align: center"><%= household.user_id %></td>
+                <td scope="col" style="text-align: center"><%= household.id %></td>
+                <td scope="col"><%= household.headname %></td>
+                <td scope="col"><%= household.headdob %></td>
+                <td scope="col"><%= household.headgender %></td>
+                <td scope="col"><%= household.headethnicity %></td>
+                <td scope="col"><%= household.numadults %></td>
+                <td scope="col"><%= household.numchild %></td>
+                <td scope="col"><%= household.pantrylocation%></td>
+                <td scope="col"><%= household.streetaddr %></td>
+                <td scope="col"><%= household.city %></td>
+                <td scope="col"><%= household.state %></td>
+                <td scope="col"><%= household.county %></td>
+                <td scope="col"><%= household.zipcode %></td>
+                <td scope="col"><%= household.phonenum %></td>
+                <td scope="col"><%= household.incomesource %></td>
+                <td scope="col"><%= household.qualifiercode %></td>
+                <td scope="col"><%= household.netincome %></td>
+                <td scope="col"><%= household.householdtype %></td>
+                <td scope="col"><%= household.foodstamps %></td>
+
+                <!-- Team22: links that allow you view, edit, & delete household data or view members in selected household -->
+                <td scope="col">
+                  <%= link_to 'View', household %>
+                  <%= link_to 'Edit', edit_household_path(household) %>
+                  <%= link_to 'Delete', household, method: :delete, data: { confirm: 'Are you sure?' } %>
+                  <%= link_to 'Members', household_members_path(household.id) %>
+                </td>
+              </tr>
+            <% end %>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div id="footer">
+      <a>© 2024 Copyright: Household List</a>
+  </div>
+<%end%>
 <%= link_to 'New Household', new_household_path %>

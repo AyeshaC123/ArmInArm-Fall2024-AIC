@@ -2,12 +2,33 @@
     Description: Allows clients to create/view/delete appointments and admin to manage existing appointments
     Filename: new.html.erb
     Description: View for appointment booker page
-    Last modified on: 11/29/23 -->
+    Last modified on: 4/21/24 -->
+
+
+<!-- Project name: Arm in Arm Appointment Booker - Team 23
+    Description: Add constraints to booking appointments and allow for clients to be checked into their slotted appointments
+    Filename: new.html.erb
+    Description: View for appointment booker page
+    Last modified on: 4/22/24 -->
+
+<!-- Project name: Arm in Arm Appointment Booker - Team 24
+    Description: Implemented the UI for a reminder functionality
+    Filename: new.html.erb
+    Description: View for appointment booker page
+    Last modified on: 4/28/24 -->
 
 <body style="font-family: 'Arial', sans-serif; background-color: #f5f5f5; padding: 20px;">
 
     <!-- Title: Appointment Booker -->
-    <h1 style="color: #007177; margin-bottom: 20px;">Appointment Booker</h1>
+    <h1 style="color: #007177; margin-bottom: 20px;">Appointment Booker for <%= current_user.client.default_location %></h1>
+
+    <% if current_user.registered == false %>
+      <div class="alert alert-danger">
+        You have not registered your household yet. You will be able to schedule appointments once you do so.
+      </div>
+    <% end %>
+<%# 
+    <h1 style="color: #007177; margin-bottom: 20px;">Appointment Booker</h1> %>
 
     <!-- Client Information Section -->
     <div style="margin-top: 5px; padding: 15px; border: 1px solid #ccc; border-radius: 5px; background-color: rgba(0, 182, 189, 0.2);">
@@ -36,28 +57,35 @@
       </table>
     </div>
 
-    <!-- Book a New Appointmnet Section -->
-    <%= form_with url: booker_times_path, method: :post, local: true do |form| %>
-      <div style="margin-top: 20px; padding: 15px; border: 1px solid #ccc; border-radius: 5px; background-color: rgba(0,182, 189, 0.2);">
-        <h2>Book a New Appointment</h2>
-    
-        <div style="margin-bottom: 10px;">
-          <%= form.label :location, 'Choose Location / Elegir Ubicación / Chwazi Kote:' %>
-          <%= form.select :location, ['Trenton', 'Princeton', 'Mobile'], {}, { class: 'form-control', required: true } %>
-        </div>
-    
-        <div style="margin-bottom: 10px;">
-          <%= form.label :date, 'Select Date / Elegir Fecha / Chwazi Dat:' %>
-          <%= form.date_field :date, class: 'form-control', required: true, max: (Date.current + 1.year).to_s %>
-        </div>
-    
-        <div>
-          Check Available Times / Verificar Horarios Disponible / Vèrifye Tan Ki Disponib
-          </br>
-          <%= form.submit 'Continue', class: 'btn btn-primary' %>
-        </div>
-      </div>
-    <% end %>  
+    <!-- Book a New Appointment Section -->
+<%= form_with url: booker_times_path, method: :post, local: true do |form| %>
+  <div style="margin-bottom: 10px;">
+    <%= form.label :location, 'Choose Location / Elegir Ubicación / Chwazi Kote:' %>
+    <%= form.select :location, ['Trenton', 'Princeton', 'Mobile'], {}, { class: 'form-control', required: true } %>
+  </div>
+
+  <div style="margin-bottom: 10px;">
+    <%= form.label :date, 'Select Date / Elegir Fecha / Chwazi Dat:' %>
+    <%= form.date_field :date, class: 'form-control', required: true, max: (Date.current + 1.year).to_s %>
+  </div>
+
+<div style="margin-bottom: 10px;">
+  <%= form.label :event_id_list, 'Select Events / Seleccionar Eventos / Chwazi Evènman:' %>
+  <% @events.each do |event| %>
+    <%= check_box_tag 'event_id_list[]', event.id %>
+    <%= label_tag "event_#{event.id}", event.event_title %><br>
+  <% end %>
+</div>
+
+
+  <div>
+    Check Available Times / Verificar Horarios Disponible / Vèrifye Tan Ki Disponib
+    </br>
+    <%= form.submit 'Continue', class: 'btn btn-primary' %>
+  </div>
+<% end %>
+
+</div>
 
   <!-- Spacer to make it look better -->
   <div style="height: 30px;"></div>
@@ -84,9 +112,92 @@
       <p>No existing appointments for this client.</p>
     <% end %>
   </div>
-  
+
+  <!-- this is showing the calendar -->
+  <div style="margin-top: 5px; padding: 15px; border: 1px solid #ccc; border-radius: 5px; background-color: rgba(0, 182, 189, 0.2);">
+    <%= month_calendar do |date| %>
+      <%= date %>
+    <% end %>
+  </div>
+
+  <!-- Spacer to make it look better -->
+  <div style="height: 2px;"></div>
+
+  <!-- Existing Appointments Section -->
+  <div style="margin-top: 20px; padding: 15px; border: 1px solid #ccc; border-radius: 5px; background-color: rgba(0, 182, 189, 0.2);">
+    <h2>Existing Appointment(s)</h2>
+    <% if @client.appointments.any?{|appointment| appointment.client_self_check_in == false} %>
+      <ul style="list-style-type: none; padding: 0;">
+        <% @cliCurAppt.each do |appointment| %>
+          <li style="margin-bottom: 8px; padding: 8px; background-color: #fff; border: 1px solid #ddd; border-radius: 3px; display: flex; justify-content: space-between; align-items: center;">
+            <div>
+              <strong>Date:</strong> <%= appointment.date_of_appts.strftime('%Y-%m-%d') %>,
+              <strong>Time:</strong> <%= appointment.time_of_appts.strftime('%I:%M %p') %>,
+              <strong>Location:</strong> <%= appointment.location %>
+            </div>
+            <div>
+                <%= button_to 'Delete', delete_appointment_path(appointment), method: :delete, data: { confirm: 'Are you sure you want to delete this appointment?' }, class: 'btn btn-danger' %>
+            </div>
+          </li>
+        <% end %>
+      </ul>
+      <%= paginate @cliCurAppt, param_name: :pageCur %>
+    <% end %>
+  </div>
+
+  <!-- Past Appointments Section -->
+  <div style="margin-top: 20px; padding: 15px; border: 1px solid #ccc; border-radius: 5px; background-color: rgba(0, 182, 189, 0.2);">
+    <h2>Past Appointment(s)</h2>
+    <% if @client.appointments.any?{|appointment| appointment.client_self_check_in == true} %>
+      <ul style="list-style-type: none; padding: 0;">
+        <% @cliPastAppt.each do |appointment| %>
+          <li style="margin-bottom: 8px; padding: 8px; background-color: #fff; border: 1px solid #ddd; border-radius: 3px; display: flex; justify-content: space-between; align-items: center;">
+            <div>
+              <strong>Date:</strong> <%= appointment.date_of_appts.strftime('%Y-%m-%d') %>,
+              <strong>Time:</strong> <%= appointment.time_of_appts.strftime('%I:%M %p') %>,
+              <strong>Location:</strong> <%= appointment.location %>
+            </div>
+          </li>
+        <% end %>
+      </ul>
+      <%= paginate @cliPastAppt, param_name: :pagePast %>
+    <% end %>
+  </div>
+
+  <!-- Spacer to make it look better -->
+  <div style="height: 30px;"></div>
+
+  <!-- Section for Updating Client Phone Number -->
+  <div class="appointment-reminders">
+    <div style="margin-top: 20px; padding: 15px; border: 1px solid #ccc; border-radius: 5px; background-color: rgba(0, 182, 189, 0.2);">    
+      <h3>Appointment Reminders</h3>
+
+      <%= form_with url: update_phone_path, method: :post, local: true do |form| %>
+        <div style="margin-bottom: 10px;">
+          <%= form.label :phone_number, 'Phone Number / Número de teléfono / Nimewo telefòn:' %>
+          <%= form.text_field :phone_number, value: @client.phone_number, placeholder: 'xxx-xxx-xxxx', class: 'form-control', pattern: "[0-9]{3}-[0-9]{3}-[0-9]{4}" %>
+        </div>
+
+        <div>
+          <%= form.submit 'Save Preferences', class: 'btn btn-primary' %>
+        </div>
+      <% end %>
+
+      <div style="margin-bottom: 10px;">
+        <br>
+        <label for="client_disclaimer">Reminders will be sent the day before your appointment at 3PM EST/ Los recordatorios se enviarán el día antes de la cita a las 3PM EST / Y ap voye rapèl jou anvan randevou a 3PM EST</label>
+      </div>
+    </div>
+  </div>
 
   <!-- Spacer at bottom to make it look better -->
   <div style="height: 60px;"></div>
 
+  <script defer>
+    let message_container = document.getElementById("the_flash_message_container")
+
+    function dismiss_message(){
+      message_container.remove()
+    }
+  </script>
 </body>

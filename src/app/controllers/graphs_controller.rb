@@ -8,8 +8,8 @@ class GraphsController < ApplicationController
     admin_panel = AdminPanel.first
 
     @appointments= Appointment.where(location: location, date_of_appts: current_date)
-   
-  
+
+
     @appointments.each do |appointment|
       hour = appointment.time_of_appts.strftime("%H:00") # Format time to extract the hour
 
@@ -28,23 +28,23 @@ class GraphsController < ApplicationController
     # Restore original keys in the hash
     @wait_times = @wait_times.transform_keys { |key| original_keys.include?(key) ? key : nil }
 
-     
+
     respond_to do |format|
       format.html #This will render a format for later-Sourced from ROJ
       format.json { render json: @wait_times } # Optionally, respond with JSON if needed
     end
   end
 
-    
-     
-  
+
+
+
   def current_date
     @cur_date=Date.today
   end
 
   def nassau
    wait_time_graph('Princeton')
-   
+
   end
   def hudson
     wait_time_graph('Trenton')

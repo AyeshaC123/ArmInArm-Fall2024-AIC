@@ -1,0 +1,6 @@
+src/node_modules/*
+src/tmp/cache/bootsnap/load-path-cache
+src/log/development.log
+#node_modules
+
+

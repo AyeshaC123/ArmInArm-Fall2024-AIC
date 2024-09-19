@@ -1,0 +1,37 @@
+<!-- 
+Project Name: Statistics: Reports and Graph Generation - Team 21
+Description: Enable clients to generate graphs to display Arm in Arm's data of people helped over time,
+	and enable admin users to generate downloadable reports of people helped over specific time frames.
+Filename: index.html.erb
+Description:  This view file is a page for navigating to the report and graph generation pages.
+Last Modified: 4/24/2024
+-->
+
+<h1>Statistics</h1>
+<br/>
+
+<div class="container">
+  <div class="row">
+	<% if can?(:access, :rails_admin) %>
+		<div class="col-md-4">
+		<div class="card" style="width: 18rem;">
+			<div class="card-body">
+			<h5 class="card-title">Report Generator</h5>
+			<p class="card-text">Click the button below to generate a curated report from Arm in Arm's data.</p>
+			<%= link_to "Generate Report", stat_report_generator_path, class: "btn btn-secondary stretched-link" %>
+			</div>
+		</div>
+		</div>
+	<% end %>
+
+    <div class="col-md-4">
+      <div class="card" style="width: 18rem;">
+        <div class="card-body">
+          <h5 class="card-title">Graph Generator</h5>
+          <p class="card-text">Click the button below to generate a curated graph from Arm in Arm's data.</p>
+          <%= link_to "Generate Graph", stat_graph_generator_path, class: "btn btn-secondary stretched-link" %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

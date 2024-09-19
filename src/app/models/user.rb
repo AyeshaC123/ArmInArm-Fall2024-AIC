@@ -19,6 +19,10 @@ class User < ApplicationRecord
   }
 
   belongs_to :client, dependent: :destroy, optional: true
+  # Team22: user has one household & if user is destroyed the household is also destroyed
+  has_one :household, dependent: :destroy
+  # Team22: admin can have multiple households
+  has_many :admin_households, class_name: 'Household'
 
   # Helper method to check if the user is a client.
   def is_client?

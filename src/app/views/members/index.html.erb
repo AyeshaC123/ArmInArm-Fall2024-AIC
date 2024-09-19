@@ -1,8 +1,22 @@
+<!-- 
+ Project Name: Admin Dashboard - Team 22
+ Description: Allows admin to view & edit household, client, & location data
+ Filename: index.html.erb
+ Description: This view lists all the members & their data for a specific household.
+  It also provides several buttons for quick access to other relevant pages.
+ Last Modified: 4/28/2024
+-->
+<!--Last modified by Team 13-->
+<!--April 21, 2024-->
+<!--Changed edit and destroy links to be viewed by admins only-->
+<!--Project Arm In Arm-->
+
 <p id="notice"><%= notice %></p>
 
 <h1>Members</h1>
 
-<table>
+<!-- Team22: set style of table -->
+<table class="table">
   <thead>
     <tr>
       <th>Firstname</th>
@@ -10,26 +24,45 @@
       <th>Dob</th>
       <th>Relationship</th>
       <th>Household</th>
-      <th colspan="3"></th>
+      <th>Actions</th>
     </tr>
   </thead>
 
   <tbody>
-    <% @members.each do |member| %>
-      <tr>
-        <td><%= member.firstname %></td>
-        <td><%= member.lastname %></td>
-        <td><%= member.dob %></td>
-        <td><%= member.relationship %></td>
-        <td><%= member.household_id %></td>
-        <td><%= link_to 'Show', member %></td>
-        <td><%= link_to 'Edit', edit_member_path(member) %></td>
-        <td><%= link_to 'Destroy', member, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+    <%if @members.present? %>
+      <% @members.each do |member| %>
+        <tr>
+          <td><%= member.firstname %></td>
+          <td><%= member.lastname %></td>
+          <td><%= member.dob %></td>
+          <td><%= member.relationship %></td>
+          <td><%= member.household_id %></td>
+          
+          <td>
+            <!-- Team22: link that allow user to view member data  -->
+            <%= link_to 'Show', member %><br>
+
+            <!-- Team22: links that allow admins to edit or delete data-->
+            <% if can?(:access, :rails_admin) %> 
+              <%= link_to 'Edit', edit_member_path(member) %><br>
+              <%= link_to 'Destroy', member, method: :delete, data: { confirm: 'Are you sure?' } %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
     <% end %>
   </tbody>
 </table>
 
 <br>
+<!-- Team22: allows admin to add members or go back to household main page -->
+<% if can?(:access, :rails_admin) %> 
+  <%= button_to 'Add Member', new_member_path, method: :get, class: 'btn btn-primary' %>
+  <br>
+  <%= button_to 'Households', households_path, method: :get, class: 'btn btn-secondary' %>
+<%end%>
 
-<%= link_to 'New Member', new_member_path %>
+<!-- Team22: allows users to go to My Account page -->
+<% unless can?(:access, :rails_admin) %> 
+  <%= button_to 'Account', account_index_path, method: :get, class: 'btn btn-primary' %>
+<%end%>

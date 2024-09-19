@@ -1,0 +1,30 @@
+
+
+<% get_temp_array( ).each do |admin_panel| %>
+    
+    <% send_card( admin_panel ) %>
+
+    <div class="card">
+
+        <%= render "card_image" %>
+
+
+        <div class="card-body">
+        
+            <h3 class="card-title">
+                
+                <%= admin_panel.event_title %>
+
+            </h3>
+
+            <%= render "card_info" %>
+
+            <br>
+
+            <%= render "card_button" %>
+
+        </div>
+    </div>
+    <div></div>
+
+<% end %>

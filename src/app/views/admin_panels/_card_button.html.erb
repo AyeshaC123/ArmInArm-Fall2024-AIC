@@ -1,0 +1,22 @@
+<% admin_panel = get_card( ) %>
+
+
+<%= link_to 'Edit', edit_admin_panel_path( admin_panel ), class: "btn btn-primary" %>
+
+<% if admin_panel.event_active %>
+
+    <%= link_to 'De-activate', de_activate_event_path( event: admin_panel ), class: "btn btn-warning", method: :post %>
+    <!-- this passes a string -->
+
+<% else %>
+
+<%= link_to 'Activate', activate_event_path( event: admin_panel ), class: "btn btn-warning", method: :post %>
+
+<% end %>
+
+
+<a href="<%= delete_event_path( event_id: admin_panel.id ) %>" >
+    <button type="button" class="btn btn-danger" >
+        Delete
+    </button>
+</a>

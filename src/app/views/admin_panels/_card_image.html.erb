@@ -1,0 +1,13 @@
+<% admin_panel = get_card( ) %>
+
+<!-- this can be changed to add different pictures -->
+<% if admin_panel.event_title.downcase.include?("food") %>
+
+    <%= image_tag("image1.jpg", :alt => "Food boxes", class: "card-img-top") %>
+
+<% else %>
+
+    <%= image_tag("image2.jpg", :alt => "Food boxes", class: "card-img-top") %>
+
+<% end %>
+

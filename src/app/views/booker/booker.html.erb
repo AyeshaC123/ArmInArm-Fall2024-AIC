@@ -1,4 +1,4 @@
-<h1> Booker </h1>
+<h1>Booker</h1>
 
 <head>
   <%= csrf_meta_tags %>
@@ -28,16 +28,18 @@
     </tr>
   </table>
 
-  <tr>
-    <td>
-      <%= form_with model: @appointment, url: appointments_path, method: :post, local: true do |form| %>
-        <%= form.hidden_field :client_id, value: @client.id %>
-        <%= form.hidden_field :dob, value: @client.dob %>
-        <%= form.hidden_field :last_name, value: @client.last_name %>
+  <div>
+    <%= form_with model: @appointment, url: book_appointment_path, method: :post, local: true do |form| %>
+      <%= form.hidden_field :client_id, value: @client.id %>
+      <%= form.hidden_field :dob, value: @client.dob %>
+      <%= form.hidden_field :last_name, value: @client.last_name %>
 
+      <div>
         <%= form.label :date_of_appts, 'Select Date:' %>
         <%= form.date_field :date_of_appts, required: true %>
-        
+      </div>
+      
+      <div>
         <%= form.label :time_of_appts, 'Select Time:' %>
         <%= form.select :time_of_appts, 
                         [['9:00 AM', '9:00'], ['9:15 AM', '9:15'], ['9:30 AM', '9:30'], ['9:45 AM', '9:45'],
@@ -47,42 +49,40 @@
                         ['1:00 PM', '13:00']],
                         { prompt: 'Select Time' },
                         class: 'form-control', required: true %>
+      </div>
 
+      <div>
         <%= form.label :location, 'Select Location:' %>
         <%= form.select :location,
                        [['Trenton', 'Trenton'], ['Princeton', 'Princeton'], ['Mobile', 'Mobile']],
                        { prompt: 'Select location' },
                        class: 'form-control', required: true %>
+      </div>
 
+      <div>
         <%= form.submit 'Create Appointment' %>
-      <% end %>
-    </td>
-  </tr>
+      </div>
+    <% end %>
+  </div>
 
-  <!---- spacer to make it look better -->
+  <!-- Spacer to make it look better -->
   <div style="height: 30px;"></div>
 
   <!-- New section for existing appointments -->
-  <!-- added style edits within section for easier changing -->
-  <tr>
-    <td>
-      <div style="margin-top: 20px; padding: 10px; border: 1px solid #ccc; border-radius: 5px; background-color: #f9f9f9;">
-        <h2>Existing Appointment(s)</h2>
-        <% if @client.appointments.any? %>
-          <ul style="list-style-type: none; padding: 0;">
-            <% @client.appointments.each do |appointment| %>
-              <li style="margin-bottom: 8px; padding: 8px; background-color: #fff; border: 1px solid #ddd; border-radius: 3px;">
-                <strong>Date:</strong> <%= appointment.date_of_appts.strftime('%Y-%m-%d') %>, 
-                <strong>Time:</strong> <%= appointment.time_of_appts.strftime('%H:%M:%S %Z') %>, 
-                <strong>Location:</strong> <%= appointment.location %>
-              </li>
-            <% end %>
-          </ul>
-        <% else %>
-          <p>No existing appointments for this client.</p>
+  <div style="margin-top: 20px; padding: 10px; border: 1px solid #ccc; border-radius: 5px; background-color: #f9f9f9;">
+    <h2>Existing Appointment(s)</h2>
+    <% if @client.appointments.any? %>
+      <ul style="list-style-type: none; padding: 0;">
+        <% @client.appointments.each do |appointment| %>
+          <li style="margin-bottom: 8px; padding: 8px; background-color: #fff; border: 1px solid #ddd; border-radius: 3px;">
+            <strong>Date:</strong> <%= appointment.date_of_appts.strftime('%Y-%m-%d') %>, 
+            <strong>Time:</strong> <%= appointment.time_of_appts.strftime('%H:%M:%S %Z') %>, 
+            <strong>Location:</strong> <%= appointment.location %>
+          </li>
         <% end %>
-      </div>
-    </td>
-  </tr>
-  
+      </ul>
+    <% else %>
+      <p>No existing appointments for this client.</p>
+    <% end %>
+  </div>
 </body>

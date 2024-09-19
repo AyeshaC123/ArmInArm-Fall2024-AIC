@@ -7,7 +7,7 @@ Rails.application.configure do
   # every request. This slows down response time but is perfect for development
   # since you don't have to restart the web server when you make code changes.
   config.cache_classes = false
-
+  
   # Do not eager load code on boot.
   config.eager_load = false
 
@@ -67,4 +67,14 @@ Rails.application.configure do
   # Devise host settings
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
   config.hosts.clear
+
+  #config.hosts << "csc415-server40.hpc.tcnj.edu"
+  #config.hosts << "csc415-team14.hpc.tcnj.edu"
+
+
+  #config.hosts << "csc415-team12.hpc.tcnj.edu"
+
+  config.hosts << "csc415-server41.hpc.tcnj.edu"
+
+
 end

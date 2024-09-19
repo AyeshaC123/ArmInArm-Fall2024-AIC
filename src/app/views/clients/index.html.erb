@@ -1,0 +1,177 @@
+<!-- 
+ Project Name: Admin Dashboard - Team 22
+ Description: Allows admin to view & edit household, client, & location data
+ Filename: index.html.erb
+ Description: This view creates the homepage for clients & lists
+   all existing clients in a table. It also creates the UI that allows
+   admin users to add, edit, view, and sort client data.
+ Last Modified: 4/28/2024
+-->
+
+<!-- Team22: Style used for this page -->
+<style>
+  a:visited {
+    color: blue !important;
+  }
+  a:hover{
+    color: green !important;
+  }
+  body{
+    background-color: #FAFAFA;
+  }
+  h1{
+    text-align: center;
+    background-color: turquoise;
+  }
+  h2{
+    text-align: center;
+    background-color: cyan;
+  }
+  h3{
+    text-align: center;
+    background-color: silver;
+  }
+  h4{
+    background-color: #FCF9F9; 
+    text-align: center;
+  }
+  label {
+    font-size: 20px; /* Adjust the font size as needed */
+  }
+  select {
+    font-size: 22px; /* Adjust the font size as needed */
+    padding: 4px;
+  }
+  .custom-file {
+    font-size: 22px; /* Adjust the font size as needed */
+    width: 500px; /* Optional: Set a fixed width */
+  }
+  .border-blocks{
+    border: 4px solid #505353;
+    border-radius: 5px;
+    padding: 10px;
+  }
+  .table-container{
+    overflow-x: auto;
+    overflow-y: auto;
+    margin: 0 auto;
+    max-height: 1200px;
+  }
+  .table-center{
+    margin-left: auto; 
+    margin-right: auto;
+  }
+</style>
+
+<!-- Team22: only admins can view page -->
+<% if can?(:access, :rails_admin) %> 
+  <p id="notice"><%= notice %></p>
+
+  <h1 class="border-blocks" style="margin-bottom: -5px; padding-top: 20px;">Clients</h1>
+  <h4 class="border-blocks">Admin-only page to view client data.</h4>
+  
+  <br>
+
+  <h3 style="margin-bottom: -4px; padding-top: 20px;", class="border-blocks text-center">Sort table data based on chosen sorting option</h3>
+  <div class="border-blocks">
+    <!-- Team22: heading with specific style applied -->
+    <h4>Sorts table in 
+      <span style="color: blue; font-weight: bold;">
+        ascending/descending order
+      </span>  
+      <br>
+      based on
+      <span style="color: green; font-weight: bold;">
+        column name selected
+      </span>
+    </h4>
+    
+    <!-- Team22: Sorts table client data based on column in ascedning order -->
+    <%= form_tag clients_sort_asc_path, method: :post do %>
+      <div class="text-center">
+        <%= label_tag :sort_by, "Sort By:", style: "font-weight: bold;" %>
+        <%= select_tag :sort_by, options_for_select([["Language", "lang"], ["Religion", "religion"], ["Peanut Allergy", "peanuts"], ["Treenut Allergy", "treenuts"], ["Egg Allergy", "eggs"], ["Milk Allergy", "milk"], ["Shellfish Allergy", "shellfish"], ["Fish Allergy", "fish"], ["Wheat Allergy", "wheat"], ["Soy Allergy", "soy"], ["Gluten-free", "gluten"], ["Vegan", "vegan"], ["Dietary Restrictions", "diet"]]), include_blank: "Select Sorting Method" %>
+        <%= button_tag "Sort Ascending Order", class: "btn btn-primary btn-lg mb-2 ml-4"%>
+      </div> 
+    <% end %>
+
+    <!-- Team22: Sorts table client data based on column in descending order -->
+    <%= form_tag clients_sort_desc_path, method: :post do %>
+      <div class="text-center">
+        <%= label_tag :sort_by, "Sort By:", style: "font-weight: bold;" %>
+        <%= select_tag :sort_by, options_for_select([["Language", "lang"], ["Religion", "religion"], ["Peanut Allergy", "peanuts"], ["Treenut Allergy", "treenuts"], ["Egg Allergy", "eggs"], ["Milk Allergy", "milk"], ["Shellfish Allergy", "shellfish"], ["Fish Allergy", "fish"], ["Wheat Allergy", "wheat"], ["Soy Allergy", "soy"], ["Gluten-free", "gluten"], ["Vegan", "vegan"], ["Dietary Restrictions", "diet"]]), include_blank: "Select Sorting Method" %>
+        <%= button_tag "Sort Descending Order", class: "btn btn-primary btn-lg mb-2 ml-4"%>
+      </div> 
+    <% end %>
+  </div>
+
+
+  <br>
+
+  <!-- Team22: Reset button to clear sort results -->
+  <%= button_to "Clear Sort Results", clients_path, method: :get, class: "btn btn-secondary btn-lg mt-3" %>
+
+  <br>
+
+  <!-- Team22: Displays client data in table -->
+  <h2 class="text-center border-blocks", style="margin-bottom: -4px;"> List of Clients </h3>
+  <div class ="text-center border-blocks">
+    <div class ="table-container">
+      <table class="table table-center">
+        <thead>
+          <tr>
+            <th scope="col">Client ID</th>
+            <th scope="col">First Name</th>
+            <th scope="col">Last Name</th>
+            <th scope="col">DOB</th>
+            <th scope="col">Address</th>
+            <th scope="col">Language</th>
+            <th scope="col">Religion</th>
+            <th scope="col">Allergies</th>
+            <th scope="col">Gluten-free</th>
+            <th scope="col">Vegan</th>
+            <th scope="col">Dietary Restrictions</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <!-- Team22: only diplays client data if clients exist -->
+          <% if @clients.empty? %>
+            <tr>
+              <p class = "text-center"><strong>No clients found!!</strong></p>
+            </tr>
+          <% else %>
+            <% @clients.each do |client| %>
+              <tr>
+                <td scope="col" style="text-align: center"><%= client.id%></td>
+                <td scope="col"><%= client.first_name%></td>
+                <td scope="col"><%= client.last_name%></td>
+                <td scope="col"><%= client.dob%></td>
+                <td scope="col"><%= client.address%></td>
+                <td scope="col"><%= client.language%></td>
+                <td scope="col"><%= client.religion%></td>
+                <td scope="col"><%= client.allergies_string%></td>
+                <td scope="col"><%= client.gluten_free%></td>
+                <td scope="col"><%= client.vegan%></td>
+                <td scope="col"><%= client.restrictions%></td>
+                
+                <!-- Team22: links that allow you view, edit, or delete client data -->
+                <td scope="col">
+                    <%= link_to 'View', client_path(client) %>
+                    <%= link_to 'Edit', edit_client_path(client) %>
+                    <%= link_to 'Delete', client_path(client), method: :delete, data: { confirm: 'Are you sure?' } %>
+                </td>
+              </tr>
+            <% end %>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Team22: Footer -->
+  <div id="footer">
+      <a>© 2024 Copyright: Household List</a>
+  </div>
+<%end%>

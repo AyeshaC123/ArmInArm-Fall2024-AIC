@@ -2,6 +2,9 @@
 
 # Controller for the home page already made for you
 class HomeController < ApplicationController
+  include HomeHelper
+
+
   # No sign in needed to access these pages
   # Overrides ApplicationController's instructions to check for login by default
   skip_before_action :authenticate_user!
@@ -17,5 +20,5 @@ class HomeController < ApplicationController
   # Also, any local variable made inside this method will also exist
   # in the view to be displayed. Do not look up information within the
   # view itself. Do it here, please!
-  def index; end
+
 end

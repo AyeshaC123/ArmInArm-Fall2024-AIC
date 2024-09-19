@@ -3,6 +3,7 @@ class CreateVolunteers < ActiveRecord::Migration[6.0]
     create_table :volunteers do |t|
       t.string :volunteer_name
       t.string :volunteer_phone
+      t.string :day
       t.text :interests
     end
   end

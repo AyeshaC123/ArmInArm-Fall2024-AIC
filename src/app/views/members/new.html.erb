@@ -1,5 +1,25 @@
-<h1>New Member</h1>
+<!-- 
+ Project Name: Admin Dashboard - Team 22
+ Description: Allows admin to view & edit household, client, & location data
+ Filename: new.html.erb
+ Description: This view renders the form to create a new household
+  and provides several buttons for quick access to relevant pages.
+ Last Modified: 4/28/2024
+-->
+<%# 
+<h1>New Member</h1> %>
+<%# Team 14: Added translation here #%>
+
+<h1><%= get_translation('non_hoh_add') %></h1>
+<br/>
 
 <%= render 'form', member: @member %>
 
-<%= link_to 'Back', members_path %>
+<!-- Team22: Changes available buttons based on type of user -->
+<% if can?(:access, :rails_admin) %>
+    <!-- Team22: allows admins to go back to the households main page -->
+    <%= button_to 'Households', households_path, method: :get, class: 'btn btn-secondary' %>
+<% else %> 
+    <!-- Team22: allows users to go back to account page -->
+    <%= button_to 'Account', account_index_path, method: :get, class: 'btn btn-secondary' %>
+<% end %>

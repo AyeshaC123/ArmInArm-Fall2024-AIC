@@ -1,0 +1,31 @@
+Head Name,Head DOB,Gender,Ethnicity,Num Adults,Num Children,Street Address,City,State,County,Zipcode,Phone Number,Income Source,Qualifer Code,Net Income,Household Type,Food Stamps
+John Smith,04/14/1995,Male,African American,2,4,21 Elm Street,Trenton,NJ,Mercer,08618,(732)-948-0921,Child Support,1,37721,Single Individual,Yes
+Alyssa Derk,10/24/1990,Female,Black,3,0,123 Oak Street,Trenton,NJ,Mercer,08608,(201) 555-1234,Employment,2,19144,Adults Only,No
+Alexander Johnson,02/18/1990,Other,Latino,2,2,456 Maple Avenue,Princeton,NJ,Mercer,08540,(609) 555-5678,General Assistance,3,51345,Family With Children Under 18,Yes
+Sophia Martinez,07/09/1987,Male,White,4,1,789 Elm Drive,Ewing,NJ,Mercer,08628,(732) 555-9012,Social Security,4,52904,Single Individual,No
+Ethan Thompson,11/26/1991,Female,Asian,3,0,101 Pine Lane,Lawrenceville,NJ,Mercer,08648,(856) 555-3456,Social Security Disability,5,23995,Adults Only,Yes
+Olivia Clark,05/14/1988,Other,Mulitracial,2,3,202 Cedar Road,Hamilton,NJ,Mercer,08609,(973) 555-7890,Retirement,6,17334,Family With Children Under 18,No
+Mason Hernandez,08/30/1989,Female,African American,5,4,303 Birch Court,Bordentown,NJ,Burlington,08505,(609) 555-2345,TNAF,7,26025,Single Individual,Yes
+Ava Lewis,04/02/1986,Male,Black,2,0,404 Willow Street,Yardville,NJ,Mercer,08620,(908) 555-6789,Unemployment Benefits,1,40816,Adults Only,No
+William Young,09/23/1985,Female,Latino,4,1,505 Chestnut Avenue,Robbinsville,NJ,Mercer,08691,(201) 555-0123,None,2,33221,Family With Children Under 18,Yes
+Isabella Scott,12/07/1986,Male,White,3,3,606 Walnut Drive,Pennington,NJ,Mercer,08534,(732) 555-4567,Child Support,3,13713,Single Individual,No
+James Adams,06/11/1990,Male,Asian,2,0,707 Spruce Lane,Hopewell,NJ,Mercer,08525,(609) 555-8901,Employment,4,57033,Adults Only,Yes
+Mia Turner,03/29/1985,Female,Multiracial,3,1,808 Ash Road,Allentown,NJ,Monmouth,08501,(856) 555-2345,General Assistance,5,49291,Family With Children Under 18,No
+Benjamin King,10/17/1986,Male,African American,4,2,909 Poplar Court,Hightstown,NJ,Mercer,08520,(973) 555-6789,Social Security,6,22102,Single Individual,Yes
+Emily Rodriguez,01/05/1988,Female,Black,2,0,111 Pinecone Street,Florence,NJ,Burlington,08518,(609) 555-1234,Social Security Disability,7,55745,Adults Only,No
+Michael White,07/31/1989,Male,Latino,5,4,222 Magnolia Avenue,Cranbury,NJ,Middlesex,08512,(908) 555-5678,Retirement,1,29872,Family With Children Under 18,Yes
+Harper Lee,09/12/1990,Female,White,3,0,333 Rose Drive,Windsor,NJ,Mercer,08561,(201) 555-9012,TNAF,2,62060,Single Individual,No
+Elijah Harris,11/02/1987,Other,Asian,2,3,444 Daisy Lane,Plainsboro,NJ,Middlesex,08536,(732) 555-3456,Unemployment Benefits,3,24011,Adults Only,Yes
+Charlotte Mitchell,03/15/1986,Male,Multiracial,4,4,555 Sunflower Road,Burlington,NJ,Burlington,08016,(609) 555-7890,None,4,55393,Family With Children Under 18,No
+Daniel Nelson,05/25/1985,Female,African American,3,0,666 Tulip Court,East Windsor,NJ,Mercer,08550,(856) 555-2345,Child Support,5,41819,Single Individual,Yes
+Amelia Carter,08/06/1988,Male,Black,2,2,777 Lily Street,West Windsor,NJ,Mercer,08540,(973) 555-6789,Employment,6,23404,Adults Only,No
+Matthew Cooper,02/04/1992,Female,Latino,4,3,888 Orchid Avenue,New Egypt,NJ,Monmouth,08533,(609) 555-0123,General Assistance,7,23753,Family With Children Under 18,Yes
+Abigail Rivera,06/29/1991,Male,White,5,0,999 Iris Drive,Roebling,NJ,Burlington,08505,(908) 555-4567,Social Security,1,14856,Single Individual,No
+Alexander Bennett,12/19/1990,Female,Asian,3,2,121 Violet Lane,Crosswicks,NJ,Mercer,08691,(201) 555-8901,Social Security Disability,2,18339,Adults Only,Yes
+Grace Edwards,04/10/1985,Other,Multiracial,2,1,232 Daisy Court,Allentown,NJ,Mercer,08691,(732) 555-2345,Retirement,3,62109,Family With Children Under 18,No
+Samuel Green,10/08/1986,Male,African American,4,0,343 Rosewood Street,Robbinsville,NJ,Mercer,08648,(609) 555-6789,TNAF,4,14699,Single Individual,Yes
+Elizabeth Baker,07/18/1989,Female,Black,3,2,454 Lily Avenue,Hamilton Square,NJ,Mercer,08619,(856) 555-0123,Unemployment Benefits,5,57982,Adults Only,No
+Jackson Reed,09/03/1991,Male,Latino,2,4,565 Orchid Drive,Lawrence Township,NJ,Mercer,08648,(973) 555-4567,None,6,18159,Family With Children Under 18,Yes
+Evelyn Ward,01/21/1988,Female,White,4,0,676 Sunflower Lane,Mercerville,NJ,Mercer,08610,(609) 555-8901,Child Support,7,32243,Single Individual,No
+David Morris,11/09/1987,Other,Asian,3,2,787 Tulip Court,Groveville,NJ,Mercer,08640,(908) 555-2345,Employment,1,22946,Adults Only,Yes
+Madison Coleman,08/27/1985,Male,Multiracial,2,1,121 Orange Lane,Trenton,NJ,Mercer,08608,(908) 555-2346,General Assistance,2,32406,Family With Children Under 18,No

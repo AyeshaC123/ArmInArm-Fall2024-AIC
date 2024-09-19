@@ -1,0 +1,51 @@
+<!-- 
+Project Name: Statistics: Reports and Graph Generation - Team 21
+Description: Enable clients to generate graphs to display Arm in Arm's data of people helped over time,
+	and enable admin users to generate downloadable reports of people helped over specific time frames.
+Filename: report_pdf.html.erb
+Description:  This view file contains the format of the attendance data which will be exported as a pdf.
+Last Modified: 4/21/2024
+-->
+
+<table id="reports-table" class="table">
+  <thead class="thead-dark">
+    <tr>
+
+      <th>User ID</th>
+      <th>Date</th>
+      <th>Name</th>
+      <th>Adults in Household</th>
+      <th>Children in Household</th>
+      <th>Number of Appointments</th>
+      <th>County</th>
+      <th>Location</th>
+      <th>ZIP Code</th>
+
+      <!-- Add more table headers as needed -->
+    </tr>
+  </thead>
+  <tbody>
+
+  <!-- pulling from households table -->
+    <% Household.includes(user: :client).each do |appointment| %>
+      <tr>
+      <td><%= appointment.user_id %></td>
+      <td><%= appointment.created_at.strftime('%Y-%m-%d') %></td>
+      <td><%= appointment.headname %></td>
+      <td><%= appointment.numadults %></td>
+      <td><%= appointment.numchild %></td>
+      <td><%= appointment.county %></td>
+      <td><%= appointment.city %></td>
+      <td><%= appointment.zipcode %></td>
+
+      <!-- Add more table data cells as needed -->
+
+      </tr>
+
+
+    <% end %>
+
+
+  </tbody>
+
+</table>

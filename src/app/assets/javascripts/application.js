@@ -1,5 +1,9 @@
 // Main javascript file
 // served for all pages
+//= require jquery3
+//= require jquery_ujs
+//= require chartkick
+//= require_tree .
 
 // Hide top bar when scrolling down and show it again when scrolling up
 $(function () {

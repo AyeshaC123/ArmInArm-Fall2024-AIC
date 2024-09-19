@@ -1,0 +1,780 @@
+
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+
+<style>
+	.form-check-input.shift-overA {
+		margin-left: 10px;
+	}
+	.form-check-label.shift-overA {
+		margin-left: 40px;
+	}
+	.pagination-navigator {
+		margin-top: 10px;
+		margin-bottom: 10px;
+		display: flex;
+		justify-content: center;
+	}
+	.pagination-item {
+		margin-left: 15px;
+		margin-right: 15px;
+	}
+	.generate-button {
+		width: 150px;
+		height: 80px;
+	}
+	.center-btn-group {
+		margin-top: 30px;
+		display: flex;
+		justify-content: center;
+	}
+	.center-mode-brn-group {
+		display: flex;
+		justify-content: center;
+	}
+	.center-loc-btn {
+		margin-top: 20px;
+		display: flex;
+		justify-content: center;
+	}
+	.center-generate-button {
+		margin-top: 800px;
+		display: flex;
+		justify-content: center;
+	}
+	.date-alert {
+		margin-top: 30px;
+		width: 150px;
+		justify-content: center;
+	}
+	.is-pressed {
+            background-color: #007bff; 
+            color: white; 
+        }
+	.custom-table {
+		margin-top: 20px;
+		margin-bottom:20px;
+		margin-left: 50px;
+		margin-right: 50px;
+	}
+</style>
+
+<body>
+
+<h1>Generate Report of People Served</h1>
+<!-- We also want the totals to be in the csv -->
+<p href="#" class="btn btn-primary btn-lg disabled" role="button" aria-disabled="true">Total Clients: <%= @total_clients %></p>
+<p href="#" class="btn btn-primary btn-lg disabled" role="button" aria-disabled="true">Children served: <%= @total_children %></p>
+<p href="#" class="btn btn-primary btn-lg disabled" role="button" aria-disabled="true">Adults served: <%= @total_adults %> </p>
+
+<p href="#" class="btn btn-secondary btn-lg disabled" role="button" aria-disabled="true">Average Appointments per Client: <%= @average_appointments_per_client %>  </p>
+<br>
+
+
+<div class="dropdown show">
+    <a class="btn btn-primary dropdown-toggle" href="#" role="button" id="reportExportMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Export Report</a>
+    <div class="dropdown-menu" aria-labelledby="reportExportMenu">
+        <div class="dropdown-item">
+            <%= link_to "PDF Document (.pdf)", download_pdf_path, :target => '_blank' %>
+        </div>
+        <div class="dropdown-item">
+            <%= link_to "CSV File (.csv)", download_csv_path(format: :csv), :target => '_blank' %>
+        </div>
+    </div>
+</div>
+
+<br>
+
+
+<div class="btn-group center-mode-brn-group" role="group">
+  <button type="button" id="attendedAppointments" class="btn btn-outline-primary is-pressed">Attended Appointments</button>
+  <button type="button" id="scheduledAppointments" class="btn btn-outline-primary">Scheduled Appointments</button>
+</div>
+
+<%# <h1>Filter Reports of People Served</h1> %>
+
+<div class="container mt-5">
+    <%= form_with( method: :post) do |f| %>
+        <div class="row">						<!-- begin row 1 -->
+            <div class="col-md-3 mb-3"> 		<!-- begin row 1 column 1 -->
+                <%= f.label :initialDate, "Initial date:"  %>
+                <%= f.date_field :initialDate, class: "form-control", id: "initialDate" %>
+                <br>
+            <%# </div> %>
+            <%# <div class="col-md-3 mb-3"> %>
+                <%= f.label :finalDate, "Final date:" %>
+                <%= f.date_field :finalDate, class: "form-control", id: "finalDate" %>
+
+				<div class="center-btn-group">
+                    <div class="btn-group-vertical" role="group" aria-label="Vertical button group">
+                        <button type="button" class="btn btn-outline-primary" id="setYesterday" onclick="setTimeWindow(0)" style="width: 240px;">Yesterday</button>
+                        <button type="button" class="btn btn-outline-primary" id="setLastWeek" onclick="setTimeWindow(7)">Last Week</button>
+                        <button type="button" class="btn btn-outline-primary" id="setLast30Days" onclick="setTimeWindow(30)">Last 30 Days</button>
+                        <button type="button" class="btn btn-outline-primary" id="setLastYear" onclick="setTimeWindow(365)">Last Year</button>
+                    </div>
+                </div>
+            </div> 								<!-- end row 1 column 1 -->
+            
+            <div class="col-md-3 mb-3">			<!-- begin row 1 column 2 -->
+                <input type="checkbox" id="showfilter" name="hasfilter" class="form-check-input shift-overA">
+                <label for="showfilter" name="hasfilter" class="form-check-label shift-overA">Show Default Table Elements</label>
+
+                <hr name="pieChartIrrelevant" class="horizontal-divider">
+
+                <input type="checkbox" id="showAppointments" name="hasfilter" class="form-check-input shift-overA">
+                <label for="hasAppointments" name="hasAppointments" class="form-check-label shift-overA">Show Households Table</label>
+
+                <hr name="pieChartIrrelevant" class="horizontal-divider">
+                
+                <!-- Demographic checkboxes -->
+                <div class="form-check">
+                    <input type="checkbox" id="includeHouseholds" name="demographicInclusionOption" class="form-check-input shift-overA" checked>
+                    <label for="includeHouseholds" name="demographicInclusionOption" class="form-check-label shift-overA">Show Households with Appointments</label>
+                </div>
+
+                <div class="form-check">
+                    <input type="checkbox" id="hasAdults" name="demographicInclusionOption" class="form-check-input shift-overA">
+                    <label for="hasAdults" name="demographicInclusionOption" class="form-check-label shift-overA">Show households only With Adults</label>
+                </div>
+
+                <div class="form-check">
+                    <input type="checkbox" id="hasChildren" name="demographicInclusionOption" class="form-check-input shift-overA">
+                    <label for="hasChildren" name="demographicInclusionOption" class="form-check-label shift-overA"> Show Households With Children</label>
+                </div>
+
+                <hr name="pieChartIrrelevant" class="horizontal-divider">
+                
+                <!-- Location checkbox -->
+                <div class="form-check">
+                    <input type="checkbox" id="includeTrentonCheckbox" name="locationCheckbox" class="form-check-input shift-overA" >
+                    <label for="includeTrentonCheckbox" class="form-check-label shift-overA">Show Trenton</label>
+                </div>
+
+                <div class="form-check">
+                    <input type="checkbox" id="includePrincetonCheckbox" name="locationCheckbox" class="form-check-input shift-overA" >
+                    <label for="includePrincetonCheckbox" class="form-check-label shift-overA">Show Princeton</label>
+                </div>
+
+                <div class="form-check">
+                    <input type="checkbox" id="includeMobilePantryCheckbox" name="locationCheckbox" class="form-check-input shift-overA">
+                    <label for="includeMobilePantryCheckbox" class="form-check-label shift-overA">Show Mobile Pantry</label>
+                </div>
+                
+            </div>								<!-- end row 1 column 2 -->
+
+            <div class="col-md-3 mb-3">			<!-- begin row 1 column 3 -->
+                
+            </div>								<!-- end row 1 column 3 -->
+
+            <div class="col-md-3 mb-3">			<!-- begin row 1 column 4 -->
+                <div class= "mt-5">
+                    <%= f.submit "Generate Dates", class: "btn btn-primary generate-button", id: "generateReportButton" %>
+					<div id="dateAlert" class="alert alert-danger date-alert" style="display: none;" role="alert">Invalid Dates</div>
+                </div>
+            </div>								<!-- end row 1 column 4 -->
+        </div>									<!-- end row 1 -->
+    <% end %>
+</div>
+
+
+
+<!-- ------------------ -->
+<!-- Reports Table -->
+<!-- ------------------ -->
+
+<!-- Add other statistics or data here -->
+<table id="reports-table" class="table">
+	<thead class="thead-dark">
+		<tr>
+		<th>User ID</th>
+		<th>Name</th>
+		<th>Adults in Household </th>
+		<th>Children in Household </th>
+		<th>Number of Appointments</th>
+		<th>Location</th>
+		<th>Date</th>
+		</tr>
+	</thead>
+	<tbody>
+		<!-- Data from households table -->
+		<% Household.includes(user: :client).each do |household| %>
+		<% client = household.user.client %>
+		<% has_children = household.numchild.to_i > 0 %>
+		<% has_adults = household.numadults.to_i > 0 %>
+		<tr data-has-children="<%= has_children %>" data-has-adults="<%= has_adults %>">
+			<td><%= client.id %></td>
+			<td><%= client.first_name %> <%= client.last_name %></td>
+			<td><%= household.numadults %></td>
+			<td><%= household.numchild %></td>
+			<td><%= client.appointments.distinct.count %></td>
+			<td><%= household.city %></td>
+			<td><%= household.created_at.strftime('%Y-%m-%d') %></td>
+		</tr>
+		<% end %>
+	</tbody>
+</table>
+
+
+<!-- Add other statistics or data here -->
+<%# Only showing 50 database entries at a time  %>
+<div id="pagination">
+    <% total_records = Appointment.count %>
+    <% records_per_page = 50 %>
+    <% total_pages = (total_records.to_f / records_per_page).ceil %>
+    <% current_page = (params[:page].to_i > 0) ? params[:page].to_i : 1 %>
+    <% previous_page = [1, current_page - 1].max %>
+    <% next_page = [total_pages, current_page + 1].min %>
+
+	<div class="pagination-navigator">
+		<div class="pagination-item">
+			<a href="?page=<%= previous_page %>">Previous</a>
+		</div>
+		<%= "   Page #{current_page} of #{total_pages}   " %>
+		<div class="pagination-item">
+			<a href="?page=<%= next_page %>">Next</a>
+		</div>
+	</div>
+</div>
+
+<!-- ------------------ -->
+<!-- Appointments Table -->
+<!-- ------------------ -->
+<table id="appointments-table" class="table">
+    <thead class="thead-dark">
+        <tr>
+            <th>User ID</th>
+            <th>Date</th>
+            <th>Name</th>
+            <th>Adults in Household</th>
+            <th>Children in Household</th>
+            <th>Number of Appointments</th>
+            <th>County</th>
+            <th>Full address</th>
+            <th>Zip Code</th>
+        </tr>
+    </thead>
+
+    <tbody>
+       	<% appointments = Appointment.limit(records_per_page).offset([0, (current_page - 1) * records_per_page].max) %>
+       	<% appointments.each do |appointment| %>
+            <% household = Household.find_by(user_id: appointment.client_id) %>
+            <% next unless household %> <!-- Skip the appointment if household is not found -->
+            <tr>
+                <td><%= appointment.client_id %></td>
+                <td><%= appointment.date_of_appt.strftime('%Y-%m-%d') %></td>
+                <td><%= appointment.last_name %></td>
+                <td><%= household.numadults %></td>
+                <td><%= household.numchild %></td>
+                <td><%= Appointment.where(client_id: appointment.client_id).count %></td>
+                <td><%= household.county %></td>
+                <td><%= "#{household.streetaddr}, #{household.city}, #{household.state}" %></td>
+                <td><%= household.zipcode %></td>
+        	</tr>
+        <% end %>
+    </tbody>
+</table>
+
+<div class="pagination-navigator">
+		<div class="pagination-item">
+			<a href="?page=<%= previous_page %>">Previous</a>
+		</div>
+		<%= "   Page #{current_page} of #{total_pages}   " %>
+		<div class="pagination-item">
+			<a href="?page=<%= next_page %>">Next</a>
+		</div>
+	</div>
+</div>
+
+<div id="tableContainer" class="custom-table"></div>
+<div id="paginationContainer"></div>
+
+<p href="#" class="btn btn-primary btn-lg disabled" role="button" aria-disabled="true">Total Adults & Children: <%= @total_clients %></p>
+            
+</body>
+
+<%#-----------------------------------------------------------------------------------------------------------%>
+<%#-----------------------------------------------------------------------------------------------------------%>
+
+<script>
+
+// Remember the state of the "Show Appointments Table" checkbox
+document.addEventListener('DOMContentLoaded', function() {
+	var checkbox = document.getElementById('show-appointments');
+	checkbox.addEventListener('change', function() {
+		var url = window.location.href.split('?')[0];
+		if (this.checked) {
+			url += '?show_appointments=true';
+		} else {
+			url += '?show_appointments=false';
+		}
+		window.location.href = url;
+	});
+});
+
+// Client side filters
+$(document).ready(function() {
+	// Function to show all rows
+	function showAllRows() {
+		$("tbody tr").show();
+	}
+
+	// Function to show or hide rows based on checkbox status
+	function filterRows() {
+		var showChildren = $("#hasChildren").is(":checked");
+		var showAdults = $("#hasAdults").is(":checked");
+
+		$("tbody tr").each(function() {
+			var hasChildren = $(this).data("has-children");
+			var hasAdults = $(this).data("has-adults");
+
+			if ((!showChildren && hasChildren) || (!showAdults && hasAdults)) {
+				$(this).hide();
+			} else {
+				$(this).show();
+			}
+		});
+	}
+
+	// Call showAllRows function when the page loads to set the default loading screen 
+	showAllRows();
+
+	// Call filterRows function when checkboxes change
+	$("#hasChildren, #hasAdults").change(filterRows);
+
+	// Add click event listener to "Location Comparison Mode" check
+	$("#showfilter").click(function() {
+		showAllRows();
+	});
+
+	// Add click event listener to "Show all Locations" check
+	$("#includeAllLocationsRadio").click(function() {
+		showAllRows();
+	});
+
+	// Add click event listeners to location-specific checkboxes
+	$("#includeTrentonCheckbox, #includePrincetonCheckbox, #includeMobilePantryCheckbox").click(function() {
+		showAllRows();
+	});
+
+	// Sorting logic based on checkboxes for different locations
+	$("#includeTrentonCheckbox").change(function() {
+		if ($(this).is(":checked")) {
+			$("tbody tr").filter(function() {
+				return $(this).find("td:eq(5)").text() !== "Trenton";
+			}).hide();
+		} else {
+			showAllRows();
+		}
+	});
+
+	$("#includePrincetonCheckbox").change(function() {
+		if ($(this).is(":checked")) {
+			$("tbody tr").filter(function() {
+				return $(this).find("td:eq(5)").text() !== "Princeton";
+			}).hide();
+		} else {
+			showAllRows();
+		}
+	});
+
+	$("#includeMobilePantryCheckbox").change(function() {
+		if ($(this).is(":checked")) {
+			$("tbody tr").filter(function() {
+				return $(this).find("td:eq(5)").text() !== "Mobile Pantry";
+			}).hide();
+		} else {
+			showAllRows();
+		}
+	});
+
+	// Sorting logic based on initial and final dates
+	$("#generateReportButton").click(function() {
+		var initialDate = $("#initialDate").val();
+		var finalDate = $("#finalDate").val();
+		
+		getTableData_attendedAppointments();
+
+		if (initialDate && finalDate) {
+			dateInputValid = areDatesValid();
+			displayDateAlert(!dateInputValid);
+			if (dateInputValid) {
+				var minDate = new Date(initialDate);
+				var maxDate = new Date(finalDate);
+
+				$("tbody tr").each(function() {
+					var rowDate = new Date($(this).find("td:eq(6)").text());
+
+					if (rowDate < minDate || rowDate > maxDate) {
+						$(this).hide();
+					} else {
+						$(this).show();
+					}
+				});
+			}
+		}
+	});
+});
+
+$(document).ready(function() {
+	// Function to show or hide tables based on checkbox status
+	function filterTables() {
+		var showAppointments = $("#showAppointments").is(":checked");
+
+		if (showAppointments) {
+			// Show appointments table and hide other tables
+			$("#reports-table").show();
+			$("#appointments-table").hide();
+
+		} else {
+			// Show other tables and hide appointments table
+			$("#reports-table").hide();
+			$("#appointments-table").show();
+		}
+	}
+
+	setDatesOnPageLoad();
+
+	// Call filterTables function when the page loads to set the default state
+	filterTables();
+
+	// Call filterTables function when "Show Appointments" checkbox changes
+	$("#showAppointments").change(filterTables);
+});
+
+//// //// //// //// //// //// //// //// //// //// //// //// //// //// 
+// date input and date alert control
+//// //// //// //// //// //// //// //// //// //// //// //// //// //// 
+
+// constants
+var csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+const today = new Date();
+const daysInAYear = 365;
+const daysInAWeek = 7;
+const maxDateOffsetFromToday = 1; // yesterday
+const minDateOffsetFromToday = 5*daysInAYear + maxDateOffsetFromToday; // 5 years ago
+const initialDefaultValueDateOffsetFromToday = 1*daysInAWeek + maxDateOffsetFromToday; // 1 week ago
+const numGroupingOptions = 3;
+
+// this function accepts a date object and returns a string in format yyyy-mm-dd
+function formatDate(date) {
+  	return date.toISOString().split('T')[0];
+}
+
+// this function either returns the default initial date for the date input or the lower bound for date input
+function getMinDate(forInitialDefaultValue=false) {
+	var minDate = new Date();
+	if (forInitialDefaultValue) {
+		minDate.setDate(today.getDate() - initialDefaultValueDateOffsetFromToday)
+	} else {
+		minDate.setDate(today.getDate() - minDateOffsetFromToday);
+	}
+	return formatDate(minDate);
+}
+
+// this function returns the upper bound for date input
+function getMaxDate() {
+	var maxDate = new Date();
+	maxDate.setDate(today.getDate() - maxDateOffsetFromToday);
+	return formatDate(maxDate);
+}
+
+// this function returns the initial date input from the form
+function getInitialDate() {
+	return document.getElementById("initialDate").value
+}
+
+// this function returns the final date input from the form
+function getFinalDate() {
+	return document.getElementById("finalDate").value
+}
+
+// this function returns true if the initial and final inputted dates are valid and false otherwise
+function areDatesValid() {
+	var initialDate = document.getElementById("initialDate").value;
+	var finalDate = document.getElementById("finalDate").value;
+
+	var initialDateObj = new Date(initialDate);
+	var finalDateObj = new Date(finalDate);
+
+	if (initialDateObj <= finalDateObj) 
+		return true;
+	else 
+		return false;
+}
+
+// if mode is true, this function makes the invalid dates alert visible;
+// 		if false, it hides the invalid dates alert
+function displayDateAlert(mode) {
+	if (mode) 
+		document.getElementById("dateAlert").style.display = "block";
+	else
+		document.getElementById("dateAlert").style.display = "none";
+}
+
+// this function assigns the value to the initial and final date form inputs
+// it accepts an integer number of days and sets the time window to stretch from 
+// 		that many days before yesterday to yesterday
+function setTimeWindow(days) {
+	var maxDate = new Date();
+	maxDate.setDate(today.getDate() - maxDateOffsetFromToday);
+
+	newMin = new Date();
+	newMin.setDate(maxDate.getDate() - days)
+
+	document.getElementById("initialDate").value = formatDate(newMin);
+	document.getElementById("finalDate").value = formatDate(maxDate);
+}
+
+// set default date input
+function setDatesOnPageLoad() {
+	const minDateFormatted = getMinDate();
+	const maxDateFormatted = getMaxDate();
+
+	// set default value for date form fields
+	setTimeWindow(7);
+
+	// set min dates for date form fields
+	document.getElementById("initialDate").min = minDateFormatted;
+	document.getElementById("finalDate").min = minDateFormatted;
+
+	// set max dates for date form fields
+	document.getElementById("initialDate").max = maxDateFormatted;
+	document.getElementById("finalDate").max = maxDateFormatted;
+}
+
+//// //// //// //// //// //// //// //// //// //// //// //// //// //// 
+// Attended vs scheduled appointment buttons control
+//// //// //// //// //// //// //// //// //// //// //// //// //// //// 
+
+// returns true if the attended appointments button is pressed
+function doAttendedAppointments() {
+	button = document.getElementById("attendedAppointments");
+	return button.classList.contains("is-pressed");
+}
+
+// returns true if the scheduled appointments button is pressed
+function doScheduledAppointments() {
+	button = document.getElementById("scheduledAppointments");
+	return button.classList.contains("is-pressed");
+}
+
+// event listener for attended appointments option button
+document.getElementById("attendedAppointments").addEventListener("click", function() {
+	otherButton = document.getElementById("scheduledAppointments")
+	if (otherButton.classList.contains("is-pressed")) {
+		otherButton.classList.remove("is-pressed");
+		this.classList.add("is-pressed");
+	}
+});
+
+//event listener for scheduled appointments option button
+document.getElementById("scheduledAppointments").addEventListener("click", function() {
+	otherButton = document.getElementById("attendedAppointments")
+	if (otherButton.classList.contains("is-pressed")) {
+		otherButton.classList.remove("is-pressed");
+		this.classList.add("is-pressed");
+	}
+});
+
+//// //// //// //// //// //// //// //// //// //// //// //// //// //// 
+// table control
+//// //// //// //// //// //// //// //// //// //// //// //// //// //// 
+
+// pagination variables
+const rowsPerPage = 50;
+var currentData = null;
+var currentTotals = null;
+var currentPage = 0;
+var totalPages = 0;
+
+function restoreTableDefaults() {
+	currentData = null;
+	currentTotals = null;
+	currentPage = 0;
+	totalPages = 0;
+}
+
+function gotoPreviousPage() {
+	if (currentPage > 1) {
+		--currentPage;
+		createTable();
+	}
+}
+
+function gotoNextPage() {
+	if (currentPage < totalPages) {
+		++currentPage;
+		createTable;
+	}
+}
+
+// deletes the current table
+function removeTable() {
+	var container = document.getElementById("tableContainer");
+	while (container.firstChild) {
+		container.removeChild(container.firstChild);
+	}
+	container = document.getElementById("paginationContainer");
+	while (container.firstChild) {
+		container.removeChild(container.firstChild);
+	}
+}
+
+function createTable() {
+	const headers = ['', 'Date', 'Time', 'Name', 'Adults in Household', 'Children in Household', 'County', 'Address', 'Zip Code'];
+	// console.log(totals["numAppointments"]);
+
+	var tableContainer = document.getElementById('tableContainer');
+	var table = tableContainer.querySelector('table');
+    var tableBody = table.querySelector('tbody');
+
+	// if we need to create a new table
+	if (!table) {
+		table = document.createElement('table');
+		table.className = 'table'
+
+		var tableHead = document.createElement('thead');
+		tableHead.className = 'thead-dark'
+		var headerRow = document.createElement('tr');
+		headers.forEach(header => {
+			var th = document.createElement('th');
+			th.textContent = header;
+			headerRow.appendChild(th);
+		});
+		tableHead.appendChild(headerRow);
+		table.appendChild(tableHead);
+		
+		tableBody = document.createElement('tbody');
+		table.appendChild(tableBody);
+        tableContainer.appendChild(table);
+	}
+	
+	// for pagination
+	const startIdx = (currentPage-1) * rowsPerPage;
+	const endIdx = startIdx + rowsPerPage
+	const paginatedData = currentData.slice(startIndex, endIndex);
+
+	// clear current table data
+	tableBody.innerHTML = '';
+
+	paginatedData.forEach(entry => {
+        var row = document.createElement('tr');
+        for (var key in entry) {
+            var cell = document.createElement('td');
+            cell.textContent = entry[key];
+            row.appendChild(cell);
+        }
+        tableBody.appendChild(row);
+    });
+	table.appendChild(tableBody);
+	tableContainer.appendChild(table);
+
+	updatePagination();
+	
+
+	// add previous 
+
+
+
+	// data.forEach(entry => {
+	// 	var row = document.createElement('tr');
+	// 	for (var key in entry) {
+	// 		var cell = document.createElement('td');
+	// 		cell.textContent = entry[key];
+	// 		row.appendChild(cell);
+	// 	}
+	// 	// for (const key in entry) {
+	// 	// 	const cell = document.createElement('td');
+	// 	// 	cell.textContent = entry[key];
+	// 	// 	row.appendChild(cell);
+	// 	// }
+	// 	tableBody.appendChild(row);
+	// });
+	// table.appendChild(tableBody);
+
+	// document.getElementById('tableContainer').appendChild(table);
+}
+
+function updatePagination() {
+	// add pagination controls
+	var paginationContainer = document.getElementById('paginationContainer');
+	// if pagination controls already exist
+	if (paginationContainer.querySelector('button');) {
+		pageIdx = document.getElementById('pageIndex');
+		pageIdx.textContent = `Page ${currentPage} of ${totalPages}`
+	}
+	else {
+		var navigator = document.createElement('div');
+		navigator.className = 'pagination-navigator';
+
+		var aDiv = document.createElement('div');
+		aDiv.className = 'pagination-item';
+		var prevButton = document.createElement('button');
+		prevButton.className = 'btn btn-light btn-sm';
+		prevButton.textContent = 'Previous';
+		prevButton.onclick = gotoPreviousPage;
+		aDiv.appendChild(prevButton);
+		navigator.appendChild(aDiv);
+		
+		aDiv = document.createElement('div');
+		aDiv.className = 'pagination-item';
+		var pageDescriptor = document.createElement('p');
+		pageDescriptor.setAttribute('id', 'pageIndex');
+		pageDescriptor.textContent = `Page ${currentPage} of ${totalPages}`
+		aDiv.appendChild(pageDescriptor);
+		navigator.appendChild(aDiv);
+
+		aDiv = document.createElement('div');
+		aDiv.className = 'pagination-item';
+		var nextButton = document.createElement('button');
+		nextButton.className = 'btn btn-light btn-sm';
+		nextButton.textContent = 'Next';
+		nextButton.onclick = gotoNextPage;
+		aDiv.appendChild(nextButton);
+		navigator.appendChild(aDiv);
+	}
+	// <div class="pagination-navigator">
+	// 	<div class="pagination-item">
+	// 		<a href="?page=<%= previous_page %>">Previous</a>
+	// 	</div>
+	// 	<%= "   Page #{current_page} of #{total_pages}   " %>
+	// 	<div class="pagination-item">
+	// 		<a href="?page=<%= next_page %>">Next</a>
+	// 	</div>
+	// </div>
+}
+
+function getTableData_attendedAppointments() {
+	fetch('/reports/generate_reports/getTableData_attendedAppointments', {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+			'X-CSRF-Token': csrfToken
+		},
+		body: JSON.stringify({
+			initialDate: getInitialDate(),
+			finalDate: getFinalDate(),
+
+		})
+	}).then(response => {
+		if (response.ok) {
+			return response.json();
+		} else {
+			restoreTableDefaults();
+			throw new Error('Failed to get table data');
+		}
+	}).then(data => {
+		console.log(data.newData);
+		currentData = data.newData;
+		currentTotals = currentData.shift();
+		currentPage = 1;
+		totalPages = Math.ceil(data.length / itemsPerPage);
+		removeTable();
+		createTable();
+	});
+}
+
+
+
+</script>

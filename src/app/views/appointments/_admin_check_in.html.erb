@@ -1,0 +1,73 @@
+<!--
+Project Name: Appointment Scheduler and Check-in - team 23
+FileName: _admin_check_in.html.erb
+Description: This is partial helps populate the appointments queried from the DB.
+Last Modified: 4/30/24
+-->
+
+<!-- Gets correspond appointment. -->
+<% appointment = get_current_appointment( ) %>
+
+<li style="margin-bottom: 8px; padding: 8px; background-color: #fff; border: 1px solid #ddd; border-radius: 3px; font-size: 14px; list-style-type: none;">
+
+    <div class="d-flex justify-content-between">
+        <div class="d-flex align-items-center">
+            <!-- Populate Appointment Information -->
+            <div>
+                <strong style="height: fit-content">Client Name:</strong> <%= appointment.first_name %> <%= appointment.last_name %>,
+                <strong style="height: fit-content">Date:</strong> <%= appointment.date_of_appts.strftime('%Y-%m-%d') %>, 
+                <strong style="height: fit-content">Time:</strong> <%= appointment.time_of_appts.strftime('%I:%M %p') %>, 
+                <strong style="height: fit-content">Location:</strong> <%= appointment.location %>
+            </div>
+        </div>
+        
+        <!-- render different messages if the users have checked in -->
+        <div>
+            <% if appointment.date_of_appts >= current_date %>
+                    <strong>Did Client Check Themselves In?:</strong> 
+                    <% if ( appointment.client_self_check_in ) == false %>
+                        NO
+                    <% else %>
+                        YES
+                    <% end %>
+
+                    <% if (appointment.check_in_user) == false %>
+                        <!-- if statement to decide whether this check-in submission is from the admin search page or from the check-in page -->
+                        <% if from_search == false %>
+                            <a href="<%= check_them_in_path("from_search" => false, who_is_doing_the_check_in: "admin", appointment_id: appointment.id ) %>" >
+                                <button type="button" class="btn btn-success">Check In</button>
+                            </a>
+                        <% else %>
+                            <a href="<%= check_them_in_path("from_search" => true, "query_data" => query_data, who_is_doing_the_check_in: "admin", appointment_id: appointment.id ) %>" >
+                                <button type="button" class="btn btn-success">Check In</button>
+                            </a>
+                        <% end %>
+                    <% else %>
+                        <!-- if statement to decide whether this check-in submission is from the admin search page or from the check-in page -->
+                        <% if from_search == false %>
+                            <a href="<%= check_them_out_path("from_search" => false, appointment_id: appointment.id ) %>" >
+                                <button type="button" class="btn btn-danger">Undo Check In</button>
+                            </a>
+                        <% else %>
+                            <a href="<%= check_them_out_path("from_search" => true, "query_data" => query_data, appointment_id: appointment.id ) %>" >
+                                <button type="button" class="btn btn-danger">Undo Check In</button>
+                            </a>
+                        <% end %>
+                        
+                    <% end %>
+            <% else %>
+                <div class="mr-2">
+                    <strong>Was Client Checked In?:</strong> 
+                        <% if ( appointment.client_self_check_in ) == false and ( appointment.check_in_user ) == false %>
+                            NO
+                        <% else %>
+                            YES
+                        <% end %>
+                
+                </div>
+            <% end %>
+            
+        </div>
+    </div>
+    
+</li>

@@ -1,0 +1,3 @@
+class Booker < ApplicationRecord
+  
+end

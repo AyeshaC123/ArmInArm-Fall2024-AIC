@@ -1,5 +1,5 @@
 class CreateAppointmentsUp < ActiveRecord::Migration[6.0]
-  # def change
+   #def change
   #   create_table :appointments do |t|
   #     t.bigint :client_id, null: false
   #     t.datetime :date_of_appt

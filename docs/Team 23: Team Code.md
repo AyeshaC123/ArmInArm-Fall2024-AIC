@@ -1,0 +1,11 @@
+# Team Guidelines:
+- We meet on Wednesdays at 2
+- Give rationale for any new feature that are presented ( use cases )
+- Keep others updated about what issue you’re working on (e.g. via slack/github issues)
+- Gracefully accept and provide constructive feedback
+- Be respectful of everyone’s opinions, and consider their feelings
+- Prioritize the needs of the community (i.e. ArmInArm staff/clients)
+- Give 24 hr grace period to respond to messages
+- Test the application as new features are added.
+- Stay up-to-date with the project features (i.e. stay familiar with others’ work on the project and new features)
+- Request insight/feedback on currently worked on issues

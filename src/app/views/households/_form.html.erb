@@ -1,110 +1,362 @@
+<%# Project name: Team 14: Add Translations #%>
+<%# Description: Support Spanish and Haitian-Creole translations for the pre-registration form and other important pages #%>
+<%# Filename: app/views/households/_form.html.erb #%>
+<%# Description: #%>
+<%# Original text was replaced with functions that display the translation of the original text, based on the user's selected language #%>
+<%# Extra section for adding household members directly on this form is commented out near the end, if a future team wants to use it #%>
+<%# Last modified on: 4/22/24 #%>
+
+<!-- 
+ Project Name: Admin Dashboard - Team 22
+ Description: Allows admin to view & edit household, client, & location data
+ Filename: _form.html.erb
+ Description: This view creates a form that allows users to
+ create new households.
+ Last Modified: 4/28/2024 
+-->
+
 <%= form_with(model: household, local: true) do |form| %>
+  <div class="btn-group btn-group-toggle justify-content-center w-100" data-toggle="buttons">
+    <label class="btn btn-outline-dark <%= current_user&.locale == 'en' ? 'active' : '' %>" id="drCasesBtn" onchange="changeFormLanguage('en')">
+      <input type="radio" name="language" value="en" autocomplete="off" <%= current_user&.locale == 'en' ? 'checked' : '' %>>
+      English
+    </label>
+    <label class="btn btn-outline-dark <%= current_user&.locale == 'es' ? 'active' : '' %>" id="drCasesBtn" onchange="changeFormLanguage('es')">
+      <input type="radio" name="language" value="es" autocomplete="off" <%= current_user&.locale == 'es' ? 'checked' : '' %>>
+      Español
+    </label>
+    <label class="btn btn-outline-dark <%= current_user&.locale == 'ht' ? 'active' : '' %>" id="drCasesBtn" onchange="changeFormLanguage('ht')">
+      <input type="radio" name="language" value="ht" autocomplete="off" <%= current_user&.locale == 'ht' ? 'checked' : '' %>>
+      Kreyòl Ayisyen
+    </label>
+  </div>
+
   <% if household.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(household.errors.count, "error") %> prohibited this household from being saved:</h2>
-
       <ul>
-        <% household.errors.full_messages.each do |message| %>
+        <% household.errors.each do |attribute, message| %>
           <li><%= message %></li>
         <% end %>
       </ul>
     </div>
   <% end %>
 
-  <br/> 
-  <h3>General Information</h3>
+  <br/>
+  <h3><%= get_translation('prereg_header_gen_info') %></h3>
 
   <div class="field">
-    <%= form.label nil,"Name of Head of Household" %>
+    <strong>
+      <%= form.label nil, "Household ID" %>
+      <%= @household.id %>
+    </strong>
+  </div>
+
+  <div class="field">
+    <%= form.label :headname, get_translation('prereg_name') %>
     <%= form.text_field :headname %>
+    <svg class="svg-icon" title="eg. John Doe" style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;" 
+      viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+      data-toggle="tooltip"
+      data-placement="top">
+      <path d="M512 81.408a422.4 422.4 0 1 0 422.4 422.4A422.4 422.4 0 0 0 512 81.408z m26.624 629.76a45.056 45.056 0 0 1-31.232 12.288 42.496 42.496 0 0 1-31.232-12.8 41.984 41.984 0 0 1-12.8-30.72 39.424 39.424 0 0 1 12.8-30.72 42.496 42.496 0 0 1 31.232-12.288 43.008 43.008 0 0 1 31.744 12.288 39.424 39.424 0 0 1 12.8 30.72 43.008 43.008 0 0 1-13.312 31.744z m87.04-235.52a617.472 617.472 0 0 1-51.2 47.104 93.184 93.184 0 0 0-25.088 31.232 80.896 80.896 0 0 0-9.728 39.936v10.24h-64v-10.24a119.808 119.808 0 0 1 12.288-57.344A311.296 311.296 0 0 1 555.52 460.8l10.24-11.264a71.168 71.168 0 0 0 16.896-44.032A69.632 69.632 0 0 0 563.2 358.4a69.632 69.632 0 0 0-51.2-17.92 67.072 67.072 0 0 0-58.88 26.112 102.4 102.4 0 0 0-16.384 61.44h-61.44a140.288 140.288 0 0 1 37.888-102.4 140.8 140.8 0 0 1 104.96-38.4 135.68 135.68 0 0 1 96.256 29.184 108.032 108.032 0 0 1 36.352 86.528 116.736 116.736 0 0 1-25.088 73.216z" />
+    </svg>
+  </div>
+
+  <br/>
+
+  <div class="field">
+    <%= form.label :headdob, get_translation('prereg_hoh_dob') %> <!-- Localized label for Date of Birth -->
+    <%= form.date_select :headdob, {
+      use_month_names: [ # Localized month names
+        get_translation('months_jan'),
+        get_translation('months_feb'),
+        get_translation('months_mar'),
+        get_translation('months_apr'),
+        get_translation('months_may'),
+        get_translation('months_jun'),
+        get_translation('months_jul'),
+        get_translation('months_aug'),
+        get_translation('months_sep'),
+        get_translation('months_oct'),
+        get_translation('months_nov'),
+        get_translation('months_dec')
+      ],
+      start_year: Date.current.year - 120, # Appropriate starting year from staging-1
+      end_year: Date.current.year, # Current year as the max year
+      day_options: { start: 1, end: 31 }, # Day options to restrict available days
+      month_options: { start: 1, end: 12 } # Month options to restrict available months
+    } %>
+    <svg class="svg-icon" title="eg. 01/01/2000 is 2000 January 1" style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;" 
+    viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+    data-toggle="tooltip"
+    data-placement="top">
+    <path d="M512 81.408a422.4 422.4 0 1 0 422.4 422.4A422.4 422.4 0 0 0 512 81.408z m26.624 629.76a45.056 45.056 0 0 1-31.232 12.288 42.496 42.496 0 0 1-31.232-12.8 41.984 41.984 0 0 1-12.8-30.72 39.424 39.424 0 0 1 12.8-30.72 42.496 42.496 0 0 1 31.232-12.288 43.008 43.008 0 0 1 31.744 12.288 39.424 39.424 0 0 1 12.8 30.72 43.008 43.008 0 0 1-13.312 31.744z m87.04-235.52a617.472 617.472 0 0 1-51.2 47.104 93.184 93.184 0 0 0-25.088 31.232 80.896 80.896 0 0 0-9.728 39.936v10.24h-64v-10.24a119.808 119.808 0 0 1 12.288-57.344A311.296 311.296 0 0 1 555.52 460.8l10.24-11.264a71.168 71.168 0 0 0 16.896-44.032A69.632 69.632 0 0 0 563.2 358.4a69.632 69.632 0 0 0-51.2-17.92 67.072 67.072 0 0 0-58.88 26.112 102.4 102.4 0 0 0-16.384 61.44h-61.44a140.288 140.288 0 0 1 37.888-102.4 140.8 140.8 0 0 1 104.96-38.4 135.68 135.68 0 0 1 96.256 29.184 108.032 108.032 0 0 1 36.352 86.528 116.736 116.736 0 0 1-25.088 73.216z" />
+    </svg>
+    <div class="error-message" style="display: none;"></div> <!-- Error message placeholder -->
   </div>
 
   <div class="field">
-    <%= form.label nil,"Date of Birth (MM/DD/YYYY)" %>
-    <%= form.date_select :headdob %>
+    <%= form.label :numadults, get_translation('prereg_num_adults') %>
+    <%= form.text_field :numadults, type: "number", step: 1 %>
+    <svg class="svg-icon" title="eg. 2" style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;"
+    viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+    data-toggle="tooltip"
+    data-placement="top">
+    <path d="M512 81.408a422.4 422.4 0 1 0 422.4 422.4A422.4 422.4 0 0 0 512 81.408z m26.624 629.76a45.056 45.056 0 0 1-31.232 12.288 42.496 42.496 0 0 1-31.232-12.8 41.984 41.984 0 0 1-12.8-30.72 39.424 39.424 0 0 1 12.8-30.72 42.496 42.496 0 0 1 31.232-12.288 43.008 43.008 0 0 1 31.744 12.288 39.424 39.424 0 0 1 12.8 30.72 43.008 43.008 0 0 1-13.312 31.744z m87.04-235.52a617.472 617.472 0 0 1-51.2 47.104 93.184 93.184 0 0 0-25.088 31.232 80.896 80.896 0 0 0-9.728 39.936v10.24h-64v-10.24a119.808 119.808 0 0 1 12.288-57.344A311.296 311.296 0 0 1 555.52 460.8l10.24-11.264a71.168 71.168 0 0 0 16.896-44.032A69.632 69.632 0 0 0 563.2 358.4a69.632 69.632 0 0 0-51.2-17.92 67.072 67.072 0 0 0-58.88 26.112 102.4 102.4 0 0 0-16.384 61.44h-61.44a140.288 140.288 0 0 1 37.888-102.4 140.8 140.8 0 0 1 104.96-38.4 135.68 135.68 0 0 1 96.256 29.184 108.032 108.032 0 0 1 36.352 86.528 116.736 116.736 0 0 1-25.088 73.216z" />
+    </svg>
   </div>
 
   <div class="field">
-    <%= form.label nil, "# of Adults in Household" %>
-    <%= form.text_field :numadults %>
+    <%= form.label :numchild, get_translation('prereg_num_children') %>
+    <%= form.text_field :numchild, type: "number", step: 1 %>
+    <svg class="svg-icon" title="eg. 3" style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;"
+    viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+    data-toggle="tooltip"
+    data-placement="top">
+    <path d="M512 81.408a422.4 422.4 0 1 0 422.4 422.4A422.4 422.4 0 0 0 512 81.408z m26.624 629.76a45.056 45.056 0 0 1-31.232 12.288 42.496 42.496 0 0 1-31.232-12.8 41.984 41.984 0 0 1-12.8-30.72 39.424 39.424 0 0 1 12.8-30.72 42.496 42.496 0 0 1 31.232-12.288 43.008 43.008 0 0 1 31.744 12.288 39.424 39.424 0 0 1 12.8 30.72 43.008 43.008 0 0 1-13.312 31.744z m87.04-235.52a617.472 617.472 0 0 1-51.2 47.104 93.184 93.184 0 0 0-25.088 31.232 80.896 80.896 0 0 0-9.728 39.936v10.24h-64v-10.24a119.808 119.808 0 0 1 12.288-57.344A311.296 311.296 0 0 1 555.52 460.8l10.24-11.264a71.168 71.168 0 0 0 16.896-44.032A69.632 69.632 0 0 0 563.2 358.4a69.632 69.632 0 0 0-51.2-17.92 67.072 67.072 0 0 0-58.88 26.112 102.4 102.4 0 0 0-16.384 61.44h-61.44a140.288 140.288 0 0 1 37.888-102.4 140.8 140.8 0 0 1 104.96-38.4 135.68 135.68 0 0 1 96.256 29.184 108.032 108.032 0 0 1 36.352 86.528 116.736 116.736 0 0 1-25.088 73.216z" />
+    </svg>
   </div>
 
   <div class="field">
-    <%= form.label nil, "# of Children in household" %>
-    <%= form.text_field :numchild %>
+    <%= form.label nil, "Preferred Pantry Location" %>
+    <%= form.select :pantrylocation, [['Hudson','hudson'],['Princeton','princeton'],['Mobile Pantry','mobile pantry']],  { include_blank: true } %>
   </div>
 
-  <h3>Household Address</h3>
+  <h3><%= get_translation('prereg_header_house_adr') %></h3>
+
   <div class="field">
-    <%= form.label nil, "Street Address" %>
+    <%= form.label :streetaddr, get_translation('prereg_street') %>
     <%= form.text_field :streetaddr %>
+    <svg class="svg-icon" title="eg. 123 Main Street" style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;"
+    viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+    data-toggle="tooltip"
+    data-placement="top">
+    <path d="M512 81.408a422.4 422.4 0 1 0 422.4 422.4A422.4 422.4 0 0 0 512 81.408z m26.624 629.76a45.056 45.056 0 0 1-31.232 12.288 42.496 42.496 0 0 1-31.232-12.8 41.984 41.984 0 0 1-12.8-30.72 39.424 39.424 0 0 1 12.8-30.72 42.496 42.496 0 0 1 31.232-12.288 43.008 43.008 0 0 1 31.744 12.288 39.424 39.424 0 0 1 12.8 30.72 43.008 43.008 0 0 1-13.312 31.744z m87.04-235.52a617.472 617.472 0 0 1-51.2 47.104 93.184 93.184 0 0 0-25.088 31.232 80.896 80.896 0 0 0-9.728 39.936v10.24h-64v-10.24a119.808 119.808 0 0 1 12.288-57.344A311.296 311.296 0 0 1 555.52 460.8l10.24-11.264a71.168 71.168 0 0 0 16.896-44.032A69.632 69.632 0 0 0 563.2 358.4a69.632 69.632 0 0 0-51.2-17.92 67.072 67.072 0 0 0-58.88 26.112 102.4 102.4 0 0 0-16.384 61.44h-61.44a140.288 140.288 0 0 1 37.888-102.4 140.8 140.8 0 0 1 104.96-38.4 135.68 135.68 0 0 1 96.256 29.184 108.032 108.032 0 0 1 36.352 86.528 116.736 116.736 0 0 1-25.088 73.216z" />
+    </svg>
   </div>
 
   <div class="field">
-    <%= form.label :city %>
+    <%= form.label :city, get_translation('prereg_city') %>
     <%= form.text_field :city %>
+    <svg class="svg-icon" title="eg. Trenton" style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;"
+    viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+    data-toggle="tooltip"
+    data-placement="top">
+    <path d="M512 81.408a422.4 422.4 0 1 0 422.4 422.4A422.4 422.4 0 0 0 512 81.408z m26.624 629.76a45.056 45.056 0 0 1-31.232 12.288 42.496 42.496 0 0 1-31.232-12.8 41.984 41.984 0 0 1-12.8-30.72 39.424 39.424 0 0 1 12.8-30.72 42.496 42.496 0 0 1 31.232-12.288 43.008 43.008 0 0 1 31.744 12.288 39.424 39.424 0 0 1 12.8 30.72 43.008 43.008 0 0 1-13.312 31.744z m87.04-235.52a617.472 617.472 0 0 1-51.2 47.104 93.184 93.184 0 0 0-25.088 31.232 80.896 80.896 0 0 0-9.728 39.936v10.24h-64v-10.24a119.808 119.808 0 0 1 12.288-57.344A311.296 311.296 0 0 1 555.52 460.8l10.24-11.264a71.168 71.168 0 0 0 16.896-44.032A69.632 69.632 0 0 0 563.2 358.4a69.632 69.632 0 0 0-51.2-17.92 67.072 67.072 0 0 0-58.88 26.112 102.4 102.4 0 0 0-16.384 61.44h-61.44a140.288 140.288 0 0 1 37.888-102.4 140.8 140.8 0 0 1 104.96-38.4 135.68 135.68 0 0 1 96.256 29.184 108.032 108.032 0 0 1 36.352 86.528 116.736 116.736 0 0 1-25.088 73.216z" />
+    </svg>
   </div>
 
   <div class="field">
-    <%= form.label :state %>
-    <%= form.text_field :state %>
+    <%= form.label :state, get_translation('prereg_state') %>
+    <%= form.select :state, options_for_select(State.order(:name).pluck(:name), "New Jersey"), { include_blank: true }, { id: "state-select" } %>
+    <svg class="svg-icon" title="eg. New Jersey" style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;"
+    viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+    data-toggle="tooltip"
+    data-placement="top">
+    <path d="M512 81.408a422.4 422.4 0 1 0 422.4 422.4A422.4 422.4 0 0 0 512 81.408z m26.624 629.76a45.056 45.056 0 0 1-31.232 12.288 42.496 42.496 0 0 1-31.232-12.8 41.984 41.984 0 0 1-12.8-30.72 39.424 39.424 0 0 1 12.8-30.72 42.496 42.496 0 0 1 31.232-12.288 43.008 43.008 0 0 1 31.744 12.288 39.424 39.424 0 0 1 12.8 30.72 43.008 43.008 0 0 1-13.312 31.744z m87.04-235.52a617.472 617.472 0 0 1-51.2 47.104 93.184 93.184 0 0 0-25.088 31.232 80.896 80.896 0 0 0-9.728 39.936v10.24h-64v-10.24a119.808 119.808 0 0 1 12.288-57.344A311.296 311.296 0 0 1 555.52 460.8l10.24-11.264a71.168 71.168 0 0 0 16.896-44.032A69.632 69.632 0 0 0 563.2 358.4a69.632 69.632 0 0 0-51.2-17.92 67.072 67.072 0 0 0-58.88 26.112 102.4 102.4 0 0 0-16.384 61.44h-61.44a140.288 140.288 0 0 1 37.888-102.4 140.8 140.8 0 0 1 104.96-38.4 135.68 135.68 0 0 1 96.256 29.184 108.032 108.032 0 0 1 36.352 86.528 116.736 116.736 0 0 1-25.088 73.216z" />
+    </svg>
   </div>
 
   <div class="field">
-    <%= form.label :county %>
-    <%= form.text_field :county %>
+    <%= form.label :county, get_translation('prereg_county') %>
+    <%= form.select :county, [], { include_blank: true }, { id: "county-select" } %>
+    <svg class="svg-icon" title="eg. Mercer" style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;"
+    viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+    data-toggle="tooltip"
+    data-placement="top">
+    <path d="M512 81.408a422.4 422.4 0 1 0 422.4 422.4A422.4 422.4 0 0 0 512 81.408z m26.624 629.76a45.056 45.056 0 0 1-31.232 12.288 42.496 42.496 0 0 1-31.232-12.8 41.984 41.984 0 0 1-12.8-30.72 39.424 39.424 0 0 1 12.8-30.72 42.496 42.496 0 0 1 31.232-12.288 43.008 43.008 0 0 1 31.744 12.288 39.424 39.424 0 0 1 12.8 30.72 43.008 43.008 0 0 1-13.312 31.744z m87.04-235.52a617.472 617.472 0 0 1-51.2 47.104 93.184 93.184 0 0 0-25.088 31.232 80.896 80.896 0 0 0-9.728 39.936v10.24h-64v-10.24a119.808 119.808 0 0 1 12.288-57.344A311.296 311.296 0 0 1 555.52 460.8l10.24-11.264a71.168 71.168 0 0 0 16.896-44.032A69.632 69.632 0 0 0 563.2 358.4a69.632 69.632 0 0 0-51.2-17.92 67.072 67.072 0 0 0-58.88 26.112 102.4 102.4 0 0 0-16.384 61.44h-61.44a140.288 140.288 0 0 1 37.888-102.4 140.8 140.8 0 0 1 104.96-38.4 135.68 135.68 0 0 1 96.256 29.184 108.032 108.032 0 0 1 36.352 86.528 116.736 116.736 0 0 1-25.088 73.216z" />
+    </svg>
   </div>
 
   <div class="field">
-    <%= form.label nil, "Zip code" %>
+    <%= form.label :zipcode, get_translation('prereg_zip_code') %>
     <%= form.text_field :zipcode %>
+    <svg class="svg-icon" title="eg. 08609" style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;"
+    viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+    data-toggle="tooltip"
+    data-placement="top">
+    <path d="M512 81.408a422.4 422.4 0 1 0 422.4 422.4A422.4 422.4 0 0 0 512 81.408z m26.624 629.76a45.056 45.056 0 0 1-31.232 12.288 42.496 42.496 0 0 1-31.232-12.8 41.984 41.984 0 0 1-12.8-30.72 39.424 39.424 0 0 1 12.8-30.72 42.496 42.496 0 0 1 31.232-12.288 43.008 43.008 0 0 1 31.744 12.288 39.424 39.424 0 0 1 12.8 30.72 43.008 43.008 0 0 1-13.312 31.744z m87.04-235.52a617.472 617.472 0 0 1-51.2 47.104 93.184 93.184 0 0 0-25.088 31.232 80.896 80.896 0 0 0-9.728 39.936v10.24h-64v-10.24a119.808 119.808 0 0 1 12.288-57.344A311.296 311.296 0 0 1 555.52 460.8l10.24-11.264a71.168 71.168 0 0 0 16.896-44.032A69.632 69.632 0 0 0 563.2 358.4a69.632 69.632 0 0 0-51.2-17.92 67.072 67.072 0 0 0-58.88 26.112 102.4 102.4 0 0 0-16.384 61.44h-61.44a140.288 140.288 0 0 1 37.888-102.4 140.8 140.8 0 0 1 104.96-38.4 135.68 135.68 0 0 1 96.256 29.184 108.032 108.032 0 0 1 36.352 86.528 116.736 116.736 0 0 1-25.088 73.216z" />
+    </svg>
   </div>
 
   <div class="field">
-    <%= form.label nil, "Mobile Phone" %>
+    <%= form.label :phonenum, get_translation('prereg_phone_number') %>
     <%= form.text_field :phonenum %>
+    <svg class="svg-icon" title="eg. 609-555-1234" style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;"
+    viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+    data-toggle="tooltip"
+    data-placement="top">
+    <path d="M512 81.408a422.4 422.4 0 1 0 422.4 422.4A422.4 422.4 0 0 0 512 81.408z m26.624 629.76a45.056 45.056 0 0 1-31.232 12.288 42.496 42.496 0 0 1-31.232-12.8 41.984 41.984 0 0 1-12.8-30.72 39.424 39.424 0 0 1 12.8-30.72 42.496 42.496 0 0 1 31.232-12.288 43.008 43.008 0 0 1 31.744 12.288 39.424 39.424 0 0 1 12.8 30.72 43.008 43.008 0 0 1-13.312 31.744z m87.04-235.52a617.472 617.472 0 0 1-51.2 47.104 93.184 93.184 0 0 0-25.088 31.232 80.896 80.896 0 0 0-9.728 39.936v10.24h-64v-10.24a119.808 119.808 0 0 1 12.288-57.344A311.296 311.296 0 0 1 555.52 460.8l10.24-11.264a71.168 71.168 0 0 0 16.896-44.032A69.632 69.632 0 0 0 563.2 358.4a69.632 69.632 0 0 0-51.2-17.92 67.072 67.072 0 0 0-58.88 26.112 102.4 102.4 0 0 0-16.384 61.44h-61.44a140.288 140.288 0 0 1 37.888-102.4 140.8 140.8 0 0 1 104.96-38.4 135.68 135.68 0 0 1 96.256 29.184 108.032 108.032 0 0 1 36.352 86.528 116.736 116.736 0 0 1-25.088 73.216z" />
+    </svg>
   </div>
   <br/>
-  <h3>Household Demographics</h3>
+
+  <h3><%= get_translation('prereg_header_house_demo') %></h3>
+
   <div class="field">
-    <%= form.label nil, "Household Type" %>
-    <%= form.select :householdtype, [['Single Individual', 'single'], ['Adults Only', 'adultonly'], ['Family with children under 18', 'family']]%>
+    <%= form.label :householdtype, get_translation('prereg_household_type') %>
+    <%= form.select :householdtype, [
+      [get_translation('prereg_single_individual'), 'single'],
+      [get_translation('prereg_adults_only'), 'adultonly'],
+      [get_translation('prereg_fam_with_children_under18'), 'family']
+    ] %>
+    <svg class="svg-icon" title="Choose the fields that best match your household" style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;"
+    viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+    data-toggle="tooltip"
+    data-placement="top">
+    <path d="M512 81.408a422.4 422.4 0 1 0 422.4 422.4A422.4 422.4 0 0 0 512 81.408z m26.624 629.76a45.056 45.056 0 0 1-31.232 12.288 42.496 42.496 0 0 1-31.232-12.8 41.984 41.984 0 0 1-12.8-30.72 39.424 39.424 0 0 1 12.8-30.72 42.496 42.496 0 0 1 31.232-12.288 43.008 43.008 0 0 1 31.744 12.288 39.424 39.424 0 0 1 12.8 30.72 43.008 43.008 0 0 1-13.312 31.744z m87.04-235.52a617.472 617.472 0 0 1-51.2 47.104 93.184 93.184 0 0 0-25.088 31.232 80.896 80.896 0 0 0-9.728 39.936v10.24h-64v-10.24a119.808 119.808 0 0 1 12.288-57.344A311.296 311.296 0 0 1 555.52 460.8l10.24-11.264a71.168 71.168 0 0 0 16.896-44.032A69.632 69.632 0 0 0 563.2 358.4a69.632 69.632 0 0 0-51.2-17.92 67.072 67.072 0 0 0-58.88 26.112 102.4 102.4 0 0 0-16.384 61.44h-61.44a140.288 140.288 0 0 1 37.888-102.4 140.8 140.8 0 0 1 104.96-38.4 135.68 135.68 0 0 1 96.256 29.184 108.032 108.032 0 0 1 36.352 86.528 116.736 116.736 0 0 1-25.088 73.216z" />
+    </svg>
   </div>
 
   <div class="field">
-    <%= form.label nil, "Head of Household Gender" %>
-    <%= form.select :headgender, [['Female','female'],['Male','male'],['Other','other']] %>
+    <%= form.label :headgender, get_translation('prereg_hoh_gender') %>
+    <%= form.select :headgender, [
+      [get_translation('prereg_female'),'female'],
+      [get_translation('prereg_male'),'male'],
+      [get_translation('prereg_other'),'other']
+    ] %>
   </div>
 
   <div class="field">
-    <%= form.label nil, "Head of Household Race / Ethnicity" %>
-    <%= form.select :headethnicity, [['African American / Black','black'],['Latino','latino'],['White','white'],['Asian','asian'],['Multiracial','multiracial']] %>
+    <%= form.label :headethnicity, get_translation('prereg_hoh_race_ethnicity') %>
+    <%= form.select :headethnicity, [
+      [get_translation('prereg_hoh_black'), 'black'],
+      [get_translation('prereg_hoh_latino'),'latino'],
+      [get_translation('prereg_hoh_white'),'white'],
+      [get_translation('prereg_hoh_asian'),'asian'],
+      [get_translation('prereg_hoh_multiracial'),'multiracial'], 
+      ['Other', 'other']
+    ] %>
   </div>
 
   <br/>
-  <h3>Household Income & Benefits</h3>
+  <h3><%= get_translation('prereg_header_house_inc') %>
+    <svg class="svg-icon" title="Choose the fields that best match your household" style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;"
+    viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+    data-toggle="tooltip"
+    data-placement="top">
+    <path d="M512 81.408a422.4 422.4 0 1 0 422.4 422.4A422.4 422.4 0 0 0 512 81.408z m26.624 629.76a45.056 45.056 0 0 1-31.232 12.288 42.496 42.496 0 0 1-31.232-12.8 41.984 41.984 0 0 1-12.8-30.72 39.424 39.424 0 0 1 12.8-30.72 42.496 42.496 0 0 1 31.232-12.288 43.008 43.008 0 0 1 31.744 12.288 39.424 39.424 0 0 1 12.8 30.72 43.008 43.008 0 0 1-13.312 31.744z m87.04-235.52a617.472 617.472 0 0 1-51.2 47.104 93.184 93.184 0 0 0-25.088 31.232 80.896 80.896 0 0 0-9.728 39.936v10.24h-64v-10.24a119.808 119.808 0 0 1 12.288-57.344A311.296 311.296 0 0 1 555.52 460.8l10.24-11.264a71.168 71.168 0 0 0 16.896-44.032A69.632 69.632 0 0 0 563.2 358.4a69.632 69.632 0 0 0-51.2-17.92 67.072 67.072 0 0 0-58.88 26.112 102.4 102.4 0 0 0-16.384 61.44h-61.44a140.288 140.288 0 0 1 37.888-102.4 140.8 140.8 0 0 1 104.96-38.4 135.68 135.68 0 0 1 96.256 29.184 108.032 108.032 0 0 1 36.352 86.528 116.736 116.736 0 0 1-25.088 73.216z" />
+    </svg>
+  </h3>
+
   <div class="field">
-    <%= form.label nil, "Does the client receive SNAP (Food Stamps)?" %>
-    <%= form.select :foodstamps, [['Yes','yes'], ['No','no']] %>
+    <%= form.label :foodstamps, get_translation('prereg_receive_snaps') %>
+    <%= form.select :foodstamps, [
+      [get_translation('prereg_snaps_yes'),'yes'],
+      [get_translation('prereg_snaps_no'),'no']
+    ] %>
+    <svg class="svg-icon" title="Choose the fields that best match your household" style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;"
+    viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+    data-toggle="tooltip"
+    data-placement="top">
+    <path d="M512 81.408a422.4 422.4 0 1 0 422.4 422.4A422.4 422.4 0 0 0 512 81.408z m26.624 629.76a45.056 45.056 0 0 1-31.232 12.288 42.496 42.496 0 0 1-31.232-12.8 41.984 41.984 0 0 1-12.8-30.72 39.424 39.424 0 0 1 12.8-30.72 42.496 42.496 0 0 1 31.232-12.288 43.008 43.008 0 0 1 31.744 12.288 39.424 39.424 0 0 1 12.8 30.72 43.008 43.008 0 0 1-13.312 31.744z m87.04-235.52a617.472 617.472 0 0 1-51.2 47.104 93.184 93.184 0 0 0-25.088 31.232 80.896 80.896 0 0 0-9.728 39.936v10.24h-64v-10.24a119.808 119.808 0 0 1 12.288-57.344A311.296 311.296 0 0 1 555.52 460.8l10.24-11.264a71.168 71.168 0 0 0 16.896-44.032A69.632 69.632 0 0 0 563.2 358.4a69.632 69.632 0 0 0-51.2-17.92 67.072 67.072 0 0 0-58.88 26.112 102.4 102.4 0 0 0-16.384 61.44h-61.44a140.288 140.288 0 0 1 37.888-102.4 140.8 140.8 0 0 1 104.96-38.4 135.68 135.68 0 0 1 96.256 29.184 108.032 108.032 0 0 1 36.352 86.528 116.736 116.736 0 0 1-25.088 73.216z" />
+    </svg>
   </div>
 
   <div class="field">
-    <%= form.label nil, "Primary Income Source" %>
-    <%= form.select :incomesource, [['Child Support','csupport'],['Employment','employment'],['General Assistance','genassist'],['Social Security (SSI)','ssi'],['Social Security Disability (SSD)','ssd'],['Retirement','retirement'],['TANF','tanf'],['Unemployment Benefits','unemployment'],['None','none']] %>
+    <%= form.label :incomesource, get_translation('prereg_income_source') %>
+    <%= form.select :incomesource, [
+      [get_translation('prereg_child_support'),'csupport'],
+      [get_translation('prereg_employment'),'employment'],
+      [get_translation('prereg_gen_assistance'),'genassist'],
+      [get_translation('prereg_soc_security'),'ssi'],
+      [get_translation('prereg_soc_sec_disability'),'ssd'],
+      [get_translation('prereg_retirement'),'retirement'],
+      [get_translation('prereg_tanf'),'tanf'],
+      [get_translation('prereg_unemployment'),'unemployment'],
+      [get_translation('prereg_none'),'none']
+    ] %>
   </div>
 
   <div class="field">
-    <%= form.label nil, "Qualifier Code" %>
-    <%= form.select :qualifiercode, [['1 - TANF','1'],['2 - SNAP','2'],['3 - SSI','3'],['4 - WIC','4'],['5 - Medicaid','5'],['6 - Income Eligible','6'],['7 - Disaster','7']] %>
+    <%= form.label :qualifiercode, get_translation('prereg_qualifier_code') %>
+    <%= form.select :qualifiercode, [
+      [get_translation('prereg_code_tanf'),'1'],
+      [get_translation('prereg_code_snap'),'2'],
+      [get_translation('prereg_code_ssi'),'3'],
+      [get_translation('prereg_code_wic'),'4'],
+      [get_translation('prereg_code_medicaid'),'5'],
+      [get_translation('prereg_code_inc_eligible'),'6'],
+      [get_translation('prereg_code_disaster'),'7']
+    ] %>
   </div>
 
   <div class="field">
-    <%= form.label nil, "Net Income" %>
+    <%= form.label :netincome, get_translation('prereg_net_income') %>
     <%= form.text_field :netincome %>
+    <svg class="svg-icon" title="Enter the total amount of money earned in a year. Eg. 50000" style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;"
+    viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+    data-toggle="tooltip"
+    data-placement="top">
+    <path d="M512 81.408a422.4 422.4 0 1 0 422.4 422.4A422.4 422.4 0 0 0 512 81.408z m26.624 629.76a45.056 45.056 0 0 1-31.232 12.288 42.496 42.496 0 0 1-31.232-12.8 41.984 41.984 0 0 1-12.8-30.72 39.424 39.424 0 0 1 12.8-30.72 42.496 42.496 0 0 1 31.232-12.288 43.008 43.008 0 0 1 31.744 12.288 39.424 39.424 0 0 1 12.8 30.72 43.008 43.008 0 0 1-13.312 31.744z m87.04-235.52a617.472 617.472 0 0 1-51.2 47.104 93.184 93.184 0 0 0-25.088 31.232 80.896 80.896 0 0 0-9.728 39.936v10.24h-64v-10.24a119.808 119.808 0 0 1 12.288-57.344A311.296 311.296 0 0 1 555.52 460.8l10.24-11.264a71.168 71.168 0 0 0 16.896-44.032A69.632 69.632 0 0 0 563.2 358.4a69.632 69.632 0 0 0-51.2-17.92 67.072 67.072 0 0 0-58.88 26.112 102.4 102.4 0 0 0-16.384 61.44h-61.44a140.288 140.288 0 0 1 37.888-102.4 140.8 140.8 0 0 1 104.96-38.4 135.68 135.68 0 0 1 96.256 29.184 108.032 108.032 0 0 1 36.352 86.528 116.736 116.736 0 0 1-25.088 73.216z" />
+    </svg>
   </div>
 
   <div class="actions">
-    <input type="submit" name="commit" value="Submit Form" data-disable-with="Submit Form" />
+    <input type="submit" name="commit" value="<%= get_translation('prereg_submit_form') %>" data-disable-with="Submit Form" onclick="return validateDate();" />
   </div>
 <% end %>
-<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+
+<%# Team 14: Script to save users input when switching languages #%>
+<script>
+  function changeFormLanguage(newLanguage) {
+    const inputs = document.querySelectorAll("div.field > input, div.field > select");
+    for (let i = 0; i < inputs.length; i++) {
+      localStorage.setItem(inputs[i].id, inputs[i].value);
+    }
+    changeLanguage(newLanguage);
+  }
+
+  function loadInputs() {
+    const inputs = document.querySelectorAll("div.field > input, div.field > select");
+    for (let i = 0; i < inputs.length; i++) {
+      val = localStorage.getItem(inputs[i].id);
+      if (val !== null) {
+        inputs[i].value = localStorage.getItem(inputs[i].id);
+        localStorage.removeItem(inputs[i].id);
+      }
+    }
+  }
+
+  window.onload = loadInputs;
+</script>
+
+<%# End of code modified by Steph Contino - Team 11 %>
+
+<!-- Script to get the county based on the state selected -->
+<script>
+  // Function to populate the county dropdown based on the selected state
+  function populateCountyDropdown() {
+    // Reference to the state and county dropdowns
+    const stateSelect = document.getElementById("state-select");
+    const countySelect = document.getElementById("county-select");
+
+    // Gets the current value of the selected state
+    const selectedState = stateSelect.value;
+    fetch(`/household_county?state_name=${selectedState}`)
+      .then(response => response.json())
+      .then(data => {
+        // Clear previous options and populate dropdown
+        countySelect.innerHTML = ""; 
+        data.forEach(county => {
+          const option = document.createElement("option");
+          option.text = county.county_name;
+          countySelect.add(option);
+        });
+      });
+  }
+
+  // Initialize the county dropdown and populate it on each state change
+  function initializeCountyDropdown() {
+    populateCountyDropdown();
+    const stateSelect = document.getElementById("state-select");
+    stateSelect.addEventListener("change", populateCountyDropdown);
+  }
+
+  // Initialize the dropdown on initial page load
+  initializeCountyDropdown();
+
+  // Listen for navigation changes and repopulate the dropdown
+  window.addEventListener("popstate", initializeCountyDropdown);
+</script>

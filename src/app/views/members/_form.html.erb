@@ -1,42 +1,161 @@
+
+<%# Project name: Add Translations #%>
+<%# Description: Support Spanish and Haitian-Creole translations for the pre-registration form and other important pages #%>
+<%# Filename: app/views/members/_form.html.erb #%>
+<%# Description: #%>
+<%# Original text was replaced with functions that display the translation of the original text, based on the user's selected language #%>
+<%# Last modified on: 4/22/24 #%>
+
+
+ <!-- 
+ Project name: Arm in Arm Project Team 12
+ Description of Project: The Arm in Arm Project aims to develop an application that assits its clients in need of food 
+ Filename: _form.html.erb
+ Description: This file contains a form template for the page to create a new household member, including validation checks.
+ Last modified on: April 21, 2024
+
+--> 
+
+
+<!--Last modified by Team 13-->
+<!--April 21, 2024-->
+<!--Changed the label for household_id field to household address to add additional members-->
+<!--Project Arm In Arm-->
+
+
+
 <%= form_with(model: member, local: true) do |form| %>
   <% if member.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(member.errors.count, "error") %> prohibited this member from being saved:</h2>
 
       <ul>
-        <% member.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
+        <% member.errors.each do |attribute, message| %>
+          <% unless attribute == :household && message == "must exist" %>
+            <li><%= message.capitalize %></li>
+          <% end %>
         <% end %>
       </ul>
     </div>
   <% end %>
 
+
+  <div> 
+  <%= flash[:notice] %>
+  </div>
+
+
   <div class="field">
-    <%= form.label nil, "First Name" %>
+    <%= form.label :firstname, get_translation('non_hoh_first_name') %>
     <%= form.text_field :firstname %>
   </div>
 
   <div class="field">
-    <%= form.label nil, "Last Name" %>
+    <%= form.label :lastname, get_translation('non_hoh_last_name') %>
     <%= form.text_field :lastname %>
   </div>
 
-  <div class="field">
-    <%= form.label nil, "Date of birth" %>
-    <%= form.date_select :dob %>
-  </div>
+
 
   <div class="field">
-    <%= form.label nil, "Relationship to Head" %>
-    <%= form.text_field :relationship %>
+
+    <%= form.label :dob, get_translation('prereg_hoh_dob') %>
+    <%= form.date_select :dob, {:use_month_names => [
+      get_translation('months_jan'),
+      get_translation('months_feb'),
+      get_translation('months_mar'),
+      get_translation('months_apr'),
+      get_translation('months_may'),
+      get_translation('months_jun'),
+      get_translation('months_jul'),
+      get_translation('months_aug'),
+      get_translation('months_sep'),
+      get_translation('months_oct'),
+      get_translation('months_nov'),
+      get_translation('months_dec')
+      ],
+      :start_year => Date.current.year,
+      :end_year => Date.current.year - 120    } %>
+
+<!--     <%#= form.label nil, "Date of birth" %>
+    <%#= form.date_select :dob, start_year: Date.today.year, end_year: Date.today.year - 120,
+       # day_options: { start: 1, end: 31 },
+       # month_options: { start: 1, end: 12 } %> -->
+        <div class="error-message" style="display: none;"></div>
+
   </div>
 
+<!-- Script to check if entered date is valid, if not, it changes it to a valid date -->
+<!-- For example, if February 31st 2005 is entered, it is adjusted to March 3rd 2005 -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const dobField = document.querySelector('.dob-field');
+  const errorField = document.querySelector('.error-message');
+
+  // Function to handle changes in the date of birth field
+  dobField.addEventListener('change', function() {
+    // Retrieve date for validation
+    const selectedDate = new Date(dobField.value);
+    const today = new Date();
+
+    // Validation for invalid date
+    if (isNaN(selectedDate.getTime())) {
+      // Display an error message for invalid date
+      errorField.textContent = 'Invalid date.';
+      errorField.style.display = 'block';
+    }
+  });
+});
+</script>
+
+  <%# A dropdown might make sense to ensure consistency %>
+
   <div class="field">
-    <%= form.label nil, "Household ID"%>
-    <%= form.text_field :household_id %>
-  </div>
+
+    <%= form.label :relationship, get_translation('non_hoh_relationship') %>
+    <%= form.select :relationship, [
+      [get_translation('non_hoh_desc_spouse'),'spouse'],
+      [get_translation('non_hoh_desc_child'),'child'],
+      [get_translation('non_hoh_desc_mother'),'mother'],
+      [get_translation('non_hoh_desc_father'),'father'],
+      [get_translation('non_hoh_desc_sibling'),'sibling'],
+      [get_translation('non_hoh_desc_grandchild'),'grandchild'],
+      [get_translation('non_hoh_desc_grandparent'),'grandparent'],
+      [get_translation('non_hoh_desc_niece'),'niece'],
+      [get_translation('non_hoh_desc_nephew'),'nephew'],
+      [get_translation('non_hoh_desc_aunt'),'aunt'],
+      [get_translation('non_hoh_desc_uncle'),'uncle'],
+      [get_translation('non_hoh_desc_cousin'),'cousin'],
+      [get_translation('non_hoh_desc_son_in_law'),'soninlaw'],
+      [get_translation('non_hoh_desc_daughter_in_law'),'daughterinlaw'],
+      [get_translation('non_hoh_desc_parent_in_law'),'parentinlaw'],
+      [get_translation('non_hoh_desc_friend'),'friend'],
+    ] %>
+
+    <%#= form.label nil, "Relationship to Head" %>
+    <%#= form.select :relationship, [['Spouse','spouse'],['Partner','partner'],['Child','child'],['Parent','parent'],['Sibling','sibling'],['Grandchild','grandchild'],['Grandparent','grandparent'],['Cousin','cousin'],['In-Law','inlaw'],['Other','other']] %>
+
+
+
+  <%# Team 14: No translation here because I don't expect this to stay #%>
+<%# 
+  <div class="field">
+    <%= form.label nil, get_translation('prereg_header_house_adr') %>  
+
+
+   <div class="field">
+   <% if current_user.admin? %>
+   <%= form.label :household_id, get_translation('prereg_header_house_adr') %>
+   <%= form.select :household_id, @households, prompt: "Select a Household" %>
+ <% else %>
+   <%= form.label :household_id, "Household Address" %>
+   <%= form.text_field :household_id %>
+ <% end %>
+  </div> 
+
+
 
   <div class="actions">
-    <%= form.submit %>
+    <input type="submit" name="commit" value="<%= get_translation('prereg_submit_form') %>" data-disable-with="Submit Form" />
   </div>
 <% end %>

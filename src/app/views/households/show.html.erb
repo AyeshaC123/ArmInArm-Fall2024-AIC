@@ -1,90 +1,193 @@
+<!-- 
+ Project Name: Admin Dashboard - Team 22
+ Description: Allows admin to view & edit household, client, & location data
+ Filename: show.html.erb
+ Description: This view lists the household information for
+   a specific user/selected household. It also provides buttons
+   to quickly access other pages.
+ Last Modified: 4/28/2024
+-->
+
 <p id="notice"><%= notice %></p>
+<% if flash[:info] %>
+  <p class="alert alert-primary"><%= get_translation(flash[:info]) %></p>
+<% end %>
+
+<h2>Household Information</h2>
+
+<br>
 
 <p>
-  <strong>Headname:</strong>
+  <strong>Household ID:</strong>
+  <%= @household.id %>
+</p>
+
+<p>
+
+  <strong><%= get_translation('prereg_show_name') %></strong>
+
+<!--   <strong>Head of Household:</strong> -->
+
   <%= @household.headname %>
 </p>
 
 <p>
-  <strong>Headdob:</strong>
+
+  <strong><%= get_translation('prereg_hoh_dob') %></strong>
+
+<!--   <strong>Date of Birth:</strong> -->
+
   <%= @household.headdob %>
 </p>
 
 <p>
-  <strong>Headgender:</strong>
+
+  <strong><%= get_translation('prereg_hoh_gender') %></strong>
+
+<!--   <strong>Gender:</strong> -->
+
   <%= @household.headgender %>
 </p>
 
 <p>
-  <strong>Headethnicity:</strong>
+
+  <strong><%= get_translation('prereg_hoh_race_ethnicity') %></strong>
+
+<!--   <strong>Ethnicity:</strong> -->
+
   <%= @household.headethnicity %>
 </p>
 
 <p>
-  <strong>Numadults:</strong>
+
+  <strong><%= get_translation('prereg_num_adults') %></strong>
+
+<!--   <strong>Number of Adults:</strong> -->
+
   <%= @household.numadults %>
 </p>
 
 <p>
-  <strong>Numchild:</strong>
+
+  <strong><%= get_translation('prereg_num_children') %></strong>
+
+<!--   <strong>Number of Children:</strong> -->
+
   <%= @household.numchild %>
 </p>
 
 <p>
-  <strong>Streetaddr:</strong>
+
+  <strong><%= get_translation('prereg_street') %></strong>
+
+<!--   <strong>Street Address:</strong> -->
+
   <%= @household.streetaddr %>
 </p>
 
 <p>
-  <strong>City:</strong>
+  <strong><%= get_translation('prereg_city') %></strong>
   <%= @household.city %>
 </p>
 
 <p>
+  <strong>Pantry Location:</strong>
+  <%= @household.pantrylocation %>
+</p>
+
+<p>
   <strong>State:</strong>
+  <strong><%= get_translation('prereg_state') %></strong>
   <%= @household.state %>
 </p>
 
 <p>
-  <strong>County:</strong>
+  <strong><%= get_translation('prereg_county') %></strong>
   <%= @household.county %>
 </p>
 
 <p>
-  <strong>Zipcode:</strong>
+
+  <strong><%= get_translation('prereg_zip_code') %></strong>
+
+<!--   <strong>Zip Code:</strong> -->
+
   <%= @household.zipcode %>
 </p>
 
 <p>
-  <strong>Phonenum:</strong>
+
+  <strong><%= get_translation('prereg_phone_number') %></strong>
+
+<!--   <strong>Phone Number:</strong> -->
+
   <%= @household.phonenum %>
 </p>
 
 <p>
-  <strong>Incomesource:</strong>
+
+  <strong><%= get_translation('prereg_income_source') %></strong>
+
+<!--   <strong>Income Source:</strong> -->
+
   <%= @household.incomesource %>
 </p>
 
 <p>
-  <strong>Qualifiercode:</strong>
+
+  <strong><%= get_translation('prereg_qualifier_code') %></strong>
+
+<!--   <strong>Qualifier Code:</strong> -->
+
   <%= @household.qualifiercode %>
 </p>
 
 <p>
-  <strong>Netincome:</strong>
+
+  <strong><%= get_translation('prereg_net_income') %></strong>
+
+<!--   <strong>Net Income:</strong> -->
+
   <%= @household.netincome %>
 </p>
 
 <p>
-  <strong>Householdtype:</strong>
+
+  <strong><%= get_translation('prereg_household_type') %></strong>
+
+<!--   <strong>Household Type:</strong> -->
+
   <%= @household.householdtype %>
 </p>
 
 <p>
-  <strong>Foodstamps:</strong>
+
+  <strong><%= get_translation('prereg_receive_snaps') %></strong>
+
+<!--   <strong>Food Stamps:</strong> -->
+
   <%= @household.foodstamps %>
 </p>
 
+<!-- Team22: allows users to view their list of members or My Account page -->
+<% unless can?(:access, :rails_admin) %>
+  <%= button_to 'Members', household_members_path(@household.id), method: :get, class: 'btn btn-primary' %>
+  <br>
+  <%= button_to 'Account',  account_index_path, method: :get, class: 'btn btn-secondary' %>
+<%end%>
 
-<%= link_to 'Edit', edit_household_path(@household) %> |
-<%= link_to 'Back', households_path %>
+
+<!-- Team22: allows admins to edit data, go to list of members, or go to households main page -->
+<% if can?(:access, :rails_admin) %>
+  <%= button_to 'Edit', edit_household_path(@household), method: :get, class: 'btn btn-primary' %>
+  <br> 
+  <%= button_to 'Members', household_members_path(@household.id), method: :get, class: 'btn btn-primary' %>
+  <br>
+  <%= button_to 'Households', households_path, method: :get, class: 'btn btn-secondary' %>
+  <%= link_to 'Back', households_path %>
+<%end%>
+
+<%# 
+<%= link_to 'Edit', edit_household_path(@household) %>
+
+

@@ -1,3 +1,12 @@
+<!-- 
+ Project Name: Admin Dashboard - Team 22
+ Description: Allows admin to view & edit household, client, & location data
+ Filename: edit.html.erb
+ Description: This view renders the form to edit current client data
+  and provides several buttons for quick access to different pages
+ Last Modified: 4/28/2024
+-->
+
 <h1>Edit Client Profile</h1>
 
 <%= form_with model: @client, local: true do |form| %>
@@ -38,4 +47,17 @@
   <%= text_field_tag :restrictions, @client.restrictions %><br>
 
   <%= submit_tag "Save Changes" %>
+<% end %>
+
+<br>
+
+<%= button_to 'View', client_path(@client), method: :get, class: 'btn btn-primary' %>
+
+<!-- Team22: adds buttons based on user type -->
+<% if can?(:access, :rails_admin) %>
+  <!-- Team22: allows amins to go back to the clients home page -->
+  <%= button_to 'Clients', clients_path, method: :get, class: 'btn btn-primary' %>
+<% else %>
+  <!-- Team22: allows users to go back to their My Account page -->
+  <%= button_to 'Account', account_index_path, method: :get, class: 'btn btn-primary' %>
 <% end %>

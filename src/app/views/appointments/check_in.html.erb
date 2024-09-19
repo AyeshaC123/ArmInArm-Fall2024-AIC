@@ -1,0 +1,22 @@
+<!-- Project name: Arm in Arm Appointment Booker - Team 23
+    Description: Renders appropriate view based on user role
+    Filename: check_in.html.erb
+    Last modified on: 4/22/24 -->
+
+
+    <% provide(:title, "Check In") %>
+
+<h1>
+    <!-- this checks if a person is an admin and gives them a different view for checking people in to the system -->
+    <% if @is_admin %>
+
+        <%= render "appointments/admin_view", locals: @data %>
+
+    <% else %>
+    <!-- the person is a regular client -->
+
+        <%= render "appointments/client_view", locals: @user %>
+
+    <% end %>
+    
+</h1>

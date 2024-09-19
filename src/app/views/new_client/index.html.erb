@@ -4,45 +4,79 @@
 
 
 <%= form_with model: @client, url: clients_path, method: :post, local: true do |form| %>
+
+  <div class="btn-group btn-group-toggle justify-content-center w-100" data-toggle="buttons">
+    <label class="btn btn-outline-dark <%= if current_user&.locale == 'en' then 'active'.html_safe else '' end %>" id="drCasesBtn" onchange="changeLanguage('en')">
+      <input type="radio" name="language" value="en" autocomplete="off" <%= if current_user&.locale == 'en' then 'checked'.html_safe else '' end %>>
+      English
+    </label>
+    <label class="btn btn-outline-dark <%= if current_user&.locale == 'es' then 'active'.html_safe else '' end %>" id="drCasesBtn" onchange="changeLanguage('es')">
+      <input type="radio" name="language" value="es" autocomplete="off" <%= if current_user&.locale == 'es' then 'checked'.html_safe else '' end %>>
+      Español
+    </label>
+    <label class="btn btn-outline-dark <%= if current_user&.locale == 'ht' then 'active'.html_safe else '' end %>" id="drCasesBtn" onchange="changeLanguage('ht')">
+      <input type="radio" name="language" value="ht" autocomplete="off" <%= if current_user&.locale == 'ht' then 'checked'.html_safe else '' end %>>
+      Kreyòl Ayisyen  
+    </label>
+  </div>
+  <br><br>
+
   <div id="step1">
-    <%= form.label :first_name, "Please enter first name:" %>
+    <%= form.label :first_name, get_translation('new_client_first_name') %>
     <%= form.text_field :first_name %><br>
 
-    <%= form.label :last_name, "Please enter last name:" %>
+    <%= form.label :last_name, get_translation('new_client_last_name') %>
     <%= form.text_field :last_name %><br>
 
-    <%= form.label :dob, "Please enter date of birth (mm/dd/yyyy):" %>
+    <%= form.label :dob, get_translation('new_client_birthdate') %>
     <%= form.date_field :dob %><br>
 
-    <button type="button" onclick="showStep(2)">Next</button>
+    <button type="button" onclick="showStep(2)"><%= get_translation('new_client_next') %></button>
   </div>
 
   <div id="step2" style="display:none;">
-    <%= form.label :address, "Please enter home address (optional):" %>
+    <%# <%= form.label :address, "Please enter home address (optional):" #%>
+    <%= form.label :address, get_translation('new_client_address') %>
     <%= form.text_field :address %><br>
 
-    <%= form.label :language, "Please enter language (optional):" %>
-    <%= form.text_field :language %><br>
+    <%#= form.label :language, "Please enter language (optional):" #%>
+    <%#= form.text_field :language #%>
 
-    <%= form.label :religion, "Please enter religion (optional):" %>
+    <%# <%= form.label :religion, "Please enter religion (optional):" #%>
+    <%= form.label :religion, get_translation('new_client_religion') %>
     <%= form.text_field :religion %><br>
 
-    <button type="button" onclick="showStep(3)">Next</button>
+    <button type="button" onclick="showStep(3)"><%= get_translation('new_client_next') %></button>
   </div>
 
   <div id="step3" style="display:none;">
-    <h2>Allergies</h2>
-    <% Client::COMMON_ALLERGENS.each do |param, name| %>
-      <%= form.label param, name %>
-      <%= form.check_box param %><br>
-    <% end %>
-    <h2>Dietary restrictions</h2>
-    <%= form.label :gluten_free, "Gluten-free" %>
+    <h2><%= get_translation('new_client_allergies_label') %></h2>
+     <%# <% Client::COMMON_ALLERGENS.each do |param, name| %>
+      <%# <%= form.label param, name %>
+      <%# <%= form.check_box param %>
+    <%= form.label :allergy_peanuts, get_translation('new_client_allergy_peanuts') %>
+    <%= form.check_box :allergy_peanuts %><br>
+    <%= form.label :allergy_treenuts, get_translation('new_client_allergy_treenuts') %>
+    <%= form.check_box :allergy_treenuts %><br>
+    <%= form.label :allergy_eggs, get_translation('new_client_allergy_eggs') %>
+    <%= form.check_box :allergy_eggs %><br>
+    <%= form.label :allergy_milk, get_translation('new_client_allergy_milk') %>
+    <%= form.check_box :allergy_milk %><br>
+    <%= form.label :allergy_shellfish, get_translation('new_client_allergy_shellfish') %>
+    <%= form.check_box :allergy_shellfish %><br>
+    <%= form.label :allergy_fish, get_translation('new_client_allergy_fish') %>
+    <%= form.check_box :allergy_fish %><br>
+    <%= form.label :allergy_wheat, get_translation('new_client_allergy_wheat') %>
+    <%= form.check_box :allergy_wheat %><br>
+    <%= form.label :allergy_soy, get_translation('new_client_allergy_soy') %>
+    <%= form.check_box :allergy_soy %><br>
+    <h2><%= get_translation('new_client_restrictions_label') %></h2>
+    <%= form.label :gluten_free, get_translation('new_client_gluten_free') %>
     <%= form.check_box :gluten_free %><br>
-    <%= form.label :vegan, "Vegan" %>
+    <%= form.label :vegan, get_translation('new_client_vegan') %>
     <%= form.check_box :vegan %><br>
-    <%= form.label :restrictions, "Any other allergens or dietary restrictions? Leave blank if not applicable." %>
-    <%= form.text_field :restrictions %><br>
+    <%= form.label :anything_else, get_translation('new_client_anything_else') %>
+    <%= form.text_field :anything_else %><br>
 
     <%= form.submit "Create Client" %>
   </div>

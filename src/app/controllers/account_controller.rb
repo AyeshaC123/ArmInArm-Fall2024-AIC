@@ -13,6 +13,8 @@ class AccountController < ApplicationController
     else
       # Handle the case when current_user is nil
     end
+
+    @client = current_user.client if current_user.present?
   end
 
   def generate_qr_code_url(household_id)
@@ -28,4 +30,5 @@ class AccountController < ApplicationController
   def load_users
     @user = User.all
   end
+  
 end

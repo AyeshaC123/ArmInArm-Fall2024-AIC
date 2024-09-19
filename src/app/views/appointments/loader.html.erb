@@ -1,0 +1,15 @@
+<!--
+Project Name: Appointment Scheduler and Check-in - team 23
+FileName: loader.html.erb
+Description: This is a helper view that help with redirection based on where the check-in/check-out came from: Either the check-ins page or the admin-search page.
+Last Modified: 4/30/24
+-->
+<% if params[:response_data]["from_search"] == "true" %>
+  <script>
+    window.location.href = "<%= admin_search_results_path("first_name" => params[:response_data]["first_name"], "last_name" => params[:response_data]["last_name"], "start_date" => params[:response_data]["start_date"], "end_date" => params[:response_data]["end_date"]) %>";
+  </script>
+<% else %>
+  <script>
+    window.location.href = "<%= check_in_path %>";
+  </script>
+<% end%>

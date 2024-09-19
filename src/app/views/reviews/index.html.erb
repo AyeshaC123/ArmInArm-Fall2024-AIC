@@ -1,0 +1,78 @@
+<%# created by team 11 %>
+<%# this is the template page for the form reviews.  a table is created and pagination is supported for every 10 forms. %>
+
+<h1>Forms to Review</h1>
+
+<% if @unreviewed_households.any? %>
+  <%= form_tag approve_multiple_reviews_path, method: :patch do %>
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+          <%# table headers %>
+            <th> 
+              Select All <%= check_box_tag "select_all", 1, false, class: "select-all-checkbox" %>
+            </th>
+            <th>Head of Household DOB</th>
+            <th>Head of Household</th>
+            <th>Date Submitted</th>
+            <th>Add Household</th>
+            <th>Review Form</th>
+            <th>Delete Household</th>
+          </tr>
+        </thead>
+        <tbody>
+        <%# table content %>
+          <% @unreviewed_households.each do |household| %>
+            <tr>
+              <td>
+                <%= check_box_tag "selected_review_ids[]", household.id, false, class: "review-checkbox" %>
+              </td>
+              <td><%= household.headdob %></td>
+              <td><%= household.headname %></td>
+              <td><%= household.created_at.strftime("%Y-%m-%d") %></td>
+              <td>
+                <%= link_to "Approve", approve_review_path(household), method: :patch, data: { confirm: "Are you sure you want to approve this household?" }, class: "btn btn-outline-success  btn-sm" %>
+              </td>
+              <td>
+                <%= link_to "Review Form", review_path(household), class: "btn btn-outline-secondary btn-sm"  %>
+              </td>
+              <td>
+                <%= link_to "Deny", deny_review_path(household), method: :delete, data: { confirm: "Are you sure you want to deny/delete this household?" }, class: "btn btn-outline-danger  btn-sm" %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+    <br>
+    <%# bulk approval/denial buttons %>
+    <div class="d-flex justify-content-center">
+      <div class="btn-group">
+        <%= button_tag "Approve Selected", type: :submit, class: "btn btn-success", data: { confirm: "Are you sure you want to approve the selected households?" } %>
+        <%= button_tag "Delete Selected", type: :submit, class: "btn btn-danger ml-3", data: { confirm: "Are you sure you want to delete the selected households?" }%>
+      </div>
+    </div>
+    <%# pagination buttons %>
+    <div class="d-flex justify-content-center">
+      <%= will_paginate @unreviewed_households, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
+    </div>  
+  <% end %>
+<% else %>
+  <p>No unreviewed households found.</p>
+<% end %>
+
+<script>
+  //javascript to select all rows
+  document.addEventListener("DOMContentLoaded", function() {
+    const selectAllCheckbox = document.querySelector(".select-all-checkbox");
+    const reviewCheckboxes = document.querySelectorAll(".review-checkbox");
+
+    selectAllCheckbox.addEventListener("change", function() {
+      reviewCheckboxes.forEach(function(checkbox) {
+        checkbox.checked = selectAllCheckbox.checked;
+      });
+    });
+  });
+
+</script>

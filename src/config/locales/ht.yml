@@ -1,3 +1,7 @@
+# Team 14: Translations (this file has been replaced by the translations in the database)
+
+# Team 14: Translations (this file has been replaced by the translations in the database)
+
 ht: 
   client_profile:
     home:
@@ -5,3 +9,109 @@ ht:
       create: "Kreye Pwofil Kliyan"
       modify: "Wè Oswa Modifye Pwofil Kliyan An"
       search: "Rechèch"
+  new_client:
+    first_name: "Tanpri antre premye non:"
+    last_name: "Tanpri antre siyati non ou:"
+    birthdate: "Tanpri antre dat desans ou:"
+    next: "Pwochen"
+    address: "Tanpri antre adrès lakay ou (opsyonèl):"
+    religion: "Tanpri antre relijyon ou (opsyonèl): "
+    allergies_label: "Alèji"
+    allergy_peanuts: "Pistach"
+    allergy_treenuts: "Fwi Pye Bwa"
+    allergy_eggs: "Ze"
+    allergy_milk: "Lèt"
+    allergy_shellfish: "Alèji Kribich"
+    allergy_fish: "Pwason"
+    allergy_wheat: "Blé"
+    allergy_soy: "Soya"
+    restrictions_label: "Restriksiyon de Manje"
+    gluten_free: "Manje San Gluten"
+    vegan: "Vejetaryen"
+    anything_else: "Ou genyen nenpòt lot alèji oswa restriksyon? Pa ekri anyen si repons ou se non."
+  date:
+    order:
+      - :day
+      - :month
+      - :year
+  pre_reg:
+    # ACTIVELY USED
+    header_gen_info: "Enfòmasyon Jeneral"
+    header_house_adr: "Adrès Kay La"
+    header_house_demo: "Demografik Nan Kay La"
+    header_house_inc: "Revni ak Benefis nan kay la"
+    submit_form: "Soumèt Fòm"
+    name: "Tanpri antre non:"
+    phone_number: "Telefòn Mobil:"
+    street: "Lari:"
+    city: "Vil la:"
+    state: "Eta:"
+    county: "Konte:"
+    country: "Peyi:"
+    zip_code: "Kòd postal:"
+    household_type: "Kalite kay:"
+    single_individual: "Endividi selibatè"
+    adults_only: "Granmoun sèlman"
+    fam_with_children_under18: "Fanmi ki gen timoun anba 18 an"
+    hoh_dob: "Dat Nesans:"
+    hoh_gender: "Sèks chèf nan kay la:"
+    female: "Fi"
+    male: "Gason"
+    other: "Lòt"
+    hoh_race_ethnicity: "Ras / Etnisite chèf nan kay la:"
+    hoh_black: "Afriken Ameriken / Nwa"
+    hoh_white: "Blan"
+    hoh_latino: "Panyòl"
+    hoh_asian: "Azyatik"
+    hoh_multiracial: "Multirasyal"
+    num_adults: "Kantite granmoun nan kay la:"
+    num_children: "Kantite timoun nan kay la:"
+    receive_snaps: "Eske ou te resevwa SNAP (Food Stamp)?"
+    snaps_yes: "Wi"
+    snaps_no: "Non"
+    income_source: "Prensipal sous lajan ou:"
+    child_support: "Sipò pou timoun"
+    employment: "Travay"
+    gen_assistance: "Asistans Jeneral"
+    soc_security: "Revni Sekirite Sosyal"
+    soc_sec_disability: "Andikap Sekirite Sosyal"
+    retirement: "Retrèt"
+    tanf: "TANF"
+    unemployment: "Benefis chomaj"
+    none: "Anyen"
+    qualifier_code: "Kòd kalifikasyon:"
+    code_tanf: "1 - TANF"
+    code_snap: "2 - SNAP"
+    code_ssi: "3 - SSI"
+    code_wic: "4 - WIC"
+    code_medicaid: "5 - Medicaid"
+    code_inc_eligible: "6 - Revni Elijib"
+    code_disaster: "7 - Dezas"
+    net_income: "Revni nèt: $"
+    # For new member page
+    non_hoh_add: "Ajoute Manm Kay la" # <-- From google translate
+    non_hoh_first_name: "Premye Non: "
+    non_hoh_last_name: "Non Dènye: "
+    non_hoh_relationship: "Relasyon ak chèf kay la:"
+
+    # NOT USED
+    #email: "Tanpri antre imel ou:"
+    #consent_to_msgs: "Èske ou dakò pou resevwa mesaj tèks nan men nou?"
+    #non_hoh_dob: "Dat nesans lòt manm (ki pa chèf fanmi) nan kay la:"
+    #non_hoh_header: "Other Household Members (if applicable)"
+    #member: "Member"
+
+  months:
+    jan: "Janvye"
+    feb: "Fevriye"
+    mar: "Mas"
+    apr: "Avril"
+    may: "Me"
+    jun: "Jen"
+    jul: "Jiyè"
+    aug: "Out"
+    sep: "Septanm"
+    oct: "Oktòb"
+    nov: "Novanm"
+    dec: "Desanm"
+
