@@ -37,7 +37,6 @@ Social and Economic Impact: Aid in alleviating hunger in Mercer County by improv
 # ArmInArm-Spr24 Source Code Setup
 
 ## How to Run
-**Dir:** `/home/student4/collab21_work/ArmInArm-Spr24/src`
 
 **In terminal:** `rails s --binding=10.18.6.55`
 
