@@ -87,7 +87,6 @@ gem 'wkhtmltopdf-binary'
 # this is the gem used for the Calendar application
 gem "simple_calendar"
 
-# gem 'will_paginate', '~> 3.1'
 gem 'kaminari', '~> 1.2'
 
 
@@ -99,7 +98,4 @@ gem 'distribution'
 gem 'groupdate'
 gem 'faker'
 
-# team 11 - need this for pagination on the review forms page
-# gem 'will_paginate', '~> 3.3'
-# gem 'will_paginate-bootstrap4'
 

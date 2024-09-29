@@ -1,12 +1,12 @@
 class ReviewsController < ApplicationController
-  require 'will_paginate/array'
 
   # default viewer for households needing review
   def index
     @unreviewed_households = Household.where(reviewed: [nil, false])
       .select(:id, :headname, :headdob, :created_at)
       .order(created_at: :asc)
-      .paginate(page: params[:page], per_page: 10)
+      .page(params[:page])   # Kaminari's page method
+      .per(10)               # Kaminari's per method to limit results per page
   end
 
   # approval button - mark the reviewed flag as true
@@ -54,4 +54,3 @@ class ReviewsController < ApplicationController
     end
   end
 end
-#team 11 added this

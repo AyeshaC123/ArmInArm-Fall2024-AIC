@@ -55,7 +55,7 @@
     </div>
     <%# pagination buttons %>
     <div class="d-flex justify-content-center">
-      <%= will_paginate @unreviewed_households, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
+    <%= paginate @unreviewed_households %>
     </div>  
   <% end %>
 <% else %>
