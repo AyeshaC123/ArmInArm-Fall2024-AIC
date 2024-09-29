@@ -85,3 +85,4 @@ You can use the following script to install Ruby:
 ```bash
 ./installruby.sh
 ```
+### If you have any issues with installation, contact peer mentor : chaudha1@tcnj.edu
