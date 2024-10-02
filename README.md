@@ -65,10 +65,6 @@ Social and Economic Impact: Aid in alleviating hunger in Mercer County by improv
 - Postgres: `/usr/pgsql-14/bin/postgres`
 - HTML: 5
 
-## File Path 
-
-- `/home/student4/collab21_work/ArmInArm-Spr24/src`
-
 ## Getting Started
 
 To get started with ArmInArm-Spr24, follow these steps:
