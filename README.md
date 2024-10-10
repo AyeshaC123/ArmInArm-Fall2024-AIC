@@ -71,7 +71,7 @@ To get started with ArmInArm-Spr24, follow these steps:
 
 1. Clone this repository.
 2. Install dependencies using `bundle install`.
-3. Set up the database with `rails db:create` and `rails db:migrate`.
+3. Run the migration comands
 4. Start the Rails server with `rails s --binding=10.18.6.55`.
 
 ## Install Ruby
